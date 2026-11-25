@@ -1,0 +1,1025 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>sglang v0.5.9 — STAGS NextStack</title><meta name="description" content="LoRA Weight Loading Overlap with Computation: Overlap LoRA weight loading with computation during inference, reducing TTFT by 78% and TPOT by 34.88% on large adaptors: #15512"><meta name="keywords" content="open source release notes, release tracker, changelog aggregator, breaking changes, deprecation tracker, Kafka releases, Spring Boot releases, Kubernetes releases"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/releases/sglang/0.5.9/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/sglang/0.5.9/"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.9"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/sglang/0.5.9/"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="sglang v0.5.9 — STAGS NextStack"><meta property="og:description" content="LoRA Weight Loading Overlap with Computation: Overlap LoRA weight loading with computation during inference, reducing TTFT by 78% and TPOT by 34.88% on large adaptors: #15512"><meta property="og:url" content="https://www.stags.cn/releases/sglang/0.5.9/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"en","description":"STAGS indexes release notes from infrastructure and AI projects — breaking changes, deprecations and migrations — in one English-first feed.","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/releases/sglang/0.5.9/#article","headline":"sglang v0.5.9 release notes","datePublished":"2026-02-24","inLanguage":"en","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/sgl-project/sglang"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">Skip to content</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/" class="brand" aria-label="STAGS NextStack — Open-source release intelligence"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/releases">Releases</a><a href="/projects">Projects</a><a href="/topics">Topics</a><a href="/compare">Compare</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="Open menu"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="Primary"> <a href="/releases" class="navmenu-item">Releases</a><a href="/projects" class="navmenu-item">Projects</a><a href="/topics" class="navmenu-item">Topics</a><a href="/compare" class="navmenu-item">Compare</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="Search releases"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">Search</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="Language"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">EN</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="Language"> <p class="langmenu-head">Language</p> <a class="langmenu-item" href="/releases/sglang/0.5.9/" hreflang="en" lang="en" aria-current="true" data-on="true"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/sglang/sglang_v0.5.9" hreflang="zh-Hans" lang="zh-CN" data-on="false"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/sglang/0.5.9/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/sglang/0.5.9/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/sglang/0.5.9/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/sglang/0.5.9/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/sglang/0.5.9/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a> <span class="sep">/</span> <a href="/releases">Releases</a> <span class="sep">/</span> <a href="/releases/sglang">sglang</a> </nav> <h1 class="detail-title"> <span class="p">sglang</span> v0.5.9 </h1> <div class="detail-meta"> <span class="chip chip--patch">patch</span> <span><span class="k">Published</span>Feb 24, 2026</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener"> <span class="k">Source</span>sgl-project/sglang </a>   <span class="sep" aria-hidden="true"></span> <a href="/zh/release_note/sglang/sglang_v0.5.9"> Chinese translation </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/releases/sglang/0.5.9/">Copy link</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="sglang-v059">sglang v0.5.9</h1>
+<h1 id="highlights">Highlights</h1>
+<ul>
+<li>
+<p><strong>LoRA Weight Loading Overlap with Computation</strong>: Overlap LoRA weight loading with computation during inference, reducing TTFT by ~78% and TPOT by ~34.88% on large adaptors: #15512</p>
+</li>
+<li>
+<p><strong>TRT-LLM NSA Kernel Integration for DeepSeek V3.2</strong>: Integrate TRT-LLM DSA kernels for Native Sparse Attention, boosting DeepSeek V3.2 performance by 3x-5x on Blackwell platforms with trtllm for both —nsa-prefill-backend and —nsa-decode-backend
+(with minor accuracy drop): #16758, #17662, #18389</p>
+</li>
+<li>
+<p><strong>Flashinfer All-to-All MoE Dispatcher</strong>: Add the Flashinfer all-to-all MoE dispatcher for efficient expert parallelism communication, enabling optimized routing in MoE models: #14668</p>
+</li>
+<li>
+<p><strong>FA4 (FP4 Attention) Support for Multimodal Encoder</strong>: Introduce FP4 attention backend and variable-length attention function for multimodal encoders, enabling lower-precision inference for vision-language models: #13539</p>
+</li>
+<li>
+<p><strong>Anthropic Compatible API Endpoint</strong>: Add native Anthropic API compatibility to SGLang, allowing direct integration with tools and clients built for the Anthropic API format: #18630</p>
+</li>
+<li>
+<p><strong>SGLang-Diffusion Advanced Optimizations</strong>: Production-ready improvements including token-level sequence sharding, parallel VAE decoding, fused kernels, Nunchaku and FP8 support, and multiple new models in the ComfyUI plugin: <a href="https://lmsys.org/blog/">blog</a></p>
+</li>
+<li>
+<p><strong>Spec V2 Critical bug fix</strong>: Fix out-of-index bug caused by torch garbage collection in speculative decoding v2, improving reliability of speculative verification: #18958</p>
+</li>
+<li>
+<p><strong>Deploying DeepSeek on GB300 NVL72</strong>: Optimization work for long-context inference using prefill-decode disaggregation and other SGLang features on NVIDIA’s latest GB300 platform: <a href="https://lmsys.org/blog/">blog</a></p>
+</li>
+<li>
+<p><strong>Bump AITER version to 0.1.10.post3</strong>: Support FP8 Prefill/Decode/KV Cache</p>
+</li>
+<li>
+<p><strong>Commit-to-Version Lookup in docs.sglang.io</strong>: Easily find the earliest official version that includes a given PR or commit, streamlining release tracking for users and developers: #18450, <a href="https://docs.sglang.io/references/release_lookup.html">link</a></p>
+</li>
+</ul>
+<h2 id="new-model-support">New Model Support</h2>
+<ul>
+<li>Kimi-K2.5: #17789, <a href="https://cookbook.sglang.io/autoregressive/Moonshotai/Kimi-K2.5">cookbook</a></li>
+<li>GLM-5: <a href="https://cookbook.sglang.io/autoregressive/GLM/GLM-5">cookbook</a> (still requires a custom docker for transformers upgrade, will follow up with a rc release since transformers upgrade is risky)</li>
+<li>Qwen 3.5: #18489, #18926, #18937, <a href="https://cookbook.sglang.io/autoregressive/Qwen/Qwen3.5">cookbook</a></li>
+<li>MiniMax 2.5: <a href="https://cookbook.sglang.io/autoregressive/MiniMax/MiniMax-M2.5">cookbook</a></li>
+<li>Ernie4.5-VL: #15679</li>
+<li>Step3-VL: #17513</li>
+<li>Step-3.5-Flash: #18084, <a href="https://cookbook.sglang.io/autoregressive/StepFun/Step3.5">cookbook</a></li>
+<li>LLaDA 2.1: <a href="https://cookbook.sglang.io/autoregressive/LLaDA/LLaDA-2.1">cookbook</a></li>
+<li>Ring 2.5 1T / Ling 2.5 1T: #18598, <a href="https://cookbook.sglang.io/autoregressive/InclusionAI/Ring-2.5-1T">cookbook</a>, <a href="https://cookbook.sglang.io/autoregressive/InclusionAI/Ling-2.5-1T">cookbook</a></li>
+<li>MOVA (Diffusion): #17704</li>
+<li>GLM-OCR: #17582, <a href="https://cookbook.sglang.io/autoregressive/GLM/GLM-OCR">cookbook</a></li>
+<li>DeepSeek-OCR-2: #17897</li>
+</ul>
+<h2 id="sglang-diffusion">SGLang-Diffusion</h2>
+<ul>
+<li>Support multiple new models in ComfyUI Plugin</li>
+<li>Parallel Folding and Parallel VAE Decoding for faster image/video generation</li>
+<li>Nunchaku and FP8 support for diffusion models</li>
+<li>Sequence Sharding (token-level) replacing Frame Sharding for improved efficiency</li>
+<li>LTX-2 support: #17495, #17496</li>
+<li>MOVA model support: #17704</li>
+<li>Cache-DiT optimizations and fused kernel improvements</li>
+<li>Numerous bug fixes and refactors across the diffusion pipeline</li>
+</ul>
+<h2 id="performance">Performance</h2>
+<ul>
+<li>Integrate TRT-LLM NSA kernels with up to 3-5x speedup on Blackwell: #16758, #17662, #18389</li>
+<li>LoRA weight loading overlap reducing TTFT by ~78%: #15512</li>
+<li>Flashinfer all-to-all MoE dispatcher: #14668</li>
+<li>FA4 for multimodal encoder: #13539</li>
+<li>Optimize GDN decode for Qwen3 Next: #17094</li>
+<li>Tune fused MoE kernels for Llama-4-Scout, MiniMax M2: #17891, #18851, #18833</li>
+<li>Symmetric memory pre-allocation to avoid fragmentation: #17089</li>
+<li>Optimize fused_moe triton kernel TMA: #18782</li>
+<li>Fused triton kernel for Ernie4.5-VL rotary embedding: #18856</li>
+<li>Support MxINT4 Flashinfer TRT-LLM MoE GEMM: #16892</li>
+<li>AITER bias MoE support for GPT-OSS MxFP4: #17735</li>
+</ul>
+<h2 id="prefill-decode-disaggregation">Prefill-Decode Disaggregation</h2>
+<ul>
+<li>Support KV transfer with MORI-IO: #14626</li>
+<li>Mooncake intra-node NVLink KV transfer: #17866</li>
+<li>Improve KV offset calculation for MHA model with different TP size: #18163</li>
+<li>Document SGLANG_MOONCAKE_CUSTOM_MEM_POOL: #18259</li>
+</ul>
+<h2 id="diffusion-llm-dllm">Diffusion LLM (dLLM)</h2>
+<ul>
+<li>Remove cuda graph batch size limitation: #17458</li>
+<li>JointThreshold algorithm for joint M2T and T2T decoding: #18171</li>
+<li>Basic dLLM scheduling strategy and implementation: #17484</li>
+</ul>
+<h2 id="speculative-decoding">Speculative Decoding</h2>
+<ul>
+<li>Fix out-of-index bug caused by torch garbage collection in Spec V2: #18958</li>
+<li>Move forward timeout before verify to fix Eagle v1 filter mismatch: #18760</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Flashinfer updated to 0.6.3: #17700</li>
+<li>AITER updated to 0.1.10.post3: #18741</li>
+<li>Mooncake transfer engine updated to 0.3.9: #18316</li>
+</ul>
+<h2 id="amd-hardware">AMD Hardware</h2>
+<ul>
+<li>AITER updated to v0.1.10.post3 with FP8 Prefill, FP8 Decode, FP8 KV Cache support</li>
+<li>ROCm 7 standardization and ROCm 6.3 deprecation: #17785</li>
+<li>Kimi K2.5 Day 0 ROCm support: #17863</li>
+<li>FP8 prefill attention kernel integration: #18528</li>
+<li>Two-batch overlapping for MORI EP: #17953</li>
+<li>DeepSeek V3.2 and Kimi-K2 nightly CI tests: #17523</li>
+</ul>
+<h2 id="npuascend">NPU/Ascend</h2>
+<ul>
+<li>Support for MiniCPM3-4B: #16866</li>
+<li>Qwen 3.5 support on Ascend: #18544</li>
+<li>Accuracy improvements for StableLM-2: #17470</li>
+<li>Bug fixes for DeepSeek V3.2 and DeepSeek-VL2: #17007</li>
+</ul>
+<h2 id="cpu-backend">CPU Backend</h2>
+<ul>
+<li>Optimize Qwen3-Next model on CPU: #12525</li>
+<li>Optimize flash_attn_varlen_func: #15708</li>
+<li>Add INT4 kernels for CPU: #8226</li>
+</ul>
+<h2 id="kernel-slimming">Kernel Slimming</h2>
+<ul>
+<li>Migrate GPTQ-Marlin repack kernel to JIT: #18543</li>
+<li>Migrate AWQ Marlin repack kernel to JIT: #18949</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li>Add RL documentation: #17663</li>
+<li>Update torch compile description: #17819</li>
+<li>Refine spec decode docs for SpecV2/STANDALONE/NGRAM: #18321</li>
+<li>Consolidate diffusion documentation: #18095</li>
+</ul>
+<h1 id="whats-changed">What’s Changed</h1>
+<ul>
+<li>Update test README with CI registry documentation and 5090/H100 guidance by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17368">https://github.com/sgl-project/sglang/pull/17368</a></li>
+<li>update dependence docs of npu by @amote-i in <a href="https://github.com/sgl-project/sglang/pull/17573">https://github.com/sgl-project/sglang/pull/17573</a></li>
+<li>[AMD] CI - migrate perf test and fix stage-b-test-1-gpu-amd by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/17340">https://github.com/sgl-project/sglang/pull/17340</a></li>
+<li>Skip mm feature pool init to avoid EPD OOM by @liusy58 in <a href="https://github.com/sgl-project/sglang/pull/16388">https://github.com/sgl-project/sglang/pull/16388</a></li>
+<li>Update mamba env setting by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/17566">https://github.com/sgl-project/sglang/pull/17566</a></li>
+<li>[NPU]bugfix: fix for dsv3.2 and dsvl2 by @JiaruiChang5268 in <a href="https://github.com/sgl-project/sglang/pull/17007">https://github.com/sgl-project/sglang/pull/17007</a></li>
+<li>[AMD CI] Add 2-GPU sgl-kernel Tests by @bingxche in <a href="https://github.com/sgl-project/sglang/pull/17555">https://github.com/sgl-project/sglang/pull/17555</a></li>
+<li>Lazy import torchao by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/17626">https://github.com/sgl-project/sglang/pull/17626</a></li>
+<li>Re-enable unit-test-deepep-8-gpu and unit-test-backend-4-gpu-gb200 by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17438">https://github.com/sgl-project/sglang/pull/17438</a></li>
+<li>fix gpt-oss launch failure with piecewise cuda graph by @zminglei in <a href="https://github.com/sgl-project/sglang/pull/17532">https://github.com/sgl-project/sglang/pull/17532</a></li>
+<li>[NPU] [CI] temporarily disable mtp test by @iforgetmyname in <a href="https://github.com/sgl-project/sglang/pull/17614">https://github.com/sgl-project/sglang/pull/17614</a></li>
+<li>[NPU] update doc for Ascend NPU by @Hexq0210 in <a href="https://github.com/sgl-project/sglang/pull/17621">https://github.com/sgl-project/sglang/pull/17621</a></li>
+<li>turn off dit_layerwise_offload for wan on rocm by @zyzshishui in <a href="https://github.com/sgl-project/sglang/pull/17569">https://github.com/sgl-project/sglang/pull/17569</a></li>
+<li>set cooldown_interval_minutes to 0 for liusy58 by @liusy58 in <a href="https://github.com/sgl-project/sglang/pull/17637">https://github.com/sgl-project/sglang/pull/17637</a></li>
+<li>Support symmetric memory pre-allocation to avoid fragmentation by @nvcastet in <a href="https://github.com/sgl-project/sglang/pull/17089">https://github.com/sgl-project/sglang/pull/17089</a></li>
+<li>[DeepSeek V3.2] Enable trtllm NSA with bf16 kvcache by @akhilg-nv in <a href="https://github.com/sgl-project/sglang/pull/16758">https://github.com/sgl-project/sglang/pull/16758</a></li>
+<li>add the fa4 mm backend and varlen func by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/13539">https://github.com/sgl-project/sglang/pull/13539</a></li>
+<li>[Refactor] Algebraic data type for nextn config + some basic refactors by @xyjixyjixyji in <a href="https://github.com/sgl-project/sglang/pull/17347">https://github.com/sgl-project/sglang/pull/17347</a></li>
+<li>[DLLM] Remove cuda graph batch size limitation by @btw616 in <a href="https://github.com/sgl-project/sglang/pull/17458">https://github.com/sgl-project/sglang/pull/17458</a></li>
+<li>Add return routed experts to the completions and chat/completions endpoints by @mansoor-s in <a href="https://github.com/sgl-project/sglang/pull/17434">https://github.com/sgl-project/sglang/pull/17434</a></li>
+<li>[MUSA][1/N] sglang.check_env by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/16959">https://github.com/sgl-project/sglang/pull/16959</a></li>
+<li>[MUSA][2/N] sgl-kernel build by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/17053">https://github.com/sgl-project/sglang/pull/17053</a></li>
+<li>fix post_residual_addition more generally by @nanjiangwill in <a href="https://github.com/sgl-project/sglang/pull/17286">https://github.com/sgl-project/sglang/pull/17286</a></li>
+<li>feature: adding openai compatible API request to bench_serving by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/17219">https://github.com/sgl-project/sglang/pull/17219</a></li>
+<li>[NPU]support model MiniCPM3-4B for npu by @McZyWu in <a href="https://github.com/sgl-project/sglang/pull/16866">https://github.com/sgl-project/sglang/pull/16866</a></li>
+<li>[NPU] solve accuracy problem for stablelm-2-1-6b for npu by @McZyWu in <a href="https://github.com/sgl-project/sglang/pull/17470">https://github.com/sgl-project/sglang/pull/17470</a></li>
+<li>[Docker] Install cudnn==9.16 for cuda 13 image to avoid check error by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/17668">https://github.com/sgl-project/sglang/pull/17668</a></li>
+<li>Refactor: Extract DeepSeek common utilities into shared module by @DotSlash-A in <a href="https://github.com/sgl-project/sglang/pull/16969">https://github.com/sgl-project/sglang/pull/16969</a></li>
+<li>[Diffusion] LTX-2 Support PR1 by @gmixiaojin in <a href="https://github.com/sgl-project/sglang/pull/17495">https://github.com/sgl-project/sglang/pull/17495</a></li>
+<li>[Diffusion] LTX-2 Support PR2 by @gmixiaojin in <a href="https://github.com/sgl-project/sglang/pull/17496">https://github.com/sgl-project/sglang/pull/17496</a></li>
+<li>fix: nightly wheel naming for non-post versions by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/17538">https://github.com/sgl-project/sglang/pull/17538</a></li>
+<li>[JIT Kernel]Add Some CUDA Runtime API Wrapper for JIT Kernel Header by @HydraQYH in <a href="https://github.com/sgl-project/sglang/pull/17588">https://github.com/sgl-project/sglang/pull/17588</a></li>
+<li>Fix: mistake sigmoid in kda by @strgrb in <a href="https://github.com/sgl-project/sglang/pull/17508">https://github.com/sgl-project/sglang/pull/17508</a></li>
+<li>Use attn tp group in embedding for more models by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/17570">https://github.com/sgl-project/sglang/pull/17570</a></li>
+<li>[Diffusion] Add diffusion time embedding to jit kernel by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17658">https://github.com/sgl-project/sglang/pull/17658</a></li>
+<li>Move fa4 from sgl-kernel to jit kernel by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17353">https://github.com/sgl-project/sglang/pull/17353</a></li>
+<li>add documentation example for LoRA overlap loading and cleanup unused function by @glenliu21 in <a href="https://github.com/sgl-project/sglang/pull/17464">https://github.com/sgl-project/sglang/pull/17464</a></li>
+<li>[Bugfix] fix TypeError when log-requests-level >=2 in prefill node warmup by @yunkchen in <a href="https://github.com/sgl-project/sglang/pull/17129">https://github.com/sgl-project/sglang/pull/17129</a></li>
+<li>[Kimi-Linear] Refactor Kimi-Linear to support RadixLinearAttention by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/17506">https://github.com/sgl-project/sglang/pull/17506</a></li>
+<li>[NPU] torch_npu profiler tensorboard path type fix by @mengchengTang in <a href="https://github.com/sgl-project/sglang/pull/17545">https://github.com/sgl-project/sglang/pull/17545</a></li>
+<li>[NVIDIA] Add flashinfer all-to-all MOE dispatcher by @trevor-m in <a href="https://github.com/sgl-project/sglang/pull/14668">https://github.com/sgl-project/sglang/pull/14668</a></li>
+<li>Fix test timeout issue in pr-test by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17681">https://github.com/sgl-project/sglang/pull/17681</a></li>
+<li>Fix NSA indexer test and move it to pre commit test by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17682">https://github.com/sgl-project/sglang/pull/17682</a></li>
+<li>Temporarily disable lora overlap loading test due to flakiness by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17683">https://github.com/sgl-project/sglang/pull/17683</a></li>
+<li>fix: Refactor register_image_processor to use kwarg instead of positional arg by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/17685">https://github.com/sgl-project/sglang/pull/17685</a></li>
+<li>[diffusion]: Fix ZImage SP sharding for caption and latent by @dutsc in <a href="https://github.com/sgl-project/sglang/pull/17301">https://github.com/sgl-project/sglang/pull/17301</a></li>
+<li>Fix slash command handler trigger condition by trimming the comments by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17691">https://github.com/sgl-project/sglang/pull/17691</a></li>
+<li>Add PyTorch .bin file validation to CI weight validation by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17533">https://github.com/sgl-project/sglang/pull/17533</a></li>
+<li>[DeepSeek-V3.2] Fix TRT-LLM NSA in target_verify/draft_extend by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/17662">https://github.com/sgl-project/sglang/pull/17662</a></li>
+<li>Fix swa memory pool size with spec by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/17630">https://github.com/sgl-project/sglang/pull/17630</a></li>
+<li>[Refactore] [CI] Remove redundant CI test runs step 2 by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/17584">https://github.com/sgl-project/sglang/pull/17584</a></li>
+<li>revert row from <a href="https://github.com/sgl-project/sglang/pull/17584/">https://github.com/sgl-project/sglang/pull/17584/</a> by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/17701">https://github.com/sgl-project/sglang/pull/17701</a></li>
+<li>[Refactor] Use is_in_ci() utility in JIT kernel benchmarks by @luke396 in <a href="https://github.com/sgl-project/sglang/pull/17118">https://github.com/sgl-project/sglang/pull/17118</a></li>
+<li>use published reasoning parser crate by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17709">https://github.com/sgl-project/sglang/pull/17709</a></li>
+<li>update to use official openai protocol crate by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17710">https://github.com/sgl-project/sglang/pull/17710</a></li>
+<li>remove self managed protocols as it has been replaced with official oai spec by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17711">https://github.com/sgl-project/sglang/pull/17711</a></li>
+<li>[diffusion] refactor: remove useless lazy-import cache-dit codes by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/17659">https://github.com/sgl-project/sglang/pull/17659</a></li>
+<li>Support mxint4 flashinfer_trtllm moe gemm by @HandH1998 in <a href="https://github.com/sgl-project/sglang/pull/16892">https://github.com/sgl-project/sglang/pull/16892</a></li>
+<li>A few updates to the night tests by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17694">https://github.com/sgl-project/sglang/pull/17694</a></li>
+<li>Add an all type in pyproject.tml to include diffusion support by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17697">https://github.com/sgl-project/sglang/pull/17697</a></li>
+<li>Extend b200 kernel tests timeout for CPU differences by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17718">https://github.com/sgl-project/sglang/pull/17718</a></li>
+<li>[misc] remove tool parser and tree benchmark as they are not meaningful atm by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17719">https://github.com/sgl-project/sglang/pull/17719</a></li>
+<li>[misc] replace existing tool call code with new crate package by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17720">https://github.com/sgl-project/sglang/pull/17720</a></li>
+<li>Upload nightly test metrics to GH artifacts by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17696">https://github.com/sgl-project/sglang/pull/17696</a></li>
+<li>Fix flaky streaming logprobs test by handling detokenizer text buffering by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17687">https://github.com/sgl-project/sglang/pull/17687</a></li>
+<li>[Bugfix]Repeated add modelslim quant_config and bugfix with “enable-piecewise-cuda-graph” on NPU by @chenxu214 in <a href="https://github.com/sgl-project/sglang/pull/17511">https://github.com/sgl-project/sglang/pull/17511</a></li>
+<li>Fix sgl-kernel install: fail instead of PyPI fallback when artifacts missing by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17728">https://github.com/sgl-project/sglang/pull/17728</a></li>
+<li>Add EP=2 to qwen235b nightly tests by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17738">https://github.com/sgl-project/sglang/pull/17738</a></li>
+<li>Update nightly-test-nvidia.yml to remove push trigger by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17625">https://github.com/sgl-project/sglang/pull/17625</a></li>
+<li>remove self managed mcp as it has been replaced with official rmcp crate by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17740">https://github.com/sgl-project/sglang/pull/17740</a></li>
+<li>[Kimi-Linear] Remove duplicated code in kimi-linear by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/17731">https://github.com/sgl-project/sglang/pull/17731</a></li>
+<li>[NIXL] Add custom NIXL backend selection for KVManager by @zackyoray in <a href="https://github.com/sgl-project/sglang/pull/17146">https://github.com/sgl-project/sglang/pull/17146</a></li>
+<li>Merge performance/accuracy test suites into regular stage-b suites by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17609">https://github.com/sgl-project/sglang/pull/17609</a></li>
+<li>remove self managed wasm as it has been replaced with official smg wa… by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17746">https://github.com/sgl-project/sglang/pull/17746</a></li>
+<li>Exclude some diffusion package for ARM in docker release by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17745">https://github.com/sgl-project/sglang/pull/17745</a></li>
+<li>update wasm endpoint by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17748">https://github.com/sgl-project/sglang/pull/17748</a></li>
+<li>[Fix] Pass missing backend argument in pipelines_core initialization by @Prozac614 in <a href="https://github.com/sgl-project/sglang/pull/17343">https://github.com/sgl-project/sglang/pull/17343</a></li>
+<li>remove multimodal as this is completely dead code by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/17750">https://github.com/sgl-project/sglang/pull/17750</a></li>
+<li>accuracy enhancement for baichuan2-13B for npu by @McZyWu in <a href="https://github.com/sgl-project/sglang/pull/16868">https://github.com/sgl-project/sglang/pull/16868</a></li>
+<li>Bump FI version by @shaharmor98 in <a href="https://github.com/sgl-project/sglang/pull/17700">https://github.com/sgl-project/sglang/pull/17700</a></li>
+<li>refactor mamba radix cache logic in server_args by @yizhang2077 in <a href="https://github.com/sgl-project/sglang/pull/17645">https://github.com/sgl-project/sglang/pull/17645</a></li>
+<li>[AMD CI] Add moonshotai/Kimi-K2-Instruct-0905 testcases by @sogalin in <a href="https://github.com/sgl-project/sglang/pull/17656">https://github.com/sgl-project/sglang/pull/17656</a></li>
+<li>[NPU]DeepSeek-V3.2 support npu mlaprolog by @lawtherWu in <a href="https://github.com/sgl-project/sglang/pull/15381">https://github.com/sgl-project/sglang/pull/15381</a></li>
+<li>Add test_gpt_oss_4gpu.py to B200 test suite by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17743">https://github.com/sgl-project/sglang/pull/17743</a></li>
+<li>fix: move nightly whl to cuda version folder by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/17762">https://github.com/sgl-project/sglang/pull/17762</a></li>
+<li>[NPU] Split pyproject npu from pyproject other by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/17641">https://github.com/sgl-project/sglang/pull/17641</a></li>
+<li>Special logic for healthcheck by @whybeyoung in <a href="https://github.com/sgl-project/sglang/pull/17734">https://github.com/sgl-project/sglang/pull/17734</a></li>
+<li>[Docs] Add RL documentation by @zijiexia in <a href="https://github.com/sgl-project/sglang/pull/17663">https://github.com/sgl-project/sglang/pull/17663</a></li>
+<li>fix(processor): support InternS1 text_config in InternVL processor by @Mahdi-CV in <a href="https://github.com/sgl-project/sglang/pull/17040">https://github.com/sgl-project/sglang/pull/17040</a></li>
+<li>[bugfix] Internal processing of hf3fs crash # 16614 by @leihuang-sketch in <a href="https://github.com/sgl-project/sglang/pull/16938">https://github.com/sgl-project/sglang/pull/16938</a></li>
+<li>[diffusion] Support Qwen-Image, Multi-GPU Z-Image, and Enhanced ComfyUI Integration by @niehen6174 in <a href="https://github.com/sgl-project/sglang/pull/17678">https://github.com/sgl-project/sglang/pull/17678</a></li>
+<li>Support Kimi-K2.5 model by @yhyang201 in <a href="https://github.com/sgl-project/sglang/pull/17789">https://github.com/sgl-project/sglang/pull/17789</a></li>
+<li>[HiCache][HA 1/N] Support HiCache storage runtime attach/detach by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/15892">https://github.com/sgl-project/sglang/pull/15892</a></li>
+<li>fix: preserve disconnect events in api key middleware by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/17253">https://github.com/sgl-project/sglang/pull/17253</a></li>
+<li>[AMD] Update dsv3.2 AMD GPU docs and unify ROCm TileLang build by @hubertlu-tw in <a href="https://github.com/sgl-project/sglang/pull/17783">https://github.com/sgl-project/sglang/pull/17783</a></li>
+<li>[Bug Fix] Fix reasoning parser when continue_final_message=true by @laixinn in <a href="https://github.com/sgl-project/sglang/pull/17065">https://github.com/sgl-project/sglang/pull/17065</a></li>
+<li>[GLM-OCR] Support GLM-OCR Model by @zRzRzRzRzRzRzR in <a href="https://github.com/sgl-project/sglang/pull/17582">https://github.com/sgl-project/sglang/pull/17582</a></li>
+<li>fix(quantization): add sgl_kernel fallback for FP4 quantize on Blackwell GPUs by @MikkoParkkola in <a href="https://github.com/sgl-project/sglang/pull/17816">https://github.com/sgl-project/sglang/pull/17816</a></li>
+<li>[Doc] Update description on torch compile by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/17819">https://github.com/sgl-project/sglang/pull/17819</a></li>
+<li>[NPU] Adapt cann 8.5: use sfa and lightning indexer op from cann and CI update by @monkeyLoveding in <a href="https://github.com/sgl-project/sglang/pull/17615">https://github.com/sgl-project/sglang/pull/17615</a></li>
+<li>[DeepSeek] Update tests and document for DeepSeek V3.2 NVFP4 checkpoint by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/17657">https://github.com/sgl-project/sglang/pull/17657</a></li>
+<li>[Diffusion] dit-precision refactor by @fsygd in <a href="https://github.com/sgl-project/sglang/pull/17751">https://github.com/sgl-project/sglang/pull/17751</a></li>
+<li>Make flashMLA work on: Cu13, B300 by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/17600">https://github.com/sgl-project/sglang/pull/17600</a></li>
+<li>[hybrid-model] clean up and consolidate redundant fields in RadixLinearAttention by @zminglei in <a href="https://github.com/sgl-project/sglang/pull/17660">https://github.com/sgl-project/sglang/pull/17660</a></li>
+<li>Pass GPU ids to kill specified devices in script. by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/17840">https://github.com/sgl-project/sglang/pull/17840</a></li>
+<li>[AMD] Deprecate ROCm 6.3 artifacts and standardize gfx942 on ROCm 7 by @hubertlu-tw in <a href="https://github.com/sgl-project/sglang/pull/17785">https://github.com/sgl-project/sglang/pull/17785</a></li>
+<li>[Diffusion] glm-image apply flashinfer rope by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17689">https://github.com/sgl-project/sglang/pull/17689</a></li>
+<li>[diffusion] fix: fix suppressing error log on non-main ranks by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/17712">https://github.com/sgl-project/sglang/pull/17712</a></li>
+<li>[diffusion] feat: add an arg for controlling the number of prefetched layers in Layerwise-offload by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/17693">https://github.com/sgl-project/sglang/pull/17693</a></li>
+<li>[diffusion] Fix vertex generate by @yashikagandhi-google in <a href="https://github.com/sgl-project/sglang/pull/17611">https://github.com/sgl-project/sglang/pull/17611</a></li>
+<li>fix: add bias when enable mm fallback variant by @gongyisheng in <a href="https://github.com/sgl-project/sglang/pull/17690">https://github.com/sgl-project/sglang/pull/17690</a></li>
+<li>[AMD] CI - enable deepseekv3.2 on MI325-8gpu and merge perf/accuracy test suites into stage-b suites by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/17633">https://github.com/sgl-project/sglang/pull/17633</a></li>
+<li>[DSv32] Overlap indexer qk projection and activation quant by @zianglih in <a href="https://github.com/sgl-project/sglang/pull/17688">https://github.com/sgl-project/sglang/pull/17688</a></li>
+<li>[Diffusion] Delete sgl-kernel outdated time_embedding kernel by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17278">https://github.com/sgl-project/sglang/pull/17278</a></li>
+<li>Add a performance dashboard server and frontend for nightly CUDA tests by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17725">https://github.com/sgl-project/sglang/pull/17725</a></li>
+<li>[diffusion] doc: fix wrong docker run command by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/17856">https://github.com/sgl-project/sglang/pull/17856</a></li>
+<li>[JIT kernel] Update jit_kernel cache and develop doc by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17842">https://github.com/sgl-project/sglang/pull/17842</a></li>
+<li>[AMD] Add Kimi-K2, DeepSeek-V3.2 tests to nightly CI by @michaelzhang-ai in <a href="https://github.com/sgl-project/sglang/pull/17523">https://github.com/sgl-project/sglang/pull/17523</a></li>
+<li>[diffusion] comfyui: fix import typo by @triple-mu in <a href="https://github.com/sgl-project/sglang/pull/17834">https://github.com/sgl-project/sglang/pull/17834</a></li>
+<li>[AMD][Kimi K2.5 Day 0] ROCm: route W4A16 MoE to Triton and fix packed-weight loading by @jhinpan in <a href="https://github.com/sgl-project/sglang/pull/17863">https://github.com/sgl-project/sglang/pull/17863</a></li>
+<li>[MUSA][7/N] Enhance CUDA / PyNccl wrapper to support MTLink connectivity detection by @gingerXue in <a href="https://github.com/sgl-project/sglang/pull/17499">https://github.com/sgl-project/sglang/pull/17499</a></li>
+<li>[Perf] Tune Llama-4-Scout-17B-16E-Instruct fused moe kernel by @zhendonghua in <a href="https://github.com/sgl-project/sglang/pull/17891">https://github.com/sgl-project/sglang/pull/17891</a></li>
+<li>Make the functions in logits_processor.py and sampler.py more modular by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/17885">https://github.com/sgl-project/sglang/pull/17885</a></li>
+<li>[Diffusion] Support MOVA model by @CloudRipple in <a href="https://github.com/sgl-project/sglang/pull/17704">https://github.com/sgl-project/sglang/pull/17704</a></li>
+<li>[JIT Kernel]Support fused_add_rmsnorm in JIT Kernel by @HydraQYH in <a href="https://github.com/sgl-project/sglang/pull/17677">https://github.com/sgl-project/sglang/pull/17677</a></li>
+<li>[Fix][trtllm-mha] Canonicalize the strides when num_head = 1 by @xyjixyjixyji in <a href="https://github.com/sgl-project/sglang/pull/17732">https://github.com/sgl-project/sglang/pull/17732</a></li>
+<li>Integration mori backend for EP a2a data communication by @kkHuang-amd in <a href="https://github.com/sgl-project/sglang/pull/17012">https://github.com/sgl-project/sglang/pull/17012</a></li>
+<li>feat: add custom request header logging by @joearedmond in <a href="https://github.com/sgl-project/sglang/pull/17786">https://github.com/sgl-project/sglang/pull/17786</a></li>
+<li>update ascend docs by @amote-i in <a href="https://github.com/sgl-project/sglang/pull/17741">https://github.com/sgl-project/sglang/pull/17741</a></li>
+<li>[FIX] kimi_k2 reasoning parser by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/17901">https://github.com/sgl-project/sglang/pull/17901</a></li>
+<li>Fix flaky tool calls in the Kimi K2.5 model by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/17914">https://github.com/sgl-project/sglang/pull/17914</a></li>
+<li>[MUSA][4/N] Add common device utilities, distributed backend, and custom op wiring by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/17246">https://github.com/sgl-project/sglang/pull/17246</a></li>
+<li>[PD] Support KV transfer with MORI-IO by @maning00 in <a href="https://github.com/sgl-project/sglang/pull/14626">https://github.com/sgl-project/sglang/pull/14626</a></li>
+<li>[Diffusion][MOVA] fix: resolve library mismatch in scheduler and update dit offload method name by @CloudRipple in <a href="https://github.com/sgl-project/sglang/pull/17916">https://github.com/sgl-project/sglang/pull/17916</a></li>
+<li>[diffusion] model: move tp_rmsnorm check to WanTransformerBlock by @triple-mu in <a href="https://github.com/sgl-project/sglang/pull/17792">https://github.com/sgl-project/sglang/pull/17792</a></li>
+<li>Add aiter bias moe support in gpt-oss mxfp4 model by @kkHuang-amd in <a href="https://github.com/sgl-project/sglang/pull/17735">https://github.com/sgl-project/sglang/pull/17735</a></li>
+<li>[diffusion]: align sglang diffusion AMD pyproject_other.toml diffusion dependency with pyproject.toml by @ZiguanWang in <a href="https://github.com/sgl-project/sglang/pull/16225">https://github.com/sgl-project/sglang/pull/16225</a></li>
+<li>[wip] sync with upstream zImage  by @yhyang201 in <a href="https://github.com/sgl-project/sglang/pull/17822">https://github.com/sgl-project/sglang/pull/17822</a></li>
+<li>Add mxfp8 support for online quantization, Triton dense linear, and CUTLASS MoE by @zianglih in <a href="https://github.com/sgl-project/sglang/pull/17449">https://github.com/sgl-project/sglang/pull/17449</a></li>
+<li>Support LightOnOCR-2-1B by @shvmjndl in <a href="https://github.com/sgl-project/sglang/pull/17806">https://github.com/sgl-project/sglang/pull/17806</a></li>
+<li>[diffusion]: add dummy device attribute to fix AttributeError by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/17949">https://github.com/sgl-project/sglang/pull/17949</a></li>
+<li>Add tool call tests for DeepSeek V3.2 in nightly CI by @harvenstar in <a href="https://github.com/sgl-project/sglang/pull/17951">https://github.com/sgl-project/sglang/pull/17951</a></li>
+<li>[MUSA] Add labeler config by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/17923">https://github.com/sgl-project/sglang/pull/17923</a></li>
+<li>Fix <code>torch.__version__</code> for PEP440 by @EduardDurech in <a href="https://github.com/sgl-project/sglang/pull/15682">https://github.com/sgl-project/sglang/pull/15682</a></li>
+<li>Fix capture_sizes range for pcg by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/17956">https://github.com/sgl-project/sglang/pull/17956</a></li>
+<li>Fix logprob_start_len handling for prefill-only requests by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/17395">https://github.com/sgl-project/sglang/pull/17395</a></li>
+<li>feat: add forward timeout by @zhooooong in <a href="https://github.com/sgl-project/sglang/pull/17831">https://github.com/sgl-project/sglang/pull/17831</a></li>
+<li>[AMD] fix pip sglang version by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/17950">https://github.com/sgl-project/sglang/pull/17950</a></li>
+<li>Add concurrency tracking to runner utilization report by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17963">https://github.com/sgl-project/sglang/pull/17963</a></li>
+<li>Support DeepSeek-OCR-2 in SGLang (OCR2 vision pipeline, tokenization alignment, and weight loading fixes)#17833 by @baonudesifeizhai in <a href="https://github.com/sgl-project/sglang/pull/17897">https://github.com/sgl-project/sglang/pull/17897</a></li>
+<li>add weightless qk norm to RMSNorm interface for Llama 4 by @b8zhong in <a href="https://github.com/sgl-project/sglang/pull/12813">https://github.com/sgl-project/sglang/pull/12813</a></li>
+<li>GPTJForCausalLM Support by @wenchen76 in <a href="https://github.com/sgl-project/sglang/pull/7839">https://github.com/sgl-project/sglang/pull/7839</a></li>
+<li>[Fix] Remove unused Type import in gpt_j.py by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17975">https://github.com/sgl-project/sglang/pull/17975</a></li>
+<li>Fix the scenario where eh_proj is quantized in the bailing moe nextn weights by @LHXuuu in <a href="https://github.com/sgl-project/sglang/pull/17808">https://github.com/sgl-project/sglang/pull/17808</a></li>
+<li>[Intel GPU] fix device in DeepseekScalingRotaryEmbedding to run DeepSeek-V2-Lite BF16 on XPU by @polisettyvarma in <a href="https://github.com/sgl-project/sglang/pull/10021">https://github.com/sgl-project/sglang/pull/10021</a></li>
+<li>Fix prefill latency performance drop of bench serving by @gaopengff in <a href="https://github.com/sgl-project/sglang/pull/14592">https://github.com/sgl-project/sglang/pull/14592</a></li>
+<li>[Intel GPU] fix import error to run DeepSeek-V2-Lite model with BF16 on XPU by @polisettyvarma in <a href="https://github.com/sgl-project/sglang/pull/10858">https://github.com/sgl-project/sglang/pull/10858</a></li>
+<li>[CPU] Optimize Qwen3-next model on CPU by @jianan-gu in <a href="https://github.com/sgl-project/sglang/pull/12525">https://github.com/sgl-project/sglang/pull/12525</a></li>
+<li>[CPU] optimize flash_attn_varlen_func by @mingfeima in <a href="https://github.com/sgl-project/sglang/pull/15708">https://github.com/sgl-project/sglang/pull/15708</a></li>
+<li>[CPU][INT4] Add INT4 kernels for CPU  by @jianan-gu in <a href="https://github.com/sgl-project/sglang/pull/8226">https://github.com/sgl-project/sglang/pull/8226</a></li>
+<li>fix(benchmark): add missing args for speculative decoding benchmark by @cswuyg in <a href="https://github.com/sgl-project/sglang/pull/17974">https://github.com/sgl-project/sglang/pull/17974</a></li>
+<li>[NPU] enhance accuracy for model kimi-vl-a3b-instruct by @McZyWu in <a href="https://github.com/sgl-project/sglang/pull/17480">https://github.com/sgl-project/sglang/pull/17480</a></li>
+<li>adapt MODELSCOPE download by @Hide-on-bushsh in <a href="https://github.com/sgl-project/sglang/pull/17922">https://github.com/sgl-project/sglang/pull/17922</a></li>
+<li>Increase install dependency timeout for gb200 by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17977">https://github.com/sgl-project/sglang/pull/17977</a></li>
+<li>SGLang Tracing: Improve root span attributes by @zhanghaotong in <a href="https://github.com/sgl-project/sglang/pull/17008">https://github.com/sgl-project/sglang/pull/17008</a></li>
+<li>Add cuda graph status to prefill log by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/17836">https://github.com/sgl-project/sglang/pull/17836</a></li>
+<li>Fix SHM pointer re-serialization in DP attention. by @FlamingoPg in <a href="https://github.com/sgl-project/sglang/pull/17930">https://github.com/sgl-project/sglang/pull/17930</a></li>
+<li>update npu docs by @amote-i in <a href="https://github.com/sgl-project/sglang/pull/17987">https://github.com/sgl-project/sglang/pull/17987</a></li>
+<li>[Model] Add K-EXAONE model support by @xvyaward in <a href="https://github.com/sgl-project/sglang/pull/16294">https://github.com/sgl-project/sglang/pull/16294</a></li>
+<li>[BUGFIX] Fix dp size > 1 for qwen3 vl model by @zju-stu-lizheng in <a href="https://github.com/sgl-project/sglang/pull/17624">https://github.com/sgl-project/sglang/pull/17624</a></li>
+<li>[Diffusion] Fix lora default lora_scale bug by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17982">https://github.com/sgl-project/sglang/pull/17982</a></li>
+<li>Optimize GDN decode for Qwen3 Next by @samuellees in <a href="https://github.com/sgl-project/sglang/pull/17094">https://github.com/sgl-project/sglang/pull/17094</a></li>
+<li>[BugFix] Fix server crashes when req.grammar and ngram spec are enabled by @SYChen123 in <a href="https://github.com/sgl-project/sglang/pull/17585">https://github.com/sgl-project/sglang/pull/17585</a></li>
+<li>[NPU] support llama-3.2-11B-vision-instruct mode for NPU by @JiaruiChang5268 in <a href="https://github.com/sgl-project/sglang/pull/17492">https://github.com/sgl-project/sglang/pull/17492</a></li>
+<li>[sglang] fix mm token padded value overlap with text token id by @bixue2010 in <a href="https://github.com/sgl-project/sglang/pull/17781">https://github.com/sgl-project/sglang/pull/17781</a></li>
+<li>doc update for CANN version by @wangtiance in <a href="https://github.com/sgl-project/sglang/pull/18014">https://github.com/sgl-project/sglang/pull/18014</a></li>
+<li>[NPU] fix sgl-kernel-npu package url error in npu.Dockerfile by @22dimensions in <a href="https://github.com/sgl-project/sglang/pull/18017">https://github.com/sgl-project/sglang/pull/18017</a></li>
+<li>Add ROCm + Mori docker build instructions in rocm.Dockerfile by @kkHuang-amd in <a href="https://github.com/sgl-project/sglang/pull/18018">https://github.com/sgl-project/sglang/pull/18018</a></li>
+<li>[Diffusion] Fix FLUX.1-schnell time embedding argument mismatch by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/17988">https://github.com/sgl-project/sglang/pull/17988</a></li>
+<li>Fix cuBLAS >=12.9 detection for cu12/cu13 package naming by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/17766">https://github.com/sgl-project/sglang/pull/17766</a></li>
+<li>Fix .gitignore may ignore files like core_attention.py by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/18021">https://github.com/sgl-project/sglang/pull/18021</a></li>
+<li>【docs】【NPU】Update Expert Parallelism docs for Ascend NPU by @husf1130 in <a href="https://github.com/sgl-project/sglang/pull/17940">https://github.com/sgl-project/sglang/pull/17940</a></li>
+<li>add reasoning_tokens usage test for tool call by @harvenstar in <a href="https://github.com/sgl-project/sglang/pull/18022">https://github.com/sgl-project/sglang/pull/18022</a></li>
+<li>Reduce topk kernel shared memory from 128KB to 32KB for better occupancy by @hammersam in <a href="https://github.com/sgl-project/sglang/pull/17747">https://github.com/sgl-project/sglang/pull/17747</a></li>
+<li>Fix OOM in DeepSeek weight loading by deferring dict(weights) materialization by @hsuchifeng in <a href="https://github.com/sgl-project/sglang/pull/17744">https://github.com/sgl-project/sglang/pull/17744</a></li>
+<li>[EPD][Perf] parallelize ZMQ send for encode server by @ZhengWG in <a href="https://github.com/sgl-project/sglang/pull/16487">https://github.com/sgl-project/sglang/pull/16487</a></li>
+<li>[Fix] Triton TP MoE Dpsk V3/Qwen3 Coder with SwapAB by @b8zhong in <a href="https://github.com/sgl-project/sglang/pull/17965">https://github.com/sgl-project/sglang/pull/17965</a></li>
+<li>Add launch_command assignment in crash dump by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/17967">https://github.com/sgl-project/sglang/pull/17967</a></li>
+<li>[diffusion] refactor: split component_loader into component-wise files by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/17820">https://github.com/sgl-project/sglang/pull/17820</a></li>
+<li>[Fix] Revert back to using CUTLASS <code>mm_fp4</code> backend by @b8zhong in <a href="https://github.com/sgl-project/sglang/pull/17369">https://github.com/sgl-project/sglang/pull/17369</a></li>
+<li>[MUSA] Update 3rd party dir to build/_deps by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/18035">https://github.com/sgl-project/sglang/pull/18035</a></li>
+<li>[CPU] toml file update by @ZailiWang in <a href="https://github.com/sgl-project/sglang/pull/17861">https://github.com/sgl-project/sglang/pull/17861</a></li>
+<li>Update python/sglang/README.md by @haojin2 in <a href="https://github.com/sgl-project/sglang/pull/18045">https://github.com/sgl-project/sglang/pull/18045</a></li>
+<li>[Performance] Optimize Mllama LayerNorm -> Upd by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/9725">https://github.com/sgl-project/sglang/pull/9725</a></li>
+<li>Fix: Remove duplicate assignment for use_w4afp8 by @tianchongchong in <a href="https://github.com/sgl-project/sglang/pull/17858">https://github.com/sgl-project/sglang/pull/17858</a></li>
+<li>[Perf] Add Flashinfer DeepGEMM SM90 for SwapAB Optimization by @b8zhong in <a href="https://github.com/sgl-project/sglang/pull/15514">https://github.com/sgl-project/sglang/pull/15514</a></li>
+<li>feat: validate ib devices in server args by @acelyc111 in <a href="https://github.com/sgl-project/sglang/pull/17598">https://github.com/sgl-project/sglang/pull/17598</a></li>
+<li>Improve error output in tnightly tets by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18053">https://github.com/sgl-project/sglang/pull/18053</a></li>
+<li>Skipped warning on sm100 by @mattteochen in <a href="https://github.com/sgl-project/sglang/pull/18000">https://github.com/sgl-project/sglang/pull/18000</a></li>
+<li>Fix rerun stage command with merged commit history by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/17960">https://github.com/sgl-project/sglang/pull/17960</a></li>
+<li>[BugFix] Fix draft model specified config file by @khalil2ji3mp6 in <a href="https://github.com/sgl-project/sglang/pull/17815">https://github.com/sgl-project/sglang/pull/17815</a></li>
+<li>Set torch url index in pyproject.toml by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/16802">https://github.com/sgl-project/sglang/pull/16802</a></li>
+<li>[metric] Optional extra metric labels by @yinghai in <a href="https://github.com/sgl-project/sglang/pull/18049">https://github.com/sgl-project/sglang/pull/18049</a></li>
+<li>[BugFix] fix gpt-oss accuracy issue when enabling piecewise cuda graph by @zminglei in <a href="https://github.com/sgl-project/sglang/pull/18013">https://github.com/sgl-project/sglang/pull/18013</a></li>
+<li>Fix swa kv cache memory allocation by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18039">https://github.com/sgl-project/sglang/pull/18039</a></li>
+<li>Disable test_mla_int8_deepseek_v3.py temporarily by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18057">https://github.com/sgl-project/sglang/pull/18057</a></li>
+<li>Migrate 4-GPU/8-GPU workflow jobs to stage-c and add CI registry decorators by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/17299">https://github.com/sgl-project/sglang/pull/17299</a></li>
+<li>Fix installation script for H200 runners by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18050">https://github.com/sgl-project/sglang/pull/18050</a></li>
+<li>[Bugfix] fix the display error (inconsistent context) by @lingebeng in <a href="https://github.com/sgl-project/sglang/pull/17699">https://github.com/sgl-project/sglang/pull/17699</a></li>
+<li>[model] Support MiniCPM-V 4.5 by @tc-mb in <a href="https://github.com/sgl-project/sglang/pull/9610">https://github.com/sgl-project/sglang/pull/9610</a></li>
+<li>Fix Diffusion Request Validation to allow missing input artifacts if the input only contains text by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/16610">https://github.com/sgl-project/sglang/pull/16610</a></li>
+<li>Optimizing all_reduce in RMSNormTP in minimax_m2 by @rogeryoungh in <a href="https://github.com/sgl-project/sglang/pull/16483">https://github.com/sgl-project/sglang/pull/16483</a></li>
+<li>Fix CUDA 12 dependency when importing Mooncake in official CUDA 13.x image by @ZhenshengWu in <a href="https://github.com/sgl-project/sglang/pull/17540">https://github.com/sgl-project/sglang/pull/17540</a></li>
+<li>[Feature] Support file:// URL format for multimodal inputs by @ppraneth in <a href="https://github.com/sgl-project/sglang/pull/14490">https://github.com/sgl-project/sglang/pull/14490</a></li>
+<li>support qwen3-next eagle3 by @sleepcoo in <a href="https://github.com/sgl-project/sglang/pull/14607">https://github.com/sgl-project/sglang/pull/14607</a></li>
+<li>feat: Add Ling Flash v2.0 support for Eagle3 by @yefei12 in <a href="https://github.com/sgl-project/sglang/pull/15119">https://github.com/sgl-project/sglang/pull/15119</a></li>
+<li>Move deleted 8-GPU tests to test/manual/ by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18060">https://github.com/sgl-project/sglang/pull/18060</a></li>
+<li>Reset evict swa status when retract by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18059">https://github.com/sgl-project/sglang/pull/18059</a></li>
+<li>[NPU] disaggregation_decode_enable_fake_auto parameter adaptation by @Estrella-xx in <a href="https://github.com/sgl-project/sglang/pull/17811">https://github.com/sgl-project/sglang/pull/17811</a></li>
+<li>[NPU] support the Enable return routed experts by @jiashaokun-1 in <a href="https://github.com/sgl-project/sglang/pull/17025">https://github.com/sgl-project/sglang/pull/17025</a></li>
+<li>[VLM] Optimize get_rope_index for GLM4v by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/17420">https://github.com/sgl-project/sglang/pull/17420</a></li>
+<li>Optimize custom-all-reduce by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/17674">https://github.com/sgl-project/sglang/pull/17674</a></li>
+<li>[BUGFIX]: using language-only should not reserve space for the vision encoder by @koush in <a href="https://github.com/sgl-project/sglang/pull/18011">https://github.com/sgl-project/sglang/pull/18011</a></li>
+<li>[TestFix] rewrite LoRA overlap loading tests by @glenliu21 in <a href="https://github.com/sgl-project/sglang/pull/18047">https://github.com/sgl-project/sglang/pull/18047</a></li>
+<li>[Fix] Remove no use code in MiMo-V2-Flash by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/18051">https://github.com/sgl-project/sglang/pull/18051</a></li>
+<li>Fix: Avoid Double Reduce in VLM DP Attention by @yhyang201 in <a href="https://github.com/sgl-project/sglang/pull/17991">https://github.com/sgl-project/sglang/pull/17991</a></li>
+<li>[diffusion] cli: introduce generic attention backend configuration in ServerArgs by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18036">https://github.com/sgl-project/sglang/pull/18036</a></li>
+<li>[diffusion] fix: fix missing component names for VAELoader by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18069">https://github.com/sgl-project/sglang/pull/18069</a></li>
+<li>Add bootstrap_room validation to detect metadata corruption in PD disaggregation by @Simon-Li in <a href="https://github.com/sgl-project/sglang/pull/17430">https://github.com/sgl-project/sglang/pull/17430</a></li>
+<li>[AMD] Fix aiter version in rocm image by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/18076">https://github.com/sgl-project/sglang/pull/18076</a></li>
+<li>Refine logprob logic for request handling by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/17986">https://github.com/sgl-project/sglang/pull/17986</a></li>
+<li>[EPD][refactor]: introduce BaseMMReceiver for gRPC transport integration by @liusy58 in <a href="https://github.com/sgl-project/sglang/pull/17921">https://github.com/sgl-project/sglang/pull/17921</a></li>
+<li>Improve Per Commit Test job filtering for sglang-kernel by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18054">https://github.com/sgl-project/sglang/pull/18054</a></li>
+<li>fix: zmq_to_tokenizer encoder transfer when host listens to 0.0.0.0 by @RangerCD in <a href="https://github.com/sgl-project/sglang/pull/17929">https://github.com/sgl-project/sglang/pull/17929</a></li>
+<li>fix: correct weight loading prefix mapping for Qwen3-VL by @Lollipop in <a href="https://github.com/sgl-project/sglang/pull/18024">https://github.com/sgl-project/sglang/pull/18024</a></li>
+<li>[diffusion] CI: deprecate WarmupRunner in CI by @yingluosanqian in <a href="https://github.com/sgl-project/sglang/pull/18038">https://github.com/sgl-project/sglang/pull/18038</a></li>
+<li>[AMD] enable MoRI to release and nightly builds by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/18101">https://github.com/sgl-project/sglang/pull/18101</a></li>
+<li>[Diffusion] Fix Ring Parallel bug with FA4 by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18062">https://github.com/sgl-project/sglang/pull/18062</a></li>
+<li>support smem in per_token_quant_fp8 kernel by @zhangxin81 in <a href="https://github.com/sgl-project/sglang/pull/16725">https://github.com/sgl-project/sglang/pull/16725</a></li>
+<li>[Diffusion] remove accelerate dependency for device mapping by @RubiaCx in <a href="https://github.com/sgl-project/sglang/pull/18026">https://github.com/sgl-project/sglang/pull/18026</a></li>
+<li>[NPU]mindspore model support moe by @zzzzzzzxh in <a href="https://github.com/sgl-project/sglang/pull/15363">https://github.com/sgl-project/sglang/pull/15363</a></li>
+<li>docs: move deepseek_ocr to popular model usage and add cookbook reference by @sglang-bot in <a href="https://github.com/sgl-project/sglang/pull/18120">https://github.com/sgl-project/sglang/pull/18120</a></li>
+<li>[NPU] update nightly tests by @Sugar920 in <a href="https://github.com/sgl-project/sglang/pull/17952">https://github.com/sgl-project/sglang/pull/17952</a></li>
+<li>add Step-3.5-Flash model support by @yhyang201 in <a href="https://github.com/sgl-project/sglang/pull/18084">https://github.com/sgl-project/sglang/pull/18084</a></li>
+<li>[DeepSeek V3.2] [Bugfix] slice indexer and padding fa3 when can not run cuda graph by @xu-yfei in <a href="https://github.com/sgl-project/sglang/pull/17076">https://github.com/sgl-project/sglang/pull/17076</a></li>
+<li>[NPU] support dsv32 radixcache on ascend by @khalil2ji3mp6 in <a href="https://github.com/sgl-project/sglang/pull/17964">https://github.com/sgl-project/sglang/pull/17964</a></li>
+<li>[MiMoV2Flash] [feat]: support two batch overlap by @TZHelloWorld in <a href="https://github.com/sgl-project/sglang/pull/17634">https://github.com/sgl-project/sglang/pull/17634</a></li>
+<li>[Fix] data race in req_to_token pool by @cctry in <a href="https://github.com/sgl-project/sglang/pull/17850">https://github.com/sgl-project/sglang/pull/17850</a></li>
+<li>Re-enable test_mla_int8_deepseek_v3.py after HF token fix by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18123">https://github.com/sgl-project/sglang/pull/18123</a></li>
+<li>feature: adding gpt-oss 120b nightly test by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18134">https://github.com/sgl-project/sglang/pull/18134</a></li>
+<li>[Performance] Optimize radix cache eviction performance by @YiXR in <a href="https://github.com/sgl-project/sglang/pull/14339">https://github.com/sgl-project/sglang/pull/14339</a></li>
+<li>[Diffsuion &#x26; JIT_kernel] QKNorm cross heads kernel by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18073">https://github.com/sgl-project/sglang/pull/18073</a></li>
+<li>[HiCache]: Support DeepSeek v32 cpu offloading by @hzh0425 in <a href="https://github.com/sgl-project/sglang/pull/17415">https://github.com/sgl-project/sglang/pull/17415</a></li>
+<li>[diffusion] UX: improve logging by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18122">https://github.com/sgl-project/sglang/pull/18122</a></li>
+<li>[Move sgl-kernel Kernel to JIT] Add JIT concat MLA kernels by @celve in <a href="https://github.com/sgl-project/sglang/pull/17889">https://github.com/sgl-project/sglang/pull/17889</a></li>
+<li>Add triton_fused_moe config for GLM-4.7-FP8 tp8 H20 H20-3e by @HanHan009527 in <a href="https://github.com/sgl-project/sglang/pull/18091">https://github.com/sgl-project/sglang/pull/18091</a></li>
+<li>[Diffusion] fix serving image_edit get input image bug by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18109">https://github.com/sgl-project/sglang/pull/18109</a></li>
+<li>MoE Refactor: Refactor <code>modelopt_quant.py</code> -> <code>flashinfer_trllm.py</code> by @b8zhong in <a href="https://github.com/sgl-project/sglang/pull/16685">https://github.com/sgl-project/sglang/pull/16685</a></li>
+<li>Support Markdown/Notebook-Friendly Documentation Export for Downstream Integration by @klhhhhh in <a href="https://github.com/sgl-project/sglang/pull/18131">https://github.com/sgl-project/sglang/pull/18131</a></li>
+<li>[TestFix] use unit tests for LoRA overlap loading tests by @glenliu21 in <a href="https://github.com/sgl-project/sglang/pull/18140">https://github.com/sgl-project/sglang/pull/18140</a></li>
+<li>[NVIDIA] Add —top-k argument to run_eval.py by @kaixih in <a href="https://github.com/sgl-project/sglang/pull/18025">https://github.com/sgl-project/sglang/pull/18025</a></li>
+<li>Gigachat 3 tool parser and tests by @ajpqs in <a href="https://github.com/sgl-project/sglang/pull/14765">https://github.com/sgl-project/sglang/pull/14765</a></li>
+<li>[HiCache] fix: apply extra_backend_tag in Mooncake batch_exists by @00fish0 in <a href="https://github.com/sgl-project/sglang/pull/17265">https://github.com/sgl-project/sglang/pull/17265</a></li>
+<li>[Perf] Use safetensors <code>load_file</code> in multithread loader by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18124">https://github.com/sgl-project/sglang/pull/18124</a></li>
+<li>[Docker] Remove hardcoded <code>America/Los_Angeles</code> timezone, default to UTC by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18121">https://github.com/sgl-project/sglang/pull/18121</a></li>
+<li>AMD PD/D PR ci by @Lzy17 in <a href="https://github.com/sgl-project/sglang/pull/17183">https://github.com/sgl-project/sglang/pull/17183</a></li>
+<li>Warmup before profiling prefill latency for dynamic chunk sizing by @xiaoweiw-nv in <a href="https://github.com/sgl-project/sglang/pull/17198">https://github.com/sgl-project/sglang/pull/17198</a></li>
+<li>[PD] feat: support mooncake intra-node nvlink kv transfer by @TTThanos in <a href="https://github.com/sgl-project/sglang/pull/17866">https://github.com/sgl-project/sglang/pull/17866</a></li>
+<li>[Bugfix] Fix Mistral Large 3 NVFP4 TRTLLM MoE by @elvischenv in <a href="https://github.com/sgl-project/sglang/pull/18065">https://github.com/sgl-project/sglang/pull/18065</a></li>
+<li>fix: add cu13 dev container to our release by @ishandhanani in <a href="https://github.com/sgl-project/sglang/pull/18192">https://github.com/sgl-project/sglang/pull/18192</a></li>
+<li>Revert broken sgl_kernel exclusion patterns in paths-filter by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18193">https://github.com/sgl-project/sglang/pull/18193</a></li>
+<li>enable ut test for xpu devices by @DiweiSun in <a href="https://github.com/sgl-project/sglang/pull/11712">https://github.com/sgl-project/sglang/pull/11712</a></li>
+<li>[HiCache] feat: Add detailed cache hit breakdown for HiCache in <code>sglext</code> and Prometheus metrics by @vladnosiv in <a href="https://github.com/sgl-project/sglang/pull/17648">https://github.com/sgl-project/sglang/pull/17648</a></li>
+<li>[Diffusion] Only import sgl_kernel in custom op cuda path (SiluAndMul and RMSNorm) by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/15592">https://github.com/sgl-project/sglang/pull/15592</a></li>
+<li>[diffusion] hardware: support diffusion models on MTGPU (multi-GPU, 5/N) by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/17318">https://github.com/sgl-project/sglang/pull/17318</a></li>
+<li>[diffusion] hardware: support diffusion models on MTGPU (doc, 6/N) by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/17346">https://github.com/sgl-project/sglang/pull/17346</a></li>
+<li>add streaming parallel tool call test case by @harvenstar in <a href="https://github.com/sgl-project/sglang/pull/18097">https://github.com/sgl-project/sglang/pull/18097</a></li>
+<li>Update weight rename check for Qwen3 Embeddings by @satyamk7054 in <a href="https://github.com/sgl-project/sglang/pull/17535">https://github.com/sgl-project/sglang/pull/17535</a></li>
+<li>fix: ensuring nightly whls are tagged with latest commit by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18204">https://github.com/sgl-project/sglang/pull/18204</a></li>
+<li>[diffusion] fix server cache-dit bug under continuous dynamic requests by @nono-Sang in <a href="https://github.com/sgl-project/sglang/pull/17140">https://github.com/sgl-project/sglang/pull/17140</a></li>
+<li>[Docs] fix readme typo by @kuafou in <a href="https://github.com/sgl-project/sglang/pull/18207">https://github.com/sgl-project/sglang/pull/18207</a></li>
+<li>Fix Session for multimodal and expose it through Engine by @aurickq in <a href="https://github.com/sgl-project/sglang/pull/18152">https://github.com/sgl-project/sglang/pull/18152</a></li>
+<li>fuse qkvbfg linear into one gemm and f_b g_b into batched gemm. by @strgrb in <a href="https://github.com/sgl-project/sglang/pull/17801">https://github.com/sgl-project/sglang/pull/17801</a></li>
+<li>fix: bumping nightly whl version by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18212">https://github.com/sgl-project/sglang/pull/18212</a></li>
+<li>Support Markdown/Notebook-Friendly Documentation Export for Downstream Integration (copy all markdown and rst files) by @klhhhhh in <a href="https://github.com/sgl-project/sglang/pull/18223">https://github.com/sgl-project/sglang/pull/18223</a></li>
+<li>[diffusion] kernel fusion: gated residual layernorm scale shift and layernorm scale shift kernel fusion for Qwen-Image, WAN and HunyuanVideo by @jianyingzhu in <a href="https://github.com/sgl-project/sglang/pull/14717">https://github.com/sgl-project/sglang/pull/14717</a></li>
+<li>[DeepGemm] Add a flag for fast warmup by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/18111">https://github.com/sgl-project/sglang/pull/18111</a></li>
+<li>[RadixTree][5/N Refactor]: Introduce pre- and post-processing methods for key matching by @hzh0425 in <a href="https://github.com/sgl-project/sglang/pull/18147">https://github.com/sgl-project/sglang/pull/18147</a></li>
+<li>Moving _alloc_extend_naive out of npu allocator by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/18200">https://github.com/sgl-project/sglang/pull/18200</a></li>
+<li>[Diffusion] update code owner by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18247">https://github.com/sgl-project/sglang/pull/18247</a></li>
+<li>[Diffusion] Downgrade prompt log from info to debug. by @Evrard-Nil in <a href="https://github.com/sgl-project/sglang/pull/17813">https://github.com/sgl-project/sglang/pull/17813</a></li>
+<li>Make sure we always disable symm memory without dp padding by @nvcastet in <a href="https://github.com/sgl-project/sglang/pull/18129">https://github.com/sgl-project/sglang/pull/18129</a></li>
+<li>optimize get_topk_ragged by fusing get k and k_scale triton kernel by @BJWang-ant in <a href="https://github.com/sgl-project/sglang/pull/16043">https://github.com/sgl-project/sglang/pull/16043</a></li>
+<li>[diffusion][mova] clean codes by @CloudRipple in <a href="https://github.com/sgl-project/sglang/pull/18107">https://github.com/sgl-project/sglang/pull/18107</a></li>
+<li>[diffusion] fix the bug of redundant memory usage on GPU-0 by @nono-Sang in <a href="https://github.com/sgl-project/sglang/pull/18221">https://github.com/sgl-project/sglang/pull/18221</a></li>
+<li>Support passing spaces_between_special_tokens per request by @RunningLeon in <a href="https://github.com/sgl-project/sglang/pull/17939">https://github.com/sgl-project/sglang/pull/17939</a></li>
+<li>support interns1-pro by @RunningLeon in <a href="https://github.com/sgl-project/sglang/pull/18145">https://github.com/sgl-project/sglang/pull/18145</a></li>
+<li>[diffusion] refactor: move model_stages into stages folder by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18248">https://github.com/sgl-project/sglang/pull/18248</a></li>
+<li>[AMD] Add kimi mi35x nightly test, folder organization and several stability fixes by @michaelzhang-ai in <a href="https://github.com/sgl-project/sglang/pull/17895">https://github.com/sgl-project/sglang/pull/17895</a></li>
+<li>fix: fix MockModelRunner in attention tests by @zack041 in <a href="https://github.com/sgl-project/sglang/pull/18240">https://github.com/sgl-project/sglang/pull/18240</a></li>
+<li>Add MoE fused config for Qwen3-Coder-Next-FP8 on H100 TP=2 by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18195">https://github.com/sgl-project/sglang/pull/18195</a></li>
+<li>[Bugfix] fix a obvious logic error by @lingebeng in <a href="https://github.com/sgl-project/sglang/pull/18254">https://github.com/sgl-project/sglang/pull/18254</a></li>
+<li>fix: add SGLANG_IS_IN_CI env var to release-docs workflow by @zwang86 in <a href="https://github.com/sgl-project/sglang/pull/18225">https://github.com/sgl-project/sglang/pull/18225</a></li>
+<li>fix kimi k2.5’s moe gemm config init by @cicirori in <a href="https://github.com/sgl-project/sglang/pull/18064">https://github.com/sgl-project/sglang/pull/18064</a></li>
+<li>[diffusion] chore: forbid Chinese characters by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18249">https://github.com/sgl-project/sglang/pull/18249</a></li>
+<li>[PD] improve kv offset calculation for MHA model with different tp size by @Ch3ngY1 in <a href="https://github.com/sgl-project/sglang/pull/18163">https://github.com/sgl-project/sglang/pull/18163</a></li>
+<li>[PD] doc: Document SGLANG_MOONCAKE_CUSTOM_MEM_POOL and supported values by @stmatengss in <a href="https://github.com/sgl-project/sglang/pull/18259">https://github.com/sgl-project/sglang/pull/18259</a></li>
+<li>[docs] fix misspellings &#x26; typos by @app/ in <a href="https://github.com/sgl-project/sglang/pull/18276">https://github.com/sgl-project/sglang/pull/18276</a></li>
+<li>Support Markdown/Notebook-Friendly Documentation Export for Downstream Integration(convert rat files to md files and save) by @klhhhhh in <a href="https://github.com/sgl-project/sglang/pull/18278">https://github.com/sgl-project/sglang/pull/18278</a></li>
+<li>Fix test_return_routed_experts to use response-level sglext by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18274">https://github.com/sgl-project/sglang/pull/18274</a></li>
+<li>[Diffusion] Support layerwise offload for mova by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18272">https://github.com/sgl-project/sglang/pull/18272</a></li>
+<li>[XPU] Integrate MoE and minor improvements in XPU attention backend by @airMeng in <a href="https://github.com/sgl-project/sglang/pull/13561">https://github.com/sgl-project/sglang/pull/13561</a></li>
+<li>[FIX] Always support TP > 4 for FP4 Gemm by @danielafrimi in <a href="https://github.com/sgl-project/sglang/pull/17300">https://github.com/sgl-project/sglang/pull/17300</a></li>
+<li>[piecewise graph]: support MiniMax-M2 by @hzh0425 in <a href="https://github.com/sgl-project/sglang/pull/18217">https://github.com/sgl-project/sglang/pull/18217</a></li>
+<li>[PD] Minor code cleanup for mooncake backend by @ShangmingCai in <a href="https://github.com/sgl-project/sglang/pull/18279">https://github.com/sgl-project/sglang/pull/18279</a></li>
+<li>docker: add patch to increase GPU deepep timeout by @ishandhanani in <a href="https://github.com/sgl-project/sglang/pull/18298">https://github.com/sgl-project/sglang/pull/18298</a></li>
+<li>[diffusion][hot fix] fix accuracy bug caused by PR 14717 by @yingluosanqian in <a href="https://github.com/sgl-project/sglang/pull/18296">https://github.com/sgl-project/sglang/pull/18296</a></li>
+<li>[Kernel] Add JIT apply_rope_with_cos_sin_cache_inplace by @pansicheng in <a href="https://github.com/sgl-project/sglang/pull/18155">https://github.com/sgl-project/sglang/pull/18155</a></li>
+<li>throw error if got adapter with added_tokens by @glenliu21 in <a href="https://github.com/sgl-project/sglang/pull/18046">https://github.com/sgl-project/sglang/pull/18046</a></li>
+<li>[diffusion] feat: allow T5’s TP Group to reuse the transformer’s SP Group by @nono-Sang in <a href="https://github.com/sgl-project/sglang/pull/17818">https://github.com/sgl-project/sglang/pull/17818</a></li>
+<li>NixlKVManager optimizations by @ovidiusm in <a href="https://github.com/sgl-project/sglang/pull/17654">https://github.com/sgl-project/sglang/pull/17654</a></li>
+<li>Fix flaky test_frequency_penalty_reduces_word_repetition by using deterministic seeds by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18285">https://github.com/sgl-project/sglang/pull/18285</a></li>
+<li>Refactor(qwen3-vl) optimize position encoding interpolation by @aaaandychen in <a href="https://github.com/sgl-project/sglang/pull/16781">https://github.com/sgl-project/sglang/pull/16781</a></li>
+<li>[Doc] refine spec decode docs for SpecV2/STANDALONE/NGRAM by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/18321">https://github.com/sgl-project/sglang/pull/18321</a></li>
+<li>[Doc] add a summary section for spec decode document by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/18323">https://github.com/sgl-project/sglang/pull/18323</a></li>
+<li>[Kernel] Migrate GPTQ-Marlin GEMM kernel to JIT by @celve in <a href="https://github.com/sgl-project/sglang/pull/18067">https://github.com/sgl-project/sglang/pull/18067</a></li>
+<li>fix npu best practice by @amote-i in <a href="https://github.com/sgl-project/sglang/pull/18330">https://github.com/sgl-project/sglang/pull/18330</a></li>
+<li>[diffusion][hot fix] fix torch.compile graph break caused by torch._dynamo.disable by @yingluosanqian in <a href="https://github.com/sgl-project/sglang/pull/18336">https://github.com/sgl-project/sglang/pull/18336</a></li>
+<li>add hicache jit test by @XucSh in <a href="https://github.com/sgl-project/sglang/pull/17847">https://github.com/sgl-project/sglang/pull/17847</a></li>
+<li>[diffusion] fix: offload text encoder model in image encoding stage by @xiaoyewww in <a href="https://github.com/sgl-project/sglang/pull/18317">https://github.com/sgl-project/sglang/pull/18317</a></li>
+<li>Add Nemotron 3 Nano tests by @shaharmor98 in <a href="https://github.com/sgl-project/sglang/pull/18119">https://github.com/sgl-project/sglang/pull/18119</a></li>
+<li>Add CI permission for Shunkangz, dongjiyingdjy, samuellees by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/18377">https://github.com/sgl-project/sglang/pull/18377</a></li>
+<li>[Docs] Add Falcon H1, Hunyuan-Large, Qwen3-Omni support and update Diffusion usage by @pokymono in <a href="https://github.com/sgl-project/sglang/pull/17888">https://github.com/sgl-project/sglang/pull/17888</a></li>
+<li>add hybrid model PD to NIXL connector by @nealvaidya in <a href="https://github.com/sgl-project/sglang/pull/16229">https://github.com/sgl-project/sglang/pull/16229</a></li>
+<li>Merge stage-c-test-large-4-gpu suites into partitioned suites by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18325">https://github.com/sgl-project/sglang/pull/18325</a></li>
+<li>Revert “[Build] Enable full kernel in aarch64 wheel” by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/18385">https://github.com/sgl-project/sglang/pull/18385</a></li>
+<li>[Qwen3Next] Optimize fused_sigmoid_gating_delta_rule_update_kernel by @hlu1 in <a href="https://github.com/sgl-project/sglang/pull/18271">https://github.com/sgl-project/sglang/pull/18271</a></li>
+<li>Support execute_shell_command for env var support by @zhaochenyang20 in <a href="https://github.com/sgl-project/sglang/pull/18390">https://github.com/sgl-project/sglang/pull/18390</a></li>
+<li>[NPU] update npu doc by @Hexq0210 in <a href="https://github.com/sgl-project/sglang/pull/18344">https://github.com/sgl-project/sglang/pull/18344</a></li>
+<li>[Diffusion] Apply fused_norm_scale_shift to MOVA by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18257">https://github.com/sgl-project/sglang/pull/18257</a></li>
+<li>[Doc] Update CUDA 13 install guide to install torch first by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18404">https://github.com/sgl-project/sglang/pull/18404</a></li>
+<li>Remove unnecessary norm_type argument from GLM-Image dits by @haojin2 in <a href="https://github.com/sgl-project/sglang/pull/18382">https://github.com/sgl-project/sglang/pull/18382</a></li>
+<li>[Doc] Fix outdated <code>--fp4-gemm-backend</code> documentation by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18350">https://github.com/sgl-project/sglang/pull/18350</a></li>
+<li>[diffusion] fix: respect dist_timeout option by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18386">https://github.com/sgl-project/sglang/pull/18386</a></li>
+<li>[diffusion] feat: support saving videos directly on the server to avoid the overhead of tensor transfer by @nono-Sang in <a href="https://github.com/sgl-project/sglang/pull/18253">https://github.com/sgl-project/sglang/pull/18253</a></li>
+<li>[Kimi-K2.5] Fix NVFP4 Kimi-K2.5 weight mapping and exclude list by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18370">https://github.com/sgl-project/sglang/pull/18370</a></li>
+<li>[NPU][diffusion] model: support WAN/FLUX/Qwen-Image/Qwen-Image-edit on Ascend by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/13662">https://github.com/sgl-project/sglang/pull/13662</a></li>
+<li>[Fix] Fix backend selection after flashinfer version update by @DarkSharpness in <a href="https://github.com/sgl-project/sglang/pull/18364">https://github.com/sgl-project/sglang/pull/18364</a></li>
+<li>fix: sync server_args.kv_cache_dtype when detecting FP8 KV cache by @zack041 in <a href="https://github.com/sgl-project/sglang/pull/18394">https://github.com/sgl-project/sglang/pull/18394</a></li>
+<li>[diffusion] feat: support efficient sequence shard by @nono-Sang in <a href="https://github.com/sgl-project/sglang/pull/18161">https://github.com/sgl-project/sglang/pull/18161</a></li>
+<li>[ModelOpt] Fix broken Qwen3-235B-A22B-Instruct-2507-NVFP4 launch by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/18189">https://github.com/sgl-project/sglang/pull/18189</a></li>
+<li>[diffusion] refactor: group component loaders under the component_loaders/ directory by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18438">https://github.com/sgl-project/sglang/pull/18438</a></li>
+<li>Fix TRT-LLM MLA backend applying k_scale to BF16 KV cache in BMM1 by @debo3 in <a href="https://github.com/sgl-project/sglang/pull/18396">https://github.com/sgl-project/sglang/pull/18396</a></li>
+<li>[diffusion] chore: revise process title by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18446">https://github.com/sgl-project/sglang/pull/18446</a></li>
+<li>Add tensor parallelism support to LFM2 ShortConv layers by @tugot17 in <a href="https://github.com/sgl-project/sglang/pull/17777">https://github.com/sgl-project/sglang/pull/17777</a></li>
+<li>[Kimi-K2.5] Fix missing <code>quant_config</code> in <code>KimiK25</code> by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18440">https://github.com/sgl-project/sglang/pull/18440</a></li>
+<li>Update author information in pyproject.toml by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/18453">https://github.com/sgl-project/sglang/pull/18453</a></li>
+<li>[ModelOPT] Support Qwen 3 Next Coder NVFP4 by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/18224">https://github.com/sgl-project/sglang/pull/18224</a></li>
+<li>Refactoring Mooncake TE as a shared distributed component by @ShangmingCai in <a href="https://github.com/sgl-project/sglang/pull/17810">https://github.com/sgl-project/sglang/pull/17810</a></li>
+<li>[BugFix][PD]Fix metadata_buffer_index leak when aborted in PD by @ZhengWG in <a href="https://github.com/sgl-project/sglang/pull/17483">https://github.com/sgl-project/sglang/pull/17483</a></li>
+<li>fix: fix the wrong return value type of draft model runner by @acelyc111 in <a href="https://github.com/sgl-project/sglang/pull/18105">https://github.com/sgl-project/sglang/pull/18105</a></li>
+<li>fix: use —no-build-isolation for human-eval install by @harvenstar in <a href="https://github.com/sgl-project/sglang/pull/18455">https://github.com/sgl-project/sglang/pull/18455</a></li>
+<li>[AMD] Update aiter to v0.1.10.post2 by @bingxche in <a href="https://github.com/sgl-project/sglang/pull/18423">https://github.com/sgl-project/sglang/pull/18423</a></li>
+<li>[AMD] CI - Fix AMD daily image release and install dependency by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/18452">https://github.com/sgl-project/sglang/pull/18452</a></li>
+<li>[DLLM] Add JointThreshold algorithm for joint M2T and T2T decoding by @edwardzjl in <a href="https://github.com/sgl-project/sglang/pull/18171">https://github.com/sgl-project/sglang/pull/18171</a></li>
+<li>Make compressed-tensors MoEs support ignored layers by @LHXuuu in <a href="https://github.com/sgl-project/sglang/pull/17828">https://github.com/sgl-project/sglang/pull/17828</a></li>
+<li>Revert “optimize get_topk_ragged by fusing get k and k_scale triton kernel” by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/18471">https://github.com/sgl-project/sglang/pull/18471</a></li>
+<li>feat: Add ModelScope support for multimodal_gen models by @yrk111222 in <a href="https://github.com/sgl-project/sglang/pull/17924">https://github.com/sgl-project/sglang/pull/17924</a></li>
+<li>[diffusion] chore: fix unclean shutdown and resource leaks by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18477">https://github.com/sgl-project/sglang/pull/18477</a></li>
+<li>[Feature] Support bidirectional attention for Gemma-3  by @zzhbrr in <a href="https://github.com/sgl-project/sglang/pull/10707">https://github.com/sgl-project/sglang/pull/10707</a></li>
+<li>Pass <code>quantize_config</code> to <code>_initialize_model</code> by @klshuster in <a href="https://github.com/sgl-project/sglang/pull/18273">https://github.com/sgl-project/sglang/pull/18273</a></li>
+<li>Fix MMLU benchmark to auto-download data and resolve path issue by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/18486">https://github.com/sgl-project/sglang/pull/18486</a></li>
+<li>[MODEL] Adding Support for Qwen3.5 Models by @zju-stu-lizheng in <a href="https://github.com/sgl-project/sglang/pull/18489">https://github.com/sgl-project/sglang/pull/18489</a></li>
+<li>[AMD] add amd ci monitor by @bingxche in <a href="https://github.com/sgl-project/sglang/pull/17476">https://github.com/sgl-project/sglang/pull/17476</a></li>
+<li>feat(kv-events): Add medium field to KV event types for storage tier tracking by @ishandhanani in <a href="https://github.com/sgl-project/sglang/pull/18205">https://github.com/sgl-project/sglang/pull/18205</a></li>
+<li>docs: expand and update modelopt documentation by @zack041 in <a href="https://github.com/sgl-project/sglang/pull/18479">https://github.com/sgl-project/sglang/pull/18479</a></li>
+<li>Add cache_config_info metric. by @kartikx in <a href="https://github.com/sgl-project/sglang/pull/17273">https://github.com/sgl-project/sglang/pull/17273</a></li>
+<li>[HiCache][PP] add test case for compatibility by @stmatengss in <a href="https://github.com/sgl-project/sglang/pull/16395">https://github.com/sgl-project/sglang/pull/16395</a></li>
+<li>Fix idle batch predict dtype in spec v2 by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/18379">https://github.com/sgl-project/sglang/pull/18379</a></li>
+<li>Make bench_one_batch_server compatible for more backends by @maocheng23 in <a href="https://github.com/sgl-project/sglang/pull/18512">https://github.com/sgl-project/sglang/pull/18512</a></li>
+<li>[EPD] Add notification mechanism to fix server hang and add timeout env var by @liusy58 in <a href="https://github.com/sgl-project/sglang/pull/18229">https://github.com/sgl-project/sglang/pull/18229</a></li>
+<li>Deepseekv32 compatibility with transformers v5 by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/18297">https://github.com/sgl-project/sglang/pull/18297</a></li>
+<li>Support GlmMoeDsaForCausalLM by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/18521">https://github.com/sgl-project/sglang/pull/18521</a></li>
+<li>[AMD] Turn on aiter-prebuild by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/18425">https://github.com/sgl-project/sglang/pull/18425</a></li>
+<li>[HiCache] fix: StorageMetricsCollector was initialized twice by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/18354">https://github.com/sgl-project/sglang/pull/18354</a></li>
+<li>[DLLM] Basic dLLM scheduling strategy and implementation by @ClawSeven in <a href="https://github.com/sgl-project/sglang/pull/17484">https://github.com/sgl-project/sglang/pull/17484</a></li>
+<li>[diffusion] feat: support parallel wan-vae decode by @nono-Sang in <a href="https://github.com/sgl-project/sglang/pull/18179">https://github.com/sgl-project/sglang/pull/18179</a></li>
+<li>[NPU] [CI] Enable run multimodal NPU CI when changes only in multimodal_gen  by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/18523">https://github.com/sgl-project/sglang/pull/18523</a></li>
+<li>[diffusion] fix: fix fsdp by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18187">https://github.com/sgl-project/sglang/pull/18187</a></li>
+<li>[sgl-kernel] upgrade deepgemm by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18362">https://github.com/sgl-project/sglang/pull/18362</a></li>
+<li>[NPU][docs] improve docs for Best Practice on Ascend NPU by @husf1130 in <a href="https://github.com/sgl-project/sglang/pull/18360">https://github.com/sgl-project/sglang/pull/18360</a></li>
+<li>[NPU] update npu doc by @Hexq0210 in <a href="https://github.com/sgl-project/sglang/pull/18474">https://github.com/sgl-project/sglang/pull/18474</a></li>
+<li>fix(config): Support setting Mamba state dtype via config file by @zju-stu-lizheng in <a href="https://github.com/sgl-project/sglang/pull/18532">https://github.com/sgl-project/sglang/pull/18532</a></li>
+<li>[NPU][docs]fix bug about hyperlink for best practice for ascend npu by @husf1130 in <a href="https://github.com/sgl-project/sglang/pull/18561">https://github.com/sgl-project/sglang/pull/18561</a></li>
+<li>Revert “[sgl-kernel] upgrade deepgemm” by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/18562">https://github.com/sgl-project/sglang/pull/18562</a></li>
+<li>Tilelang sparse decode fwd for dsv32 mi355 by @1am9trash in <a href="https://github.com/sgl-project/sglang/pull/18488">https://github.com/sgl-project/sglang/pull/18488</a></li>
+<li>Fix radix cache key to include generated tokens in multi-turn (regression) by @ycchen-tw in <a href="https://github.com/sgl-project/sglang/pull/16521">https://github.com/sgl-project/sglang/pull/16521</a></li>
+<li>Fix wrong prefill log. by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18570">https://github.com/sgl-project/sglang/pull/18570</a></li>
+<li>[Doc] Comprehensive Guide: Navigating DP, DPA, and SMG Best Practices by @zhaohaidao in <a href="https://github.com/sgl-project/sglang/pull/18096">https://github.com/sgl-project/sglang/pull/18096</a></li>
+<li>Enhance SMG guide with RL rollout systems benefits by @zhaochenyang20 in <a href="https://github.com/sgl-project/sglang/pull/18588">https://github.com/sgl-project/sglang/pull/18588</a></li>
+<li>Add cache hit rate UT by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18566">https://github.com/sgl-project/sglang/pull/18566</a></li>
+<li>[AMD] Fix Janus-Pro crash and add Kimi-K2.5 nightly test  by @michaelzhang-ai in <a href="https://github.com/sgl-project/sglang/pull/18269">https://github.com/sgl-project/sglang/pull/18269</a></li>
+<li>Fix Bug on dsv3.2 by @BourneSun0527 in <a href="https://github.com/sgl-project/sglang/pull/18553">https://github.com/sgl-project/sglang/pull/18553</a></li>
+<li>Fp8 prefill attn kernel integration by @1am9trash in <a href="https://github.com/sgl-project/sglang/pull/18528">https://github.com/sgl-project/sglang/pull/18528</a></li>
+<li>Register cp-atten-allgather buffers with symm memory by @wangfakang in <a href="https://github.com/sgl-project/sglang/pull/17756">https://github.com/sgl-project/sglang/pull/17756</a></li>
+<li>[NPU] support model skywork-reward-gemma2-2-27B-v0.2 by @McZyWu in <a href="https://github.com/sgl-project/sglang/pull/16947">https://github.com/sgl-project/sglang/pull/16947</a></li>
+<li>[V3.2] Change default CP token split method to <code>--round-robin-split</code> by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/18613">https://github.com/sgl-project/sglang/pull/18613</a></li>
+<li>add support to enable lora with embedding models by @vedantjh2 in <a href="https://github.com/sgl-project/sglang/pull/17780">https://github.com/sgl-project/sglang/pull/17780</a></li>
+<li>Fix prefill stats for dllm by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18632">https://github.com/sgl-project/sglang/pull/18632</a></li>
+<li>Add LMF2 MoE model architecture by @tugot17 in <a href="https://github.com/sgl-project/sglang/pull/17997">https://github.com/sgl-project/sglang/pull/17997</a></li>
+<li>Clean up noisy startup log messages and refactor loader.py by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/18531">https://github.com/sgl-project/sglang/pull/18531</a></li>
+<li>[diffusion] docs: consolidate diffusion documentation into docs by @qianyue76 in <a href="https://github.com/sgl-project/sglang/pull/18095">https://github.com/sgl-project/sglang/pull/18095</a></li>
+<li>[PCG] GPT OSS Triton Kernel Support by @Oasis-Git in <a href="https://github.com/sgl-project/sglang/pull/18405">https://github.com/sgl-project/sglang/pull/18405</a></li>
+<li>[Bugfix] fix config bug caused by PR #18273 by @1195343015 in <a href="https://github.com/sgl-project/sglang/pull/18535">https://github.com/sgl-project/sglang/pull/18535</a></li>
+<li>Avoid kimi linear stream sync by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/16186">https://github.com/sgl-project/sglang/pull/16186</a></li>
+<li>Add CI permission for Chen-0210 by @Chen-0210 in <a href="https://github.com/sgl-project/sglang/pull/18494">https://github.com/sgl-project/sglang/pull/18494</a></li>
+<li>glm5 md by @liupeng374 in <a href="https://github.com/sgl-project/sglang/pull/18655">https://github.com/sgl-project/sglang/pull/18655</a></li>
+<li>[diffusion] fix: webui cannot correctly display generated video using wan2.2 by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/18473">https://github.com/sgl-project/sglang/pull/18473</a></li>
+<li>List more CI runs for <code>pr-test</code> by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18650">https://github.com/sgl-project/sglang/pull/18650</a></li>
+<li>update glm5 readme on npu by @xiaobaicxy in <a href="https://github.com/sgl-project/sglang/pull/18657">https://github.com/sgl-project/sglang/pull/18657</a></li>
+<li>fix the max-parallel for <code>/rerun-stage</code> by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18658">https://github.com/sgl-project/sglang/pull/18658</a></li>
+<li>Update modelopt quantization config parsing by @Edwardf0t1 in <a href="https://github.com/sgl-project/sglang/pull/13919">https://github.com/sgl-project/sglang/pull/13919</a></li>
+<li>[Mamba] Add float16 support for SSM cache dtype by @danielafrimi in <a href="https://github.com/sgl-project/sglang/pull/18444">https://github.com/sgl-project/sglang/pull/18444</a></li>
+<li>Try fix the max-parallel for maunally triggered test again. by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18686">https://github.com/sgl-project/sglang/pull/18686</a></li>
+<li>Update ci permission by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18693">https://github.com/sgl-project/sglang/pull/18693</a></li>
+<li>[AMD] rocm 7.2 image release, PR test, Nightly Test by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/17799">https://github.com/sgl-project/sglang/pull/17799</a></li>
+<li>[Flashinfer Autotune] Fix FlashInfer FP4 MoE autotuning crash by removing incorrect flatten on hidden_states_scale by @YAMY1234 in <a href="https://github.com/sgl-project/sglang/pull/18500">https://github.com/sgl-project/sglang/pull/18500</a></li>
+<li>[Qwen3_5] Refactor <code>Qwen3_5ForCausalLMMTP</code> class implementation by @zju-stu-lizheng in <a href="https://github.com/sgl-project/sglang/pull/18538">https://github.com/sgl-project/sglang/pull/18538</a></li>
+<li>Update README commands to include model-path option by @wplf in <a href="https://github.com/sgl-project/sglang/pull/18557">https://github.com/sgl-project/sglang/pull/18557</a></li>
+<li>fix: /metrics endpoint always reports engine_type=“unified” in PD disaggregation mode by @2JooYeon in <a href="https://github.com/sgl-project/sglang/pull/18552">https://github.com/sgl-project/sglang/pull/18552</a></li>
+<li>[Z-Image] Replace TextEncoderConfig with Qwen3TextConfig by @rootonchair in <a href="https://github.com/sgl-project/sglang/pull/18560">https://github.com/sgl-project/sglang/pull/18560</a></li>
+<li>[AMD] Enable release image build for ROCm 7.2.0 by @akao-amd in <a href="https://github.com/sgl-project/sglang/pull/18698">https://github.com/sgl-project/sglang/pull/18698</a></li>
+<li>[Ascend]Support qwen3.5 by @chenxu214 in <a href="https://github.com/sgl-project/sglang/pull/18544">https://github.com/sgl-project/sglang/pull/18544</a></li>
+<li>[AMD] reset AMD image release time and reduce CI queue time by @yctseng0211 in <a href="https://github.com/sgl-project/sglang/pull/18707">https://github.com/sgl-project/sglang/pull/18707</a></li>
+<li>[AMD] Fix accuracy issue when running TP4 dsv3 model with mtp by @1am9trash in <a href="https://github.com/sgl-project/sglang/pull/18607">https://github.com/sgl-project/sglang/pull/18607</a></li>
+<li>add tool_choice=auto nightly test case by @harvenstar in <a href="https://github.com/sgl-project/sglang/pull/18302">https://github.com/sgl-project/sglang/pull/18302</a></li>
+<li>Make PR based docker and pypi workflow work for forked PR by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18720">https://github.com/sgl-project/sglang/pull/18720</a></li>
+<li>Fix flaky penalty tests by using higher temperature for effect comparison by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18380">https://github.com/sgl-project/sglang/pull/18380</a></li>
+<li>Add <code>spec_accept_histogram</code> request statistic by @scottjlee in <a href="https://github.com/sgl-project/sglang/pull/18332">https://github.com/sgl-project/sglang/pull/18332</a></li>
+<li>refactor: replace local proto compilation with smg-grpc-proto package by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/18682">https://github.com/sgl-project/sglang/pull/18682</a></li>
+<li>[BUGFIX] fix bug in handle mamba radix cache in server_args by @yizhang2077 in <a href="https://github.com/sgl-project/sglang/pull/18723">https://github.com/sgl-project/sglang/pull/18723</a></li>
+<li>Fix B200 installation issue by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18725">https://github.com/sgl-project/sglang/pull/18725</a></li>
+<li>refactor: consolidate gRPC client into shared crate dependency by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/18730">https://github.com/sgl-project/sglang/pull/18730</a></li>
+<li>speed up sgl-kernel build by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18586">https://github.com/sgl-project/sglang/pull/18586</a></li>
+<li>fix: image version in pypi pr workflow by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18735">https://github.com/sgl-project/sglang/pull/18735</a></li>
+<li>refactor: remove crate re-export aliases from lib.rs by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/18737">https://github.com/sgl-project/sglang/pull/18737</a></li>
+<li>Reuse initialized transfer engine in mooncake store by @ShangmingCai in <a href="https://github.com/sgl-project/sglang/pull/18460">https://github.com/sgl-project/sglang/pull/18460</a></li>
+<li>Build ROCm7.2 Image with latest AITER v0.1.10.post3 by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/18741">https://github.com/sgl-project/sglang/pull/18741</a></li>
+<li>[Diffusion] [BUG] Fix missing initialization of GLM-Image text encoder config by @haojin2 in <a href="https://github.com/sgl-project/sglang/pull/18704">https://github.com/sgl-project/sglang/pull/18704</a></li>
+<li>Fix invalid import paths in glm_image.py by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18757">https://github.com/sgl-project/sglang/pull/18757</a></li>
+<li>Revert changes to weight_utils.py by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/18759">https://github.com/sgl-project/sglang/pull/18759</a></li>
+<li>feat: support release lookup by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/18450">https://github.com/sgl-project/sglang/pull/18450</a></li>
+<li>Modify glm5 readme on npu by @BourneSun0527 in <a href="https://github.com/sgl-project/sglang/pull/18768">https://github.com/sgl-project/sglang/pull/18768</a></li>
+<li>[AMD] Fix Multimodal Test 1 GPU by @bingxche in <a href="https://github.com/sgl-project/sglang/pull/18716">https://github.com/sgl-project/sglang/pull/18716</a></li>
+<li>[diffusion]Allows quality adjustment of generated images/videos through requests. by @IPostYellow in <a href="https://github.com/sgl-project/sglang/pull/17937">https://github.com/sgl-project/sglang/pull/17937</a></li>
+<li>[BUG] fixed local model loading issue in multimodal generation test by @blazingbhavneek in <a href="https://github.com/sgl-project/sglang/pull/18687">https://github.com/sgl-project/sglang/pull/18687</a></li>
+<li>[Kernel] Add JIT rotary_embedding_kernel by @pansicheng in <a href="https://github.com/sgl-project/sglang/pull/17934">https://github.com/sgl-project/sglang/pull/17934</a></li>
+<li>[Spec] Move forward timeout before verify to fix Eagle v1 filter mismatch by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18760">https://github.com/sgl-project/sglang/pull/18760</a></li>
+<li>[diffusion] feat: support tp for qwen-image-edit-2511 by @xiaoyewww in <a href="https://github.com/sgl-project/sglang/pull/18619">https://github.com/sgl-project/sglang/pull/18619</a></li>
+<li>Rename request timeout env vars for waiting/running stages by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18766">https://github.com/sgl-project/sglang/pull/18766</a></li>
+<li>[Bugfix] Add warnings when NSA indexer cache indice mismatch in PD module by @ShangmingCai in <a href="https://github.com/sgl-project/sglang/pull/18727">https://github.com/sgl-project/sglang/pull/18727</a></li>
+<li>Support LingV2_5 model by @ant-yy in <a href="https://github.com/sgl-project/sglang/pull/18598">https://github.com/sgl-project/sglang/pull/18598</a></li>
+<li>[diffusion] feat: support SparseVideoGen2 attention backend by @tie-pilot-qxw in <a href="https://github.com/sgl-project/sglang/pull/17507">https://github.com/sgl-project/sglang/pull/17507</a></li>
+<li>[schedule] Fix streaming return of customized_info by @yinghai in <a href="https://github.com/sgl-project/sglang/pull/18654">https://github.com/sgl-project/sglang/pull/18654</a></li>
+<li>Cleanup unused rerun stages by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18788">https://github.com/sgl-project/sglang/pull/18788</a></li>
+<li>Adjust mamba cache allocation by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18786">https://github.com/sgl-project/sglang/pull/18786</a></li>
+<li>Enhence gsm8k test by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18791">https://github.com/sgl-project/sglang/pull/18791</a></li>
+<li>Cleanup debug log for Ring model by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18793">https://github.com/sgl-project/sglang/pull/18793</a></li>
+<li>Added cuda availability guard by @mattteochen in <a href="https://github.com/sgl-project/sglang/pull/18480">https://github.com/sgl-project/sglang/pull/18480</a></li>
+<li>[diffusion] refactor: merge redundant default_dtype and param_dtype parameters in FSDP loader by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18789">https://github.com/sgl-project/sglang/pull/18789</a></li>
+<li>[diffusion] fix: webui task_type check by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/18462">https://github.com/sgl-project/sglang/pull/18462</a></li>
+<li>[diffusion] fix typo by @triple-mu in <a href="https://github.com/sgl-project/sglang/pull/18790">https://github.com/sgl-project/sglang/pull/18790</a></li>
+<li>[diffusion] chore: use batched P2P ops in VAE parallel decoding by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18728">https://github.com/sgl-project/sglang/pull/18728</a></li>
+<li>[Kernel Slimming] Migrate GPTQ-Marlin repack kernel to JIT by @celve in <a href="https://github.com/sgl-project/sglang/pull/18543">https://github.com/sgl-project/sglang/pull/18543</a></li>
+<li>refactor context parallel state  by @dongjiyingdjy in <a href="https://github.com/sgl-project/sglang/pull/17213">https://github.com/sgl-project/sglang/pull/17213</a></li>
+<li>[bugfix] fix mamba slot leak when scheduling fails with radix cache (#15840) by @kuafou in <a href="https://github.com/sgl-project/sglang/pull/16067">https://github.com/sgl-project/sglang/pull/16067</a></li>
+<li>fix double-free kv cache for requests that have already finished and been freed during preemption  by @JD-ETH in <a href="https://github.com/sgl-project/sglang/pull/18694">https://github.com/sgl-project/sglang/pull/18694</a></li>
+<li>Update notified user in post_ci_failures_to_slack.py by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18817">https://github.com/sgl-project/sglang/pull/18817</a></li>
+<li>[FlashInfer] Bump FlashInfer version from 0.6.2 to 0.6.3 by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18448">https://github.com/sgl-project/sglang/pull/18448</a></li>
+<li>Update performance dashboard for nightly tests by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18824">https://github.com/sgl-project/sglang/pull/18824</a></li>
+<li>[Perf] refactor piecewise cuda graph support of Qwen3-Next by @zminglei in <a href="https://github.com/sgl-project/sglang/pull/17613">https://github.com/sgl-project/sglang/pull/17613</a></li>
+<li>feat: add SGLANG_DISTRIBUTED_INIT_METHOD_OVERRIDE env var by @YazhiGao in <a href="https://github.com/sgl-project/sglang/pull/18743">https://github.com/sgl-project/sglang/pull/18743</a></li>
+<li>[PD-Disagg] Fix double free when prebuilt batch is aborted. by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18822">https://github.com/sgl-project/sglang/pull/18822</a></li>
+<li>Add timeout abort kits for normal / eagle. by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18815">https://github.com/sgl-project/sglang/pull/18815</a></li>
+<li>[Env] centralize hicache vars in environ.py by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/17204">https://github.com/sgl-project/sglang/pull/17204</a></li>
+<li>Handle abort for retracted requests in disagg decode prealloc queue by @qmzznbxhl in <a href="https://github.com/sgl-project/sglang/pull/18705">https://github.com/sgl-project/sglang/pull/18705</a></li>
+<li>[diffusion][MUSA] fix: MUSA platform breakage caused by PR #13662 by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/18456">https://github.com/sgl-project/sglang/pull/18456</a></li>
+<li>Fix/partial gen from waiting queue miss metadata by @JD-ETH in <a href="https://github.com/sgl-project/sglang/pull/17610">https://github.com/sgl-project/sglang/pull/17610</a></li>
+<li>[VLM][LLM] Optimize fused_moe triton kernel tma by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/18782">https://github.com/sgl-project/sglang/pull/18782</a></li>
+<li>[AMD] Fix sgl-model-gateway Build Errors in ROCm Docker Release  by @bingxche in <a href="https://github.com/sgl-project/sglang/pull/18836">https://github.com/sgl-project/sglang/pull/18836</a></li>
+<li>Kernel: optimize decoding metadata in NSA multi-spec backend with fused kernels by @Johnsonms in <a href="https://github.com/sgl-project/sglang/pull/17554">https://github.com/sgl-project/sglang/pull/17554</a></li>
+<li>Fix  dsv32 encode_messages  by @whybeyoung in <a href="https://github.com/sgl-project/sglang/pull/18126">https://github.com/sgl-project/sglang/pull/18126</a></li>
+<li>Add ci test for ring model by @ispobock in <a href="https://github.com/sgl-project/sglang/pull/18829">https://github.com/sgl-project/sglang/pull/18829</a></li>
+<li>feat: Support <code>mrope_section</code> with <code>rope_type: "yarn"</code> by @raayandhar in <a href="https://github.com/sgl-project/sglang/pull/13313">https://github.com/sgl-project/sglang/pull/13313</a></li>
+<li>Enable SGLANG_ENABLE_SPEC_V2 for nightly speculative decoding tests by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18719">https://github.com/sgl-project/sglang/pull/18719</a></li>
+<li>[kernel slimming] Move fast_hadamard_transform to jit_kernel by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18475">https://github.com/sgl-project/sglang/pull/18475</a></li>
+<li>[Diffusion] opt vae decode with <code>channels_last_3d</code>  by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18540">https://github.com/sgl-project/sglang/pull/18540</a></li>
+<li>Add CI permissions by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18847">https://github.com/sgl-project/sglang/pull/18847</a></li>
+<li>Fix model loading for DeepSeek-V3.2-AWQ by @bingps in <a href="https://github.com/sgl-project/sglang/pull/16907">https://github.com/sgl-project/sglang/pull/16907</a></li>
+<li>[Doc] Convert the speculative decoding notebook to markdow by @alphabetc1 in <a href="https://github.com/sgl-project/sglang/pull/18395">https://github.com/sgl-project/sglang/pull/18395</a></li>
+<li>Model: Support IBM Granite (Dense/Mamba + MoE)  by @blazingbhavneek in <a href="https://github.com/sgl-project/sglang/pull/18040">https://github.com/sgl-project/sglang/pull/18040</a></li>
+<li>[FIX] Correct JIT kernel compilation on newer GPUs with outdated driver metadata. by @muse-coder in <a href="https://github.com/sgl-project/sglang/pull/18496">https://github.com/sgl-project/sglang/pull/18496</a></li>
+<li>[AMD] Fix/qwen3 5 amd rope cutedsl fallback by @andyluo7 in <a href="https://github.com/sgl-project/sglang/pull/18753">https://github.com/sgl-project/sglang/pull/18753</a></li>
+<li>[Perf] Tune MiniMax M2 fused moe kernel on H100 GPU by @zhendonghua in <a href="https://github.com/sgl-project/sglang/pull/18851">https://github.com/sgl-project/sglang/pull/18851</a></li>
+<li>perf: add minimax-2.5 fused_moe tuning config for h20 by @zhangxiaolei123456 in <a href="https://github.com/sgl-project/sglang/pull/18833">https://github.com/sgl-project/sglang/pull/18833</a></li>
+<li>[diffusion]: Enable torch.compile for UlyssesAttention by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/18840">https://github.com/sgl-project/sglang/pull/18840</a></li>
+<li>fix bug on kimi2.5 when dp2 tp4 by @haowen-han in <a href="https://github.com/sgl-project/sglang/pull/18604">https://github.com/sgl-project/sglang/pull/18604</a></li>
+<li>Extract dumper and prefill delayer tests common utils by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/18857">https://github.com/sgl-project/sglang/pull/18857</a></li>
+<li>Add missing dumper tests by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/18859">https://github.com/sgl-project/sglang/pull/18859</a></li>
+<li>[AMD] Fix nightly 1-GPU test failures and bench_serving regression by @michaelzhang-ai in <a href="https://github.com/sgl-project/sglang/pull/18761">https://github.com/sgl-project/sglang/pull/18761</a></li>
+<li>[diffusion] quant: add support for svdquant and nunchaku by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18549">https://github.com/sgl-project/sglang/pull/18549</a></li>
+<li>change npu.dockerfile by @chenxu214 in <a href="https://github.com/sgl-project/sglang/pull/18835">https://github.com/sgl-project/sglang/pull/18835</a></li>
+<li>[diffusion]: Improve layerwise offload buffer reuse and shared-storage handling by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/18611">https://github.com/sgl-project/sglang/pull/18611</a></li>
+<li>feature: adding build commit to sgl kernel workflow by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18853">https://github.com/sgl-project/sglang/pull/18853</a></li>
+<li>Enable DeepGemm fast warmup in CI to prevent cold-cache timeouts by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18823">https://github.com/sgl-project/sglang/pull/18823</a></li>
+<li>update pre-commit config by @SoluMilken in <a href="https://github.com/sgl-project/sglang/pull/18860">https://github.com/sgl-project/sglang/pull/18860</a></li>
+<li>fix: update Blackwell log/error messages to include SM12x by @blake-snc in <a href="https://github.com/sgl-project/sglang/pull/18751">https://github.com/sgl-project/sglang/pull/18751</a></li>
+<li>fix: add SM110 (Jetson AGX Thor) to Blackwell capability check by @WiwilZ in <a href="https://github.com/sgl-project/sglang/pull/18787">https://github.com/sgl-project/sglang/pull/18787</a></li>
+<li>test: add test for Modelopt FP8 on SM90 by @zack041 in <a href="https://github.com/sgl-project/sglang/pull/18463">https://github.com/sgl-project/sglang/pull/18463</a></li>
+<li>fix_get_quant_method_in_fused_moe_condition by @tom-zju in <a href="https://github.com/sgl-project/sglang/pull/18459">https://github.com/sgl-project/sglang/pull/18459</a></li>
+<li>Use ephemeral nccl port via get_free_port() by @chanh in <a href="https://github.com/sgl-project/sglang/pull/18009">https://github.com/sgl-project/sglang/pull/18009</a></li>
+<li>feat: expose consistent_hashing policy in Python router CLI args by @bledden in <a href="https://github.com/sgl-project/sglang/pull/17972">https://github.com/sgl-project/sglang/pull/17972</a></li>
+<li>Improve profiler options for bench_serving by @akhilg-nv in <a href="https://github.com/sgl-project/sglang/pull/16991">https://github.com/sgl-project/sglang/pull/16991</a></li>
+<li>Fix libnuma.so does not exsit by @QiuMike in <a href="https://github.com/sgl-project/sglang/pull/15355">https://github.com/sgl-project/sglang/pull/15355</a></li>
+<li>fix(sgl-kernel): support CUDA 13 runtime preloading for DGX Spark by @blake-snc in <a href="https://github.com/sgl-project/sglang/pull/18747">https://github.com/sgl-project/sglang/pull/18747</a></li>
+<li>fix(sgl-kernel): use >= 120 for SM12x CUDA kernel dispatch by @blake-snc in <a href="https://github.com/sgl-project/sglang/pull/18750">https://github.com/sgl-project/sglang/pull/18750</a></li>
+<li>Create ascend_npu_qwen3_5_examples.md  by @chenxu214 in <a href="https://github.com/sgl-project/sglang/pull/18864">https://github.com/sgl-project/sglang/pull/18864</a></li>
+<li>Update ascend_npu_support.rst by @chenxu214 in <a href="https://github.com/sgl-project/sglang/pull/18868">https://github.com/sgl-project/sglang/pull/18868</a></li>
+<li>Add claude skills for sgl-kernel and jit-kernel by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18855">https://github.com/sgl-project/sglang/pull/18855</a></li>
+<li>Nsa trtllm mla sparse fp8 support with Deepseek v3.2 NVFP4 by @rainj-me in <a href="https://github.com/sgl-project/sglang/pull/18389">https://github.com/sgl-project/sglang/pull/18389</a></li>
+<li>fix: nightly whl dev date suffix by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18873">https://github.com/sgl-project/sglang/pull/18873</a></li>
+<li>[VLM] Optimize Ernie4.5-VL rotary embedding with fused triton kernel by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/18856">https://github.com/sgl-project/sglang/pull/18856</a></li>
+<li>[diffusion] fix: avoid saving output for warmup requests by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18867">https://github.com/sgl-project/sglang/pull/18867</a></li>
+<li>[diffusion] refactor: refactor server_args adjust and validate logics by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18863">https://github.com/sgl-project/sglang/pull/18863</a></li>
+<li>[Diff]: support SGLANG_TORCH_PROFILER_DIR environment variable for profiler log directory by @Johnsonms in <a href="https://github.com/sgl-project/sglang/pull/18454">https://github.com/sgl-project/sglang/pull/18454</a></li>
+<li>[AMD] MORI-EP inter kernel type switch by @Duyi-Wang in <a href="https://github.com/sgl-project/sglang/pull/18437">https://github.com/sgl-project/sglang/pull/18437</a></li>
+<li>Flip dumper to disable by default and refactor environment handling by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/18878">https://github.com/sgl-project/sglang/pull/18878</a></li>
+<li>Change dump output format to dict with value and metadata by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/18879">https://github.com/sgl-project/sglang/pull/18879</a></li>
+<li>Collect upper level metadata to dump output by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/18880">https://github.com/sgl-project/sglang/pull/18880</a></li>
+<li>Support dumping gradients, parameters, lazy values by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/18881">https://github.com/sgl-project/sglang/pull/18881</a></li>
+<li>fix: unifying docker image build pipeline by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18814">https://github.com/sgl-project/sglang/pull/18814</a></li>
+<li>fix: adding performance logging for nightly diffusion by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/18023">https://github.com/sgl-project/sglang/pull/18023</a></li>
+<li>Fix test_lora_qwen3 nightly failure: replace adapter with added_tokens by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18884">https://github.com/sgl-project/sglang/pull/18884</a></li>
+<li>Update ascend_npu_qwen3_5_examples.md by @realray808 in <a href="https://github.com/sgl-project/sglang/pull/18888">https://github.com/sgl-project/sglang/pull/18888</a></li>
+<li>[Diffusion] Fix LoRA weight snapshot aliasing in unmerge by @ChangyiYang in <a href="https://github.com/sgl-project/sglang/pull/18883">https://github.com/sgl-project/sglang/pull/18883</a></li>
+<li>Fix GLM-4V processor registration when glm_ocr is unavailable by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18885">https://github.com/sgl-project/sglang/pull/18885</a></li>
+<li>[JIT kernel] hd=512,1024 in JIT QK norm (cta based) by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/17515">https://github.com/sgl-project/sglang/pull/17515</a></li>
+<li>[diffusion] logging: improve peak vram logging by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18865">https://github.com/sgl-project/sglang/pull/18865</a></li>
+<li>Revert “[diffusion]: Improve layerwise offload buffer reuse and shared-storage handling” by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18866">https://github.com/sgl-project/sglang/pull/18866</a></li>
+<li>[Model] Add Qwen3ForRewardModel and fix Qwen3ForSequenceClassification by @shvmjndl in <a href="https://github.com/sgl-project/sglang/pull/17992">https://github.com/sgl-project/sglang/pull/17992</a></li>
+<li>[Perf] ~9.5x faster Blackwell MXFP4 MoE weight loading by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18858">https://github.com/sgl-project/sglang/pull/18858</a></li>
+<li>[diffusion][Wan]: fix sparse attention backends being applied to cross-attention by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/17596">https://github.com/sgl-project/sglang/pull/17596</a></li>
+<li>refactor FAKE transfer backend and remove —disaggregation-decode-enable-fake-auto parameter by @Estrella-xx in <a href="https://github.com/sgl-project/sglang/pull/18345">https://github.com/sgl-project/sglang/pull/18345</a></li>
+<li>[2/N] Quantization Refactor: Compressed tensors MoE schemes by @TamirBaydasov in <a href="https://github.com/sgl-project/sglang/pull/17503">https://github.com/sgl-project/sglang/pull/17503</a></li>
+<li>Fix modelopt FP8 create weights by @danielafrimi in <a href="https://github.com/sgl-project/sglang/pull/18447">https://github.com/sgl-project/sglang/pull/18447</a></li>
+<li>Fix GLM-5 fused shared expert by @FrankMinions in <a href="https://github.com/sgl-project/sglang/pull/18804">https://github.com/sgl-project/sglang/pull/18804</a></li>
+<li>[diffusion]: fix scheduler crash on ZMQ messages with unexpected frame counts by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/17890">https://github.com/sgl-project/sglang/pull/17890</a></li>
+<li>Adapt the Qwen2Model._update_causal_mask for transformers==4.57.1 by @pansicheng in <a href="https://github.com/sgl-project/sglang/pull/18774">https://github.com/sgl-project/sglang/pull/18774</a></li>
+<li>[diffusion] operator: unify rotary embedding impl by @triple-mu in <a href="https://github.com/sgl-project/sglang/pull/18164">https://github.com/sgl-project/sglang/pull/18164</a></li>
+<li>[misc] adding metadata field in UpdateWeightFromDiskReqInput by @happierpig in <a href="https://github.com/sgl-project/sglang/pull/18821">https://github.com/sgl-project/sglang/pull/18821</a></li>
+<li>Skip flaky test_tool_choice_required_non_streaming for Mistral by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18889">https://github.com/sgl-project/sglang/pull/18889</a></li>
+<li>[AMD] Fix RotaryEmbedding crash on AMD/ROCm (regression from #17934) by @michaelzhang-ai in <a href="https://github.com/sgl-project/sglang/pull/18903">https://github.com/sgl-project/sglang/pull/18903</a></li>
+<li>[TBO] fix cuda graph intermittently becomes disabled bug by @billishyahao in <a href="https://github.com/sgl-project/sglang/pull/18320">https://github.com/sgl-project/sglang/pull/18320</a></li>
+<li>[Diffusion] [NPU] [Doc] Add NPU documentation for sglang-diffusion by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/18894">https://github.com/sgl-project/sglang/pull/18894</a></li>
+<li>Revert “[AMD] Fix RotaryEmbedding crash on AMD/ROCm (regression from #17934)” by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/18922">https://github.com/sgl-project/sglang/pull/18922</a></li>
+<li>[diffusion]: fix sparse video gen 2 backend being applied to cross-attention by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/18900">https://github.com/sgl-project/sglang/pull/18900</a></li>
+<li>[Diffusion] Fix get model name when model local path end with ”/” by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/18918">https://github.com/sgl-project/sglang/pull/18918</a></li>
+<li>ROCm use rotary_embedding from sgl-kernel by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/18920">https://github.com/sgl-project/sglang/pull/18920</a></li>
+<li>[Diffusion] [NPU] Fix CI run by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/18921">https://github.com/sgl-project/sglang/pull/18921</a></li>
+<li>Revert “[diffusion] operator: unify rotary embedding impl” by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18929">https://github.com/sgl-project/sglang/pull/18929</a></li>
+<li>[PCG] support piecewise cuda graph for kimi-linear model by @zminglei in <a href="https://github.com/sgl-project/sglang/pull/18849">https://github.com/sgl-project/sglang/pull/18849</a></li>
+<li>[diffusion]: MOVA torch.compile opt by @triple-mu in <a href="https://github.com/sgl-project/sglang/pull/18914">https://github.com/sgl-project/sglang/pull/18914</a></li>
+<li>[gRPC] Fix scheduler startup broken by context parallel refactor by @slin1237 in <a href="https://github.com/sgl-project/sglang/pull/18933">https://github.com/sgl-project/sglang/pull/18933</a></li>
+<li>[diffusion] update code owner by @ping1jing2 in <a href="https://github.com/sgl-project/sglang/pull/18495">https://github.com/sgl-project/sglang/pull/18495</a></li>
+<li>[3/N] Quantization Refactor: ModelSlim MoE schemes by @TamirBaydasov in <a href="https://github.com/sgl-project/sglang/pull/17993">https://github.com/sgl-project/sglang/pull/17993</a></li>
+<li>fix(glm-image): single-GPU T5 config + SP support for 4D latents (#18… by @Nickcp39 in <a href="https://github.com/sgl-project/sglang/pull/18739">https://github.com/sgl-project/sglang/pull/18739</a></li>
+<li>Fix generated-shared-prefix bench_serving by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/18769">https://github.com/sgl-project/sglang/pull/18769</a></li>
+<li>Fix benchmark_sglang_fused_moe_triton.py by @satyamk7054 in <a href="https://github.com/sgl-project/sglang/pull/18940">https://github.com/sgl-project/sglang/pull/18940</a></li>
+<li>cleanup prefill metrics logging to fix dp-attn metrics by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/18778">https://github.com/sgl-project/sglang/pull/18778</a></li>
+<li>feat: add cuda core dump CI warpper by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18909">https://github.com/sgl-project/sglang/pull/18909</a></li>
+<li>Refactor sampler: Use a better hash function for deterministic sampling and clear dispatch for probs/logprobs/logits sampling paths by @merrymercy in <a href="https://github.com/sgl-project/sglang/pull/18915">https://github.com/sgl-project/sglang/pull/18915</a></li>
+<li>Fix eval tests not capturing server launch failures by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18886">https://github.com/sgl-project/sglang/pull/18886</a></li>
+<li>Expose priority parameter in Engine.generate() and Engine.async_generate() by @PeaBrane in <a href="https://github.com/sgl-project/sglang/pull/18944">https://github.com/sgl-project/sglang/pull/18944</a></li>
+<li>feat: [Qwen3.5] Support block-wise FP8 quantization and model adaptation by @zju-stu-lizheng in <a href="https://github.com/sgl-project/sglang/pull/18926">https://github.com/sgl-project/sglang/pull/18926</a></li>
+<li>Revert “Fix generated-shared-prefix bench_serving” by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18956">https://github.com/sgl-project/sglang/pull/18956</a></li>
+<li>feat: add nsa and swa disagg support with nixl by @nealvaidya in <a href="https://github.com/sgl-project/sglang/pull/18939">https://github.com/sgl-project/sglang/pull/18939</a></li>
+<li>[feat] Add return_routed_experts param to async_generate for parity with generate by @Aphoh in <a href="https://github.com/sgl-project/sglang/pull/18508">https://github.com/sgl-project/sglang/pull/18508</a></li>
+<li>[Refactor] Fix test and clean up hicache code by @DarkSharpness in <a href="https://github.com/sgl-project/sglang/pull/18555">https://github.com/sgl-project/sglang/pull/18555</a></li>
+<li>[diffusion] refactor: unify SamplingParams construction and improve DiffGenerator return types by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18928">https://github.com/sgl-project/sglang/pull/18928</a></li>
+<li>Reasoning models fix docs by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/18963">https://github.com/sgl-project/sglang/pull/18963</a></li>
+<li>Remove unused fast-hadamard-transform PyTorch extension sources by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18927">https://github.com/sgl-project/sglang/pull/18927</a></li>
+<li>[Tiny fix] Super tiny fix mul_add naive forward bug by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18964">https://github.com/sgl-project/sglang/pull/18964</a></li>
+<li>Enable fa3 PDL by compiling it with corresponding flags by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/18756">https://github.com/sgl-project/sglang/pull/18756</a></li>
+<li>[AMD] ROCm7.2: Add /sgl-workspace/aiter to PYTHONPATH by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/18972">https://github.com/sgl-project/sglang/pull/18972</a></li>
+<li>[BUG] Refactor task resolution logic in benchmark function for multimodal generation by @zijiexia in <a href="https://github.com/sgl-project/sglang/pull/18948">https://github.com/sgl-project/sglang/pull/18948</a></li>
+<li>Add DP ViT support for Kimi K2.5 by @yhyang201 in <a href="https://github.com/sgl-project/sglang/pull/18689">https://github.com/sgl-project/sglang/pull/18689</a></li>
+<li>[Fix] Add lora tied lm head support (for Qwen2.5, Gemma, etc model need) by @yushengsu-thu in <a href="https://github.com/sgl-project/sglang/pull/18634">https://github.com/sgl-project/sglang/pull/18634</a></li>
+<li>[4/N] Quantization Refactor: Quark MoE schemes by @TamirBaydasov in <a href="https://github.com/sgl-project/sglang/pull/18252">https://github.com/sgl-project/sglang/pull/18252</a></li>
+<li>[Feature] Implement update_weights_from_disk for SGLang-D (Diffusion … by @dreamyang-liu in <a href="https://github.com/sgl-project/sglang/pull/18306">https://github.com/sgl-project/sglang/pull/18306</a></li>
+<li>[Doc] Add <code>flashinfer_deepgemm</code> to <code>--fp8-gemm-backend</code> by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18982">https://github.com/sgl-project/sglang/pull/18982</a></li>
+<li>Fix flaky Qwen3-Next KL divergence tests by reverting mamba slot release by @alisonshao in <a href="https://github.com/sgl-project/sglang/pull/18910">https://github.com/sgl-project/sglang/pull/18910</a></li>
+<li>[AMD]  Fix mi35x dsv32 mtp nightly by @bingxche in <a href="https://github.com/sgl-project/sglang/pull/18978">https://github.com/sgl-project/sglang/pull/18978</a></li>
+<li>Add batched zero copy to NIXL backend by @hxieustc in <a href="https://github.com/sgl-project/sglang/pull/18850">https://github.com/sgl-project/sglang/pull/18850</a></li>
+<li>[Qwen3.5] Enable nvfp4 checkpoint by @hlu1 in <a href="https://github.com/sgl-project/sglang/pull/18937">https://github.com/sgl-project/sglang/pull/18937</a></li>
+<li>Fix PCG MoE Error by @Oasis-Git in <a href="https://github.com/sgl-project/sglang/pull/17739">https://github.com/sgl-project/sglang/pull/17739</a></li>
+<li>Feat/add fi selective state update kernel call by @shaharmor98 in <a href="https://github.com/sgl-project/sglang/pull/18070">https://github.com/sgl-project/sglang/pull/18070</a></li>
+<li>[RadixTree][4/N Refactor]: Move available_and_evictable_str to individual radix cache classes by @pansicheng in <a href="https://github.com/sgl-project/sglang/pull/17852">https://github.com/sgl-project/sglang/pull/17852</a></li>
+<li>[Diffusion] Refactor diffusion triton kernels by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18966">https://github.com/sgl-project/sglang/pull/18966</a></li>
+<li>[Fix] Fix rank used in parallel executor when enable_cfg_parallel is false by @Prozac614 in <a href="https://github.com/sgl-project/sglang/pull/18975">https://github.com/sgl-project/sglang/pull/18975</a></li>
+<li>[Diffusion] [NPU] Enable profiler on NPU by @Makcum888e in <a href="https://github.com/sgl-project/sglang/pull/17807">https://github.com/sgl-project/sglang/pull/17807</a></li>
+<li>Move lora request validation to tokenizer_manager from server by @satyamk7054 in <a href="https://github.com/sgl-project/sglang/pull/18962">https://github.com/sgl-project/sglang/pull/18962</a></li>
+<li>[diffusion] chore: improve memory usage on consumer-level GPU by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18997">https://github.com/sgl-project/sglang/pull/18997</a></li>
+<li>[diffusion] CI: enable warmup as default by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/19010">https://github.com/sgl-project/sglang/pull/19010</a></li>
+<li>Add SDAR model support by @chengshuang18 in <a href="https://github.com/sgl-project/sglang/pull/18318">https://github.com/sgl-project/sglang/pull/18318</a></li>
+<li>[spec v2]Fix torch gc of future indices by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/18958">https://github.com/sgl-project/sglang/pull/18958</a></li>
+<li>Revert “Add SDAR model support” by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/19032">https://github.com/sgl-project/sglang/pull/19032</a></li>
+<li>Register tensors with symmetric memory for qwen by @nvcastet in <a href="https://github.com/sgl-project/sglang/pull/18643">https://github.com/sgl-project/sglang/pull/18643</a></li>
+<li>Fix long prompt KV allocation by falling back to torch native APIs when exceeding Triton tensor limit by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/18250">https://github.com/sgl-project/sglang/pull/18250</a></li>
+<li>Fix flashinfer autotune to only wrap run_once() by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/19004">https://github.com/sgl-project/sglang/pull/19004</a></li>
+<li>Support cleanup previous dumps in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19013">https://github.com/sgl-project/sglang/pull/19013</a></li>
+<li>Hint users when wrongly execute it with partial ranks in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19014">https://github.com/sgl-project/sglang/pull/19014</a></li>
+<li>Support captured dump output and console output control in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19017">https://github.com/sgl-project/sglang/pull/19017</a></li>
+<li>Support filtering labels in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19018">https://github.com/sgl-project/sglang/pull/19018</a></li>
+<li>Enhance configure and env parsing in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19034">https://github.com/sgl-project/sglang/pull/19034</a></li>
+<li>Support resetting and enhance HTTP endpoints for dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19046">https://github.com/sgl-project/sglang/pull/19046</a></li>
+<li>Support using SGLang port in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19038">https://github.com/sgl-project/sglang/pull/19038</a></li>
+<li>Feature/sdar support by @chengshuang18 in <a href="https://github.com/sgl-project/sglang/pull/19044">https://github.com/sgl-project/sglang/pull/19044</a></li>
+<li>[Fix][Qwen3.5] Pass max_mamba_cache_size to mamba pool in disaggregation decode path by @YAMY1234 in <a href="https://github.com/sgl-project/sglang/pull/19002">https://github.com/sgl-project/sglang/pull/19002</a></li>
+<li>[AMD] Replace msgpack with msgspec in MORI-IO by @Duyi-Wang in <a href="https://github.com/sgl-project/sglang/pull/19007">https://github.com/sgl-project/sglang/pull/19007</a></li>
+<li>fix lint on main by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/19052">https://github.com/sgl-project/sglang/pull/19052</a></li>
+<li>feature: docker patch workflow by @dougyster in <a href="https://github.com/sgl-project/sglang/pull/19025">https://github.com/sgl-project/sglang/pull/19025</a></li>
+<li>Fix lint on main by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19054">https://github.com/sgl-project/sglang/pull/19054</a></li>
+<li>[diffusion] logging: log available mem when each stage starts in debug level by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18998">https://github.com/sgl-project/sglang/pull/18998</a></li>
+<li>[jit kernel] Support per_token_group_quant_8bit jit kernel by @yuan-luo in <a href="https://github.com/sgl-project/sglang/pull/18905">https://github.com/sgl-project/sglang/pull/18905</a></li>
+<li>[diffusion] feat: support nunchaku for Z-Image-Turbo and flux.1 (int4) by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/18959">https://github.com/sgl-project/sglang/pull/18959</a></li>
+<li>Fix NSA FP8 KV cache path for both-trtllm MHA one-shot by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18931">https://github.com/sgl-project/sglang/pull/18931</a></li>
+<li>[Fix] DO NOT skip save_kv_cache for dllm by @DarkSharpness in <a href="https://github.com/sgl-project/sglang/pull/19020">https://github.com/sgl-project/sglang/pull/19020</a></li>
+<li>[Fix] Run FlashInfer autotune on non-default stream for NCCL 2.29+ compatibility by @nvcastet in <a href="https://github.com/sgl-project/sglang/pull/18987">https://github.com/sgl-project/sglang/pull/18987</a></li>
+<li>Fix adjust_num_token_non_padded_for_attn_tp returning CPU tensor by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/19051">https://github.com/sgl-project/sglang/pull/19051</a></li>
+<li>[AMD] support two batch overlapping for mori ep by @billishyahao in <a href="https://github.com/sgl-project/sglang/pull/17953">https://github.com/sgl-project/sglang/pull/17953</a></li>
+<li>[feat] feat: support swa in trtllm_mha by @LuYanFCP in <a href="https://github.com/sgl-project/sglang/pull/18970">https://github.com/sgl-project/sglang/pull/18970</a></li>
+<li>Add generated-shared-prefix dataset in bench_one_batch by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/18986">https://github.com/sgl-project/sglang/pull/18986</a></li>
+<li>[GPT-OSS] support fp8 online quantization for gpt-oss bf16 by @zminglei in <a href="https://github.com/sgl-project/sglang/pull/18988">https://github.com/sgl-project/sglang/pull/18988</a></li>
+<li>Refactor graph input buffers by @ch-wan in <a href="https://github.com/sgl-project/sglang/pull/18991">https://github.com/sgl-project/sglang/pull/18991</a></li>
+<li>[DSv32] Fix MTP and CP compatability by @vladnosiv in <a href="https://github.com/sgl-project/sglang/pull/19062">https://github.com/sgl-project/sglang/pull/19062</a></li>
+<li>Fix bug in symm mem pre-allocation default by @nvcastet in <a href="https://github.com/sgl-project/sglang/pull/19082">https://github.com/sgl-project/sglang/pull/19082</a></li>
+<li>Remove error dllm and diffusion doc in basic_useage by @zhaochenyang20 in <a href="https://github.com/sgl-project/sglang/pull/19105">https://github.com/sgl-project/sglang/pull/19105</a></li>
+<li>[Quantization] Support config.json quantization_config format, fix exclude_modules matching, and fix KV cache scale loading for Nemotron by @danielafrimi in <a href="https://github.com/sgl-project/sglang/pull/18546">https://github.com/sgl-project/sglang/pull/18546</a></li>
+<li>[diffusion] refactor: reduce redundancy and improve stage api by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/19060">https://github.com/sgl-project/sglang/pull/19060</a></li>
+<li>[FEAT] Add Anthropic compatible API endpoint by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/18630">https://github.com/sgl-project/sglang/pull/18630</a></li>
+<li>[diffusion] feat: support passing component path via server args by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/19108">https://github.com/sgl-project/sglang/pull/19108</a></li>
+<li>[Feature] rewrite rope kernel; remove flashinfer dependencies by @DarkSharpness in <a href="https://github.com/sgl-project/sglang/pull/18844">https://github.com/sgl-project/sglang/pull/18844</a></li>
+<li>[Diffusion] Restruct and clean Diffusion rotary embedding by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/19064">https://github.com/sgl-project/sglang/pull/19064</a></li>
+<li>fix tool handling in OpenAIServingChat by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/18996">https://github.com/sgl-project/sglang/pull/18996</a></li>
+<li>fix KimiK2Detector regex patterns with re.DOTALL by @JustinTong0323 in <a href="https://github.com/sgl-project/sglang/pull/19120">https://github.com/sgl-project/sglang/pull/19120</a></li>
+<li>[sgl] view could hold the memory too long and introduced large memory by @bixue2010 in <a href="https://github.com/sgl-project/sglang/pull/19109">https://github.com/sgl-project/sglang/pull/19109</a></li>
+<li>[FlashInfer] Switch FlashInfer allreduce fusion to unified API by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18341">https://github.com/sgl-project/sglang/pull/18341</a></li>
+<li>[Refactor] Benchmark Phase 1: extract utils and datasets from bench_serving by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/19077">https://github.com/sgl-project/sglang/pull/19077</a></li>
+<li>[Benchmark] Remove re-exports from bench_serving.py by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/19130">https://github.com/sgl-project/sglang/pull/19130</a></li>
+<li>Revert “[jit kernel] Support per_token_group_quant_8bit jit kernel” by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/19131">https://github.com/sgl-project/sglang/pull/19131</a></li>
+<li>Fix dev Docker build OOM on ARM64 cu13 by adding docker system prune by @Kangyan-Zhou in <a href="https://github.com/sgl-project/sglang/pull/18947">https://github.com/sgl-project/sglang/pull/18947</a></li>
+<li>[Fix] Quick fix for int32 overflow in Mooncakes’ send_kvcache_slice by @YAMY1234 in <a href="https://github.com/sgl-project/sglang/pull/19076">https://github.com/sgl-project/sglang/pull/19076</a></li>
+<li>[diffusion] Adapt FP8 linear to sgld feature (Rebase) by @fy1214 in <a href="https://github.com/sgl-project/sglang/pull/17023">https://github.com/sgl-project/sglang/pull/17023</a></li>
+<li>[BUG] [DLLM] Missing max_running_requests value by @blazingbhavneek in <a href="https://github.com/sgl-project/sglang/pull/18740">https://github.com/sgl-project/sglang/pull/18740</a></li>
+<li>Fix spec v2+dp attention in nsa backend by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/19134">https://github.com/sgl-project/sglang/pull/19134</a></li>
+<li>[Qwen3-Next] Enable fused_qkvzba_split_reshape_cat also for prefill by @YAMY1234 in <a href="https://github.com/sgl-project/sglang/pull/18917">https://github.com/sgl-project/sglang/pull/18917</a></li>
+<li>[PD] Change bootstrap_room metadata dtype from int64 to uint64 by @ShangmingCai in <a href="https://github.com/sgl-project/sglang/pull/19141">https://github.com/sgl-project/sglang/pull/19141</a></li>
+<li>Refactor dumper and change on_forward_pass_start API by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19065">https://github.com/sgl-project/sglang/pull/19065</a></li>
+<li>Support non-intrusive dumping in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19068">https://github.com/sgl-project/sglang/pull/19068</a></li>
+<li>Support enabling partial non intrusive dump in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19069">https://github.com/sgl-project/sglang/pull/19069</a></li>
+<li>Auto annotate context in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19071">https://github.com/sgl-project/sglang/pull/19071</a></li>
+<li>Extract framework plugins in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19072">https://github.com/sgl-project/sglang/pull/19072</a></li>
+<li>Enhance hook mechanism in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19073">https://github.com/sgl-project/sglang/pull/19073</a></li>
+<li>Configure and call dumper in main SGLang logic by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19093">https://github.com/sgl-project/sglang/pull/19093</a></li>
+<li>Support multi colocated dumper, named exp cleanup, argparse config by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19094">https://github.com/sgl-project/sglang/pull/19094</a></li>
+<li>Enhance reset, states, http in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19095">https://github.com/sgl-project/sglang/pull/19095</a></li>
+<li>Fix wrongly large dumped file and handle non intrusive hook reset in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19124">https://github.com/sgl-project/sglang/pull/19124</a></li>
+<li>[DSv32] [GLM5] Improve Model Quality by Avoiding FP32 Precision Loss in <code>weights_proj</code> by @zianglih in <a href="https://github.com/sgl-project/sglang/pull/19041">https://github.com/sgl-project/sglang/pull/19041</a></li>
+<li>Support kwargs and megatron core tensor parsing in dumper by @fzyzcjy in <a href="https://github.com/sgl-project/sglang/pull/19138">https://github.com/sgl-project/sglang/pull/19138</a></li>
+<li>[diffusion] chore: minor cleanups by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/19123">https://github.com/sgl-project/sglang/pull/19123</a></li>
+<li>[diffusion] CI: relax perf check threshold by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/19154">https://github.com/sgl-project/sglang/pull/19154</a></li>
+<li>Fix corrupted JSONL metrics file due to concurrent writes by @talorabr in <a href="https://github.com/sgl-project/sglang/pull/19011">https://github.com/sgl-project/sglang/pull/19011</a></li>
+<li>[diffusion] refactor: rename quantized model path server arg by @mickqian in <a href="https://github.com/sgl-project/sglang/pull/19142">https://github.com/sgl-project/sglang/pull/19142</a></li>
+<li>Revert “[AMD] support two batch overlapping for mori ep #17953” by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/19161">https://github.com/sgl-project/sglang/pull/19161</a></li>
+<li>fix(diffusion): enforce strict input_reference validation for T2V by @Ratish1 in <a href="https://github.com/sgl-project/sglang/pull/14825">https://github.com/sgl-project/sglang/pull/14825</a></li>
+<li>Revert “Refactor graph input buffers (#18991)” by @Fridge003 in <a href="https://github.com/sgl-project/sglang/pull/19173">https://github.com/sgl-project/sglang/pull/19173</a></li>
+<li>Update rocm7.2 Dockerfile to install amdsmi for QuickReduce Initialization by @clintg6 in <a href="https://github.com/sgl-project/sglang/pull/19091">https://github.com/sgl-project/sglang/pull/19091</a></li>
+<li>Fix bench_one_batch_server by moving the print statements by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/19175">https://github.com/sgl-project/sglang/pull/19175</a></li>
+<li>[AMD] ENV Flags tuning and cleanup by @HaiShaw in <a href="https://github.com/sgl-project/sglang/pull/19176">https://github.com/sgl-project/sglang/pull/19176</a></li>
+<li>[Diffusion] Detect Flux2 custom VAE path from component_paths by @ChangyiYang in <a href="https://github.com/sgl-project/sglang/pull/19170">https://github.com/sgl-project/sglang/pull/19170</a></li>
+<li>[ROCm] Use unreg path for custom all-reduce during CUDA graph capture by @zyzshishui in <a href="https://github.com/sgl-project/sglang/pull/19162">https://github.com/sgl-project/sglang/pull/19162</a></li>
+<li>Reorganize topk logic to clean up code and expose logical experts by @ocss884 in <a href="https://github.com/sgl-project/sglang/pull/16945">https://github.com/sgl-project/sglang/pull/16945</a></li>
+<li>Use single mma warp group for short q_len in FA to optimize decoding performance by @Qiaolin-Yu in <a href="https://github.com/sgl-project/sglang/pull/18985">https://github.com/sgl-project/sglang/pull/18985</a></li>
+<li>[NPU] bump sgl-kernel-npu to 2026.02.01.post2 by @iforgetmyname in <a href="https://github.com/sgl-project/sglang/pull/19178">https://github.com/sgl-project/sglang/pull/19178</a></li>
+<li>[Refactor] Split rotary_embedding.py into a modular package by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/19144">https://github.com/sgl-project/sglang/pull/19144</a></li>
+<li>[Diffusion] Match rotary_embedding module name style by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/19179">https://github.com/sgl-project/sglang/pull/19179</a></li>
+<li>[Kernel Slimming] Migrate AWQ marlin repack kernel to JIT by @celve in <a href="https://github.com/sgl-project/sglang/pull/18949">https://github.com/sgl-project/sglang/pull/18949</a></li>
+<li>[PD-Disagg] Support query dp rank from bootstrap server. by @hnyls2002 in <a href="https://github.com/sgl-project/sglang/pull/19168">https://github.com/sgl-project/sglang/pull/19168</a></li>
+<li>add new ci user by @narutolhy in <a href="https://github.com/sgl-project/sglang/pull/19133">https://github.com/sgl-project/sglang/pull/19133</a></li>
+</ul>
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+<li>@00fish0 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17265">https://github.com/sgl-project/sglang/pull/17265</a></li>
+<li>@1195343015 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18535">https://github.com/sgl-project/sglang/pull/18535</a></li>
+<li>@1am9trash made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18488">https://github.com/sgl-project/sglang/pull/18488</a></li>
+<li>@22dimensions made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18017">https://github.com/sgl-project/sglang/pull/18017</a></li>
+<li>@2JooYeon made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18552">https://github.com/sgl-project/sglang/pull/18552</a></li>
+<li>@Aphoh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18508">https://github.com/sgl-project/sglang/pull/18508</a></li>
+<li>@BJWang-ant made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16043">https://github.com/sgl-project/sglang/pull/16043</a></li>
+<li>@BourneSun0527 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18553">https://github.com/sgl-project/sglang/pull/18553</a></li>
+<li>@Ch3ngY1 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18163">https://github.com/sgl-project/sglang/pull/18163</a></li>
+<li>@ChangyiYang made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18883">https://github.com/sgl-project/sglang/pull/18883</a></li>
+<li>@CloudRipple made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17704">https://github.com/sgl-project/sglang/pull/17704</a></li>
+<li>@DiweiSun made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/11712">https://github.com/sgl-project/sglang/pull/11712</a></li>
+<li>@DotSlash-A made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16969">https://github.com/sgl-project/sglang/pull/16969</a></li>
+<li>@Duyi-Wang made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18437">https://github.com/sgl-project/sglang/pull/18437</a></li>
+<li>@EduardDurech made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/15682">https://github.com/sgl-project/sglang/pull/15682</a></li>
+<li>@Estrella-xx made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17811">https://github.com/sgl-project/sglang/pull/17811</a></li>
+<li>@Evrard-Nil made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17813">https://github.com/sgl-project/sglang/pull/17813</a></li>
+<li>@FrankMinions made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18804">https://github.com/sgl-project/sglang/pull/18804</a></li>
+<li>@HaiShaw made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18101">https://github.com/sgl-project/sglang/pull/18101</a></li>
+<li>@HanHan009527 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18091">https://github.com/sgl-project/sglang/pull/18091</a></li>
+<li>@HandH1998 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16892">https://github.com/sgl-project/sglang/pull/16892</a></li>
+<li>@Hide-on-bushsh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17922">https://github.com/sgl-project/sglang/pull/17922</a></li>
+<li>@JD-ETH made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18694">https://github.com/sgl-project/sglang/pull/18694</a></li>
+<li>@JiaruiChang5268 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17007">https://github.com/sgl-project/sglang/pull/17007</a></li>
+<li>@Lollipop made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18024">https://github.com/sgl-project/sglang/pull/18024</a></li>
+<li>@LuYanFCP made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18970">https://github.com/sgl-project/sglang/pull/18970</a></li>
+<li>@Lzy17 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17183">https://github.com/sgl-project/sglang/pull/17183</a></li>
+<li>@Mahdi-CV made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17040">https://github.com/sgl-project/sglang/pull/17040</a></li>
+<li>@Makcum888e made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17584">https://github.com/sgl-project/sglang/pull/17584</a></li>
+<li>@McZyWu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16866">https://github.com/sgl-project/sglang/pull/16866</a></li>
+<li>@MikkoParkkola made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17816">https://github.com/sgl-project/sglang/pull/17816</a></li>
+<li>@Nickcp39 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18739">https://github.com/sgl-project/sglang/pull/18739</a></li>
+<li>@PeaBrane made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18944">https://github.com/sgl-project/sglang/pull/18944</a></li>
+<li>@RangerCD made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17929">https://github.com/sgl-project/sglang/pull/17929</a></li>
+<li>@RubiaCx made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18026">https://github.com/sgl-project/sglang/pull/18026</a></li>
+<li>@RunningLeon made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17939">https://github.com/sgl-project/sglang/pull/17939</a></li>
+<li>@Simon-Li made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17430">https://github.com/sgl-project/sglang/pull/17430</a></li>
+<li>@SoluMilken made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18860">https://github.com/sgl-project/sglang/pull/18860</a></li>
+<li>@Sugar920 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17952">https://github.com/sgl-project/sglang/pull/17952</a></li>
+<li>@TTThanos made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17866">https://github.com/sgl-project/sglang/pull/17866</a></li>
+<li>@TamirBaydasov made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17503">https://github.com/sgl-project/sglang/pull/17503</a></li>
+<li>@WiwilZ made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18787">https://github.com/sgl-project/sglang/pull/18787</a></li>
+<li>@YazhiGao made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18743">https://github.com/sgl-project/sglang/pull/18743</a></li>
+<li>@ZhenshengWu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17540">https://github.com/sgl-project/sglang/pull/17540</a></li>
+<li>@ZiguanWang made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16225">https://github.com/sgl-project/sglang/pull/16225</a></li>
+<li>@aaaandychen made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16781">https://github.com/sgl-project/sglang/pull/16781</a></li>
+<li>@airMeng made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/13561">https://github.com/sgl-project/sglang/pull/13561</a></li>
+<li>@ajpqs made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/14765">https://github.com/sgl-project/sglang/pull/14765</a></li>
+<li>@akao-amd made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18698">https://github.com/sgl-project/sglang/pull/18698</a></li>
+<li>@akhilg-nv made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16758">https://github.com/sgl-project/sglang/pull/16758</a></li>
+<li>@amote-i made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17573">https://github.com/sgl-project/sglang/pull/17573</a></li>
+<li>@andyluo7 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18753">https://github.com/sgl-project/sglang/pull/18753</a></li>
+<li>@ant-yy made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18598">https://github.com/sgl-project/sglang/pull/18598</a></li>
+<li>@aurickq made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18152">https://github.com/sgl-project/sglang/pull/18152</a></li>
+<li>@billishyahao made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18320">https://github.com/sgl-project/sglang/pull/18320</a></li>
+<li>@bingps made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16907">https://github.com/sgl-project/sglang/pull/16907</a></li>
+<li>@bixue2010 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17781">https://github.com/sgl-project/sglang/pull/17781</a></li>
+<li>@blake-snc made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18751">https://github.com/sgl-project/sglang/pull/18751</a></li>
+<li>@blazingbhavneek made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18687">https://github.com/sgl-project/sglang/pull/18687</a></li>
+<li>@bledden made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17972">https://github.com/sgl-project/sglang/pull/17972</a></li>
+<li>@cctry made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17850">https://github.com/sgl-project/sglang/pull/17850</a></li>
+<li>@celve made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17889">https://github.com/sgl-project/sglang/pull/17889</a></li>
+<li>@chanh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18009">https://github.com/sgl-project/sglang/pull/18009</a></li>
+<li>@chengshuang18 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18318">https://github.com/sgl-project/sglang/pull/18318</a></li>
+<li>@chenxu214 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17511">https://github.com/sgl-project/sglang/pull/17511</a></li>
+<li>@cicirori made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18064">https://github.com/sgl-project/sglang/pull/18064</a></li>
+<li>@clintg6 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/19091">https://github.com/sgl-project/sglang/pull/19091</a></li>
+<li>@cswuyg made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17974">https://github.com/sgl-project/sglang/pull/17974</a></li>
+<li>@debo3 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18396">https://github.com/sgl-project/sglang/pull/18396</a></li>
+<li>@dongjiyingdjy made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17213">https://github.com/sgl-project/sglang/pull/17213</a></li>
+<li>@dreamyang-liu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18306">https://github.com/sgl-project/sglang/pull/18306</a></li>
+<li>@dutsc made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17301">https://github.com/sgl-project/sglang/pull/17301</a></li>
+<li>@edwardzjl made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18171">https://github.com/sgl-project/sglang/pull/18171</a></li>
+<li>@fsygd made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17751">https://github.com/sgl-project/sglang/pull/17751</a></li>
+<li>@fy1214 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17023">https://github.com/sgl-project/sglang/pull/17023</a></li>
+<li>@gaopengff made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/14592">https://github.com/sgl-project/sglang/pull/14592</a></li>
+<li>@gingerXue made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17499">https://github.com/sgl-project/sglang/pull/17499</a></li>
+<li>@glenliu21 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17464">https://github.com/sgl-project/sglang/pull/17464</a></li>
+<li>@gongyisheng made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17690">https://github.com/sgl-project/sglang/pull/17690</a></li>
+<li>@hammersam made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17747">https://github.com/sgl-project/sglang/pull/17747</a></li>
+<li>@haojin2 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18045">https://github.com/sgl-project/sglang/pull/18045</a></li>
+<li>@haowen-han made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18604">https://github.com/sgl-project/sglang/pull/18604</a></li>
+<li>@happierpig made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18821">https://github.com/sgl-project/sglang/pull/18821</a></li>
+<li>@hsuchifeng made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17744">https://github.com/sgl-project/sglang/pull/17744</a></li>
+<li>@hxieustc made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18850">https://github.com/sgl-project/sglang/pull/18850</a></li>
+<li>@jhinpan made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17863">https://github.com/sgl-project/sglang/pull/17863</a></li>
+<li>@jianyingzhu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/14717">https://github.com/sgl-project/sglang/pull/14717</a></li>
+<li>@jiashaokun-1 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17025">https://github.com/sgl-project/sglang/pull/17025</a></li>
+<li>@joearedmond made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17786">https://github.com/sgl-project/sglang/pull/17786</a></li>
+<li>@kaixih made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18025">https://github.com/sgl-project/sglang/pull/18025</a></li>
+<li>@kartikx made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17273">https://github.com/sgl-project/sglang/pull/17273</a></li>
+<li>@klhhhhh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18131">https://github.com/sgl-project/sglang/pull/18131</a></li>
+<li>@klshuster made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18273">https://github.com/sgl-project/sglang/pull/18273</a></li>
+<li>@koush made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18011">https://github.com/sgl-project/sglang/pull/18011</a></li>
+<li>@kuafou made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18207">https://github.com/sgl-project/sglang/pull/18207</a></li>
+<li>@laixinn made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17065">https://github.com/sgl-project/sglang/pull/17065</a></li>
+<li>@lawtherWu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/15381">https://github.com/sgl-project/sglang/pull/15381</a></li>
+<li>@lingebeng made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17699">https://github.com/sgl-project/sglang/pull/17699</a></li>
+<li>@luke396 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17118">https://github.com/sgl-project/sglang/pull/17118</a></li>
+<li>@maning00 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/14626">https://github.com/sgl-project/sglang/pull/14626</a></li>
+<li>@mansoor-s made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17434">https://github.com/sgl-project/sglang/pull/17434</a></li>
+<li>@maocheng23 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18512">https://github.com/sgl-project/sglang/pull/18512</a></li>
+<li>@mattteochen made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18000">https://github.com/sgl-project/sglang/pull/18000</a></li>
+<li>@mengchengTang made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17545">https://github.com/sgl-project/sglang/pull/17545</a></li>
+<li>@michaelzhang-ai made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17523">https://github.com/sgl-project/sglang/pull/17523</a></li>
+<li>@mmangkad made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17662">https://github.com/sgl-project/sglang/pull/17662</a></li>
+<li>@muse-coder made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18496">https://github.com/sgl-project/sglang/pull/18496</a></li>
+<li>@nanjiangwill made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17286">https://github.com/sgl-project/sglang/pull/17286</a></li>
+<li>@nono-Sang made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17140">https://github.com/sgl-project/sglang/pull/17140</a></li>
+<li>@nvcastet made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17089">https://github.com/sgl-project/sglang/pull/17089</a></li>
+<li>@ovidiusm made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17654">https://github.com/sgl-project/sglang/pull/17654</a></li>
+<li>@pansicheng made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18155">https://github.com/sgl-project/sglang/pull/18155</a></li>
+<li>@ping1jing2 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18495">https://github.com/sgl-project/sglang/pull/18495</a></li>
+<li>@pokymono made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17888">https://github.com/sgl-project/sglang/pull/17888</a></li>
+<li>@polisettyvarma made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/10021">https://github.com/sgl-project/sglang/pull/10021</a></li>
+<li>@qianyue76 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18095">https://github.com/sgl-project/sglang/pull/18095</a></li>
+<li>@qmzznbxhl made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18705">https://github.com/sgl-project/sglang/pull/18705</a></li>
+<li>@raayandhar made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/13313">https://github.com/sgl-project/sglang/pull/13313</a></li>
+<li>@realray808 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18888">https://github.com/sgl-project/sglang/pull/18888</a></li>
+<li>@rootonchair made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18560">https://github.com/sgl-project/sglang/pull/18560</a></li>
+<li>@shaharmor98 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17700">https://github.com/sgl-project/sglang/pull/17700</a></li>
+<li>@shvmjndl made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17806">https://github.com/sgl-project/sglang/pull/17806</a></li>
+<li>@sleepcoo made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/14607">https://github.com/sgl-project/sglang/pull/14607</a></li>
+<li>@sogalin made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17656">https://github.com/sgl-project/sglang/pull/17656</a></li>
+<li>@strgrb made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17508">https://github.com/sgl-project/sglang/pull/17508</a></li>
+<li>@talorabr made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/19011">https://github.com/sgl-project/sglang/pull/19011</a></li>
+<li>@tc-mb made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/9610">https://github.com/sgl-project/sglang/pull/9610</a></li>
+<li>@tianchongchong made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17858">https://github.com/sgl-project/sglang/pull/17858</a></li>
+<li>@tie-pilot-qxw made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17507">https://github.com/sgl-project/sglang/pull/17507</a></li>
+<li>@tom-zju made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18459">https://github.com/sgl-project/sglang/pull/18459</a></li>
+<li>@triple-mu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17834">https://github.com/sgl-project/sglang/pull/17834</a></li>
+<li>@tugot17 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17777">https://github.com/sgl-project/sglang/pull/17777</a></li>
+<li>@vedantjh2 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17780">https://github.com/sgl-project/sglang/pull/17780</a></li>
+<li>@wangfakang made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17756">https://github.com/sgl-project/sglang/pull/17756</a></li>
+<li>@wenchen76 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/7839">https://github.com/sgl-project/sglang/pull/7839</a></li>
+<li>@xiaobaicxy made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18657">https://github.com/sgl-project/sglang/pull/18657</a></li>
+<li>@xiaoweiw-nv made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17198">https://github.com/sgl-project/sglang/pull/17198</a></li>
+<li>@xiaoyewww made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18317">https://github.com/sgl-project/sglang/pull/18317</a></li>
+<li>@xu-yfei made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17076">https://github.com/sgl-project/sglang/pull/17076</a></li>
+<li>@xvyaward made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16294">https://github.com/sgl-project/sglang/pull/16294</a></li>
+<li>@xyjixyjixyji made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17347">https://github.com/sgl-project/sglang/pull/17347</a></li>
+<li>@ycchen-tw made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16521">https://github.com/sgl-project/sglang/pull/16521</a></li>
+<li>@yefei12 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/15119">https://github.com/sgl-project/sglang/pull/15119</a></li>
+<li>@yingluosanqian made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18038">https://github.com/sgl-project/sglang/pull/18038</a></li>
+<li>@yunkchen made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17129">https://github.com/sgl-project/sglang/pull/17129</a></li>
+<li>@zack041 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18240">https://github.com/sgl-project/sglang/pull/18240</a></li>
+<li>@zackyoray made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17146">https://github.com/sgl-project/sglang/pull/17146</a></li>
+<li>@zhangxiaolei123456 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18833">https://github.com/sgl-project/sglang/pull/18833</a></li>
+<li>@zhangxin81 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/16725">https://github.com/sgl-project/sglang/pull/16725</a></li>
+<li>@zhaochenyang20 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18390">https://github.com/sgl-project/sglang/pull/18390</a></li>
+<li>@zhaohaidao made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18096">https://github.com/sgl-project/sglang/pull/18096</a></li>
+<li>@zhendonghua made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17891">https://github.com/sgl-project/sglang/pull/17891</a></li>
+<li>@zianglih made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17688">https://github.com/sgl-project/sglang/pull/17688</a></li>
+<li>@zijiexia made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17663">https://github.com/sgl-project/sglang/pull/17663</a></li>
+<li>@zju-stu-lizheng made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/17624">https://github.com/sgl-project/sglang/pull/17624</a></li>
+<li>@zwang86 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/18225">https://github.com/sgl-project/sglang/pull/18225</a></li>
+<li>@zzhbrr made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/10707">https://github.com/sgl-project/sglang/pull/10707</a></li>
+<li>@zzzzzzzxh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/15363">https://github.com/sgl-project/sglang/pull/15363</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/sgl-project/sglang/compare/v0.5.8...v0.5.9">https://github.com/sgl-project/sglang/compare/v0.5.8…v0.5.9</a></p>
+<hr>
+<blockquote>
+<p><strong>Source</strong> <a href="https://github.com/sgl-project/sglang">sgl-project/sglang</a> · <code>v0.5.9</code> · 2026-02-24 · <a href="https://github.com/sgl-project/sglang/releases/tag/v0.5.9">upstream release</a></p>
+</blockquote>
+<p><em>Mirrored verbatim for indexing. All rights belong to the upstream project.</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> Release notes come from the upstream project. We organize and connect them so you can compare versions at a glance. All content rights belong to the original authors. </p> <nav class="pager" aria-label="Release navigation"> <a href="/releases/sglang/0.5.10"> <span class="k">← Next</span> <span class="t">v0.5.10</span> </a> <a href="/releases/sglang/0.5.8"> <span class="k">Previous →</span> <span class="t">v0.5.8</span> </a> </nav> <aside class="ad-slot" aria-label="Advertisement" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>Advertisement</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/sgl-project/sglang/releases/tag/v0.5.9" target="_blank" rel="noopener"> <span>Original on GitHub</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener"> <span>sgl-project/sglang</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">On this page</div> <nav> <a href="#new-model-support" class>New Model Support</a><a href="#sglang-diffusion" class>SGLang-Diffusion</a><a href="#performance" class>Performance</a><a href="#prefill-decode-disaggregation" class>Prefill-Decode Disaggregation</a><a href="#diffusion-llm-dllm" class>Diffusion LLM (dLLM)</a><a href="#speculative-decoding" class>Speculative Decoding</a><a href="#dependencies" class>Dependencies</a><a href="#amd-hardware" class>AMD Hardware</a><a href="#npuascend" class>NPU/Ascend</a><a href="#cpu-backend" class>CPU Backend</a><a href="#kernel-slimming" class>Kernel Slimming</a><a href="#documentation" class>Documentation</a><a href="#new-contributors" class>New Contributors</a> </nav> </div> <div class="rail-card"> <div class="rail-title">Version history</div> <ul class="rail-list"> <li> <a href="/releases/sglang/0.5.23"> <span class="v">v0.5.23</span> <span class="d">26-11-02</span> </a> </li><li> <a href="/releases/sglang/0.5.22"> <span class="v">v0.5.22</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/releases/sglang/0.5.21"> <span class="v">v0.5.21</span> <span class="d">26-10-02</span> </a> </li><li> <a href="/releases/sglang/0.5.20"> <span class="v">v0.5.20</span> <span class="d">26-09-18</span> </a> </li><li> <a href="/releases/sglang/0.5.19"> <span class="v">v0.5.19</span> <span class="d">26-09-05</span> </a> </li><li> <a href="/releases/sglang/0.5.18"> <span class="v">v0.5.18</span> <span class="d">26-08-22</span> </a> </li><li> <a href="/releases/sglang/0.5.17"> <span class="v">v0.5.17</span> <span class="d">26-08-08</span> </a> </li><li> <a href="/releases/sglang/0.5.16"> <span class="v">v0.5.16</span> <span class="d">26-07-25</span> </a> </li> </ul> <a href="/releases/sglang" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> View all 20 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>Open-source release intelligence, published daily.</p> </div> <div class="footer-col"> <h3>Track</h3> <ul> <li><a href="/releases">Releases</a></li> <li><a href="/projects">Projects</a></li> <li><a href="/releases.xml">RSS feed</a></li> </ul> </div> <div class="footer-col"> <h3>Archive</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">Chinese archive</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">Technical notes</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>Meta</h3> <ul> <li><a href="/privacy">Privacy policy</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release notes belong to their upstream projects.</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="Search releases"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="Search releases, projects, versions…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ navigate</span> <span>↵ open</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

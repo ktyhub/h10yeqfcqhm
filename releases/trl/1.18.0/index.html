@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>trl v1.18.0 — STAGS NextStack</title><meta name="description" content="AsyncGRPOTrainer runs GRPO with generation decoupled from training. A rollout worker in a background process streams completions from a vLLM server, scores them and queues them, while the training loop pulls from the…"><meta name="keywords" content="open source release notes, release tracker, changelog aggregator, breaking changes, deprecation tracker, Kafka releases, Spring Boot releases, Kubernetes releases"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/releases/trl/1.18.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/trl/1.18.0/"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/trl/trl_v1.18.0"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/trl/1.18.0/"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="trl v1.18.0 — STAGS NextStack"><meta property="og:description" content="AsyncGRPOTrainer runs GRPO with generation decoupled from training. A rollout worker in a background process streams completions from a vLLM server, scores them and queues them, while the training loop pulls from the…"><meta property="og:url" content="https://www.stags.cn/releases/trl/1.18.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"en","description":"STAGS indexes release notes from infrastructure and AI projects — breaking changes, deprecations and migrations — in one English-first feed.","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/releases/trl/1.18.0/#article","headline":"trl v1.18.0 release notes","datePublished":"2026-11-13","inLanguage":"en","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/trl"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">Skip to content</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/" class="brand" aria-label="STAGS NextStack — Open-source release intelligence"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/releases">Releases</a><a href="/projects">Projects</a><a href="/topics">Topics</a><a href="/compare">Compare</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="Open menu"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="Primary"> <a href="/releases" class="navmenu-item">Releases</a><a href="/projects" class="navmenu-item">Projects</a><a href="/topics" class="navmenu-item">Topics</a><a href="/compare" class="navmenu-item">Compare</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="Search releases"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">Search</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="Language"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">EN</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="Language"> <p class="langmenu-head">Language</p> <a class="langmenu-item" href="/releases/trl/1.18.0/" hreflang="en" lang="en" aria-current="true" data-on="true"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/trl/trl_v1.18.0" hreflang="zh-Hans" lang="zh-CN" data-on="false"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/trl/1.18.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/trl/1.18.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/trl/1.18.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/trl/1.18.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/trl/1.18.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a> <span class="sep">/</span> <a href="/releases">Releases</a> <span class="sep">/</span> <a href="/releases/trl">trl</a> </nav> <h1 class="detail-title"> <span class="p">trl</span> v1.18.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">minor</span> <span><span class="k">Published</span>Nov 13, 2026</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span class="k">Source</span>huggingface/trl </a>   <span class="sep" aria-hidden="true"></span> <a href="/zh/release_note/trl/trl_v1.18.0"> Chinese translation </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/releases/trl/1.18.0/">Copy link</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="trl-v1180">trl v1.18.0</h1>
+<img width="1672" height="941" alt="TRL v1 18 motorcycle release" src="https://github.com/user-attachments/assets/701191f4-46e1-45ea-95ad-60a18f19497a">
+<h2 id="features">Features</h2>
+<blockquote>
+<p>[!WARNING]
+The submodules of <code>trl.experimental.async_grpo</code> are gone. <code>from trl.experimental.async_grpo.async_grpo_config import AsyncGRPOConfig</code>, and imports from <code>async_rollout_worker</code>, <code>packing</code>, <code>vllm_client</code> or <code>weight_transfer</code> in that package, no longer work. Import the trainer from <code>trl</code>, the rollout loop from <code>trl.trainer.async_grpo_trainer</code>, and the vLLM client from <code>trl.generation.async_vllm_client</code> (renamed <code>AsyncVLLMClient</code>). <code>from trl.experimental.async_grpo import AsyncGRPOConfig, AsyncGRPOTrainer</code> still works, with a <code>FutureWarning</code>, until v2.0.0.</p>
+</blockquote>
+<h3 id="mortar_board-asyncgrpotrainer-is-now-a-stable-trainer">:mortar_board: <code>AsyncGRPOTrainer</code> is now a stable trainer</h3>
+<p><code>AsyncGRPOTrainer</code> runs GRPO with generation decoupled from training. A rollout worker in a background process streams completions from a vLLM server, scores them and queues them, while the training loop pulls from the queue and updates the model. Generation and gradient updates overlap instead of alternating, and the trainer sends its new weights to the server over NCCL every <code>weight_sync_steps</code> steps.</p>
+<p>In v1.17 it lived in <code>trl.experimental.async_grpo</code>: seven files, three ways to batch and bound generation, two constructor arguments for swapping out internals, and metric names that didn’t match GRPO’s. This cycle cleaned that up in about 40 PRs, tracked in <a href="https://github.com/huggingface/trl/issues/7841">https://github.com/huggingface/trl/issues/7841</a>: config renames, one timeout instead of three, one batching mode, generation held to <code>max_staleness</code>, GRPO’s metric names and init checks, a public rollout loop, and the two-file layout every stable trainer has. Then <a href="https://github.com/huggingface/trl/pull/8288">https://github.com/huggingface/trl/pull/8288</a> moved it to the top-level package.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># Before</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl.experimental.async_grpo </span><span style="color:#D73A49">import</span><span style="color:#24292E"> AsyncGRPOConfig, AsyncGRPOTrainer</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Now</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl </span><span style="color:#D73A49">import</span><span style="color:#24292E"> AsyncGRPOConfig, AsyncGRPOTrainer</span></span></code></pre>
+<p>The old path still works and emits a <code>FutureWarning</code> (removal in v2.0.0). The rollout loop extension point lives next to the trainer, <code>from trl.trainer.async_grpo_trainer import AsyncRolloutLoop, Rollout</code>, and isn’t exported from <code>trl</code>. The OpenEnv / Harbor harness stays experimental, as <code>HarnessAsyncGRPOTrainer</code> in <code>trl.experimental.async_grpo.openenv_harness</code>. Logged metric names can still change between releases.</p>
+<p>Quick start, from the <a href="https://huggingface.co/docs/trl/async_grpo_trainer">docs</a>. Install with <code>pip install trl[vllm,kernels,math_verify]</code>, then start the vLLM server on GPU 0:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#24292E">CUDA_VISIBLE_DEVICES</span><span style="color:#D73A49">=</span><span style="color:#032F62">0</span><span style="color:#24292E"> VLLM_SERVER_DEV_MODE</span><span style="color:#D73A49">=</span><span style="color:#032F62">1</span><span style="color:#6F42C1"> vllm</span><span style="color:#032F62"> serve</span><span style="color:#032F62"> Qwen/Qwen3.5-2B</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">    --weight-transfer-config</span><span style="color:#032F62"> '{"backend": "nccl"}'</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">    --logprobs-mode</span><span style="color:#032F62"> processed_logprobs</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">    --api-server-count</span><span style="color:#005CC5"> 8</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">    --max-model-len</span><span style="color:#005CC5"> 4096</span></span></code></pre>
+<p>Then train on GPU 1 with <code>CUDA_VISIBLE_DEVICES=1 python train_async_grpo.py</code>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># train_async_grpo.py</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> datasets </span><span style="color:#D73A49">import</span><span style="color:#24292E"> load_dataset</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl </span><span style="color:#D73A49">import</span><span style="color:#24292E"> AsyncGRPOTrainer</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl.rewards </span><span style="color:#D73A49">import</span><span style="color:#24292E"> accuracy_reward</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#005CC5"> __name__</span><span style="color:#D73A49"> ==</span><span style="color:#032F62"> "__main__"</span><span style="color:#24292E">:  </span><span style="color:#6A737D"># the rollout worker is a spawned process that re-imports this script</span></span>
+<span class="line"><span style="color:#24292E">    dataset </span><span style="color:#D73A49">=</span><span style="color:#24292E"> load_dataset(</span><span style="color:#032F62">"trl-lib/DeepMath-103K"</span><span style="color:#24292E">, </span><span style="color:#E36209">split</span><span style="color:#D73A49">=</span><span style="color:#032F62">"train"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    trainer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> AsyncGRPOTrainer(</span></span>
+<span class="line"><span style="color:#E36209">        model</span><span style="color:#D73A49">=</span><span style="color:#032F62">"Qwen/Qwen3.5-2B"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">        reward_funcs</span><span style="color:#D73A49">=</span><span style="color:#24292E">accuracy_reward,</span></span>
+<span class="line"><span style="color:#E36209">        train_dataset</span><span style="color:#D73A49">=</span><span style="color:#24292E">dataset,</span></span>
+<span class="line"><span style="color:#24292E">    )</span></span>
+<span class="line"><span style="color:#24292E">    trainer.train()</span></span></code></pre>
+<p>This exact example runs end to end. It’s a sanity check, not a speedup comparison:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model / data / reward</td>
+<td><code>Qwen/Qwen3.5-2B</code>, <code>trl-lib/DeepMath-103K</code>, <code>accuracy_reward</code></td>
+</tr>
+<tr>
+<td>Hardware</td>
+<td>2x B200: vLLM on one GPU, the trainer on the other</td>
+</tr>
+<tr>
+<td>Config</td>
+<td>default <code>AsyncGRPOConfig</code>: fp32 weights with bf16 autocast, 8 generations per prompt, up to 2048 completion tokens, <code>token_budget</code> read from <code>--max-model-len 4096</code></td>
+</tr>
+<tr>
+<td>Step time</td>
+<td>~7 s/step, after ~5 min of warmup</td>
+</tr>
+<tr>
+<td>Throughput</td>
+<td>~7k trained tokens/s</td>
+</tr>
+<tr>
+<td>Trainer vs vLLM log-prob gap</td>
+<td>0.007 to 0.02</td>
+</tr>
+</tbody>
+</table>
+<p>What the trainer covers, all documented on the <a href="https://huggingface.co/docs/trl/async_grpo_trainer">trainer page</a>:</p>
+<ul>
+<li><strong>Tree packing</strong>: each micro-batch row is a prefix trie, so a prompt shared by a group’s rollouts, or the history repeated by every turn of a multi-turn rollout, is forwarded once. Gated DeltaNet hybrids (Qwen3.5, Qwen3.6, Qwen3-Next) are supported.</li>
+<li><strong>Agent training</strong>: <code>tools</code>, <code>environment_factory</code> and multi-turn rollouts.</li>
+<li><strong>Score centering with masked importance sampling</strong> as the default objective (<code>score_centering=True</code>). <code>score_centering=False</code> gives GRPO’s clipped objective with the same masked ratio.</li>
+<li><strong>Zero-advantage group filtering</strong>: groups whose rewards are all equal are dropped before they cost a forward and backward, and their share is logged as <code>frac_zero_std_groups</code>.</li>
+<li><strong>Top-k / top-p renormalization</strong>: with <code>top_p</code> or <code>min_p</code>, set <code>top_k > 0</code> and the trainer normalizes its log-probs over the candidate set vLLM sampled from.</li>
+<li><strong>LoRA adapter sync</strong>: start vLLM with <code>--enable-lora</code> and each weight sync sends only the adapter (about 160 MB at <code>r=32</code>) instead of merged weights.</li>
+<li><strong>Custom rollout loops</strong>: subclass <code>AsyncRolloutLoop</code>, override <code>filter_prompt</code>, <code>generate_one</code>, <code>generate_one_turn</code>, <code>compute_advantages</code>, <code>setup</code> or <code>close</code>, and set it as <code>loop_cls</code> on a trainer subclass. The trainer’s constructor doesn’t change.</li>
+<li><strong>Metrics with reading guides</strong>: every logged metric has a one-line definition, plus guides for whether a run is generation-bound or trainer-bound and whether it is saturating or sampling duplicates.</li>
+<li><strong>Text-only training of VLM checkpoints</strong> (Qwen3.5, Qwen3.6, Qwen3-VL), with the vision tower frozen.</li>
+</ul>
+<p><strong>:boom: What this changes for you.</strong> If you used the experimental <code>AsyncGRPOTrainer</code> in v1.17, the breaking changes all landed before the promotion, so they don’t have to happen after it. <code>AsyncDistillationTrainer</code> (still experimental) got the same constructor removals, config renames, timeout merge, batching and staleness changes and metric conventions in the same PRs.</p>
+<p>Constructor arguments:</p>
+<ul>
+<li><code>weight_transfer=</code> is removed. Weight sync is built from the config: NCCL through vLLM’s weight-transfer API, or adapter sync for LoRA. The server is a plain <code>vllm serve</code>.</li>
+<li><code>rollout_worker=</code> is removed. To change how rollouts are produced, subclass <code>AsyncRolloutLoop</code> and set <code>loop_cls</code> (see above).</li>
+<li>For OpenEnv / Harbor, <code>HarnessAsyncGRPOTrainer</code> replaces building a <code>HarnessRolloutWorker</code> yourself and passing it as <code>rollout_worker=</code>.</li>
+</ul>
+<p>Config:</p>
+<table>
+<thead>
+<tr>
+<th>v1.17 (experimental)</th>
+<th>v1.18</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_inflight_tasks</code> (<code>-1</code> = automatic)</td>
+<td><code>max_concurrent_rollouts</code>, a fixed ceiling, <code>512</code> by default</td>
+</tr>
+<tr>
+<td><code>heartbeat_stale_after_s</code></td>
+<td><code>rollout_worker_timeout</code> (same meaning, same 300 s default)</td>
+</tr>
+<tr>
+<td><code>request_timeout</code>, <code>weight_sync_timeout</code></td>
+<td>removed: <code>vllm_server_timeout</code> (default 1800 s, was 240 s) now covers server readiness, every request and every weight-sync call</td>
+</tr>
+<tr>
+<td><code>queue_maxsize</code></td>
+<td>removed: generation is held to <code>max_staleness</code>, counted in tokens</td>
+</tr>
+<tr>
+<td><code>fork_threshold_tokens</code></td>
+<td>removed: a multi-turn rollout always forks on re-tokenization drift, so no generated token loses its training signal</td>
+</tr>
+<tr>
+<td><code>token_budget &#x3C;= 0</code> (fixed-count batching)</td>
+<td>removed: the token-budget batcher is the only mode. Use <code>None</code> (read <code>max_model_len</code> from the server) or a positive int</td>
+</tr>
+<tr>
+<td><code>repetition_penalty</code></td>
+<td>removed: the sampler’s log-probs include it and the trainer’s don’t, which biases the importance ratio</td>
+</tr>
+<tr>
+<td><code>remove_unused_columns=True</code> (ignored)</td>
+<td>defaults to <code>False</code>, and <code>True</code> raises: every dataset column goes to the reward functions</td>
+</tr>
+</tbody>
+</table>
+<p>Behavior to check after upgrading:</p>
+<ul>
+<li>Readiness used to wait 240 s and a request 600 s. Both now wait up to <code>vllm_server_timeout</code> (1800 s).</li>
+<li><code>max_concurrent_rollouts</code> no longer derives from <code>per_device_train_batch_size</code>. With OpenEnv / Harbor, the environment server’s <code>MAX_CONCURRENT_ENVS</code> must be at least <code>max_concurrent_rollouts + 1</code>: raise it, or lower <code>max_concurrent_rollouts</code>. The Harbor example’s <code>--max-inflight</code> flag is now <code>--max-concurrent-rollouts</code>.</li>
+<li><code>rollout/backpressure_s</code> used to measure time waiting on a full queue. It now measures time waiting on the staleness limit.</li>
+</ul>
+<p>Metrics: where AsyncGRPO and GRPO log the same quantity, AsyncGRPO now mostly uses the GRPO name. The async-only metrics keep their namespaces (<code>rollout/</code>, <code>sample/</code>, <code>batch/</code>, <code>perf/</code>, <code>tools/</code>, <code>env/</code>), with one meaning per suffix: <code>_count</code> is a count over the logging window, <code>_s</code> a duration, <code>_per_s</code> a rate, <code>_frac</code> a fraction. Dashboards and scripts that read the old names need the new ones.</p>
+<table>
+<thead>
+<tr>
+<th>v1.17 (experimental)</th>
+<th>v1.18</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rewards/&#x3C;func></code></td>
+<td><code>rewards/&#x3C;func>/mean</code>, plus <code>rewards/&#x3C;func>/group_std</code></td>
+</tr>
+<tr>
+<td><code>reward_std</code></td>
+<td><code>reward_group_std</code> (within-group, unlike GRPO’s batch-wide <code>reward_std</code>)</td>
+</tr>
+<tr>
+<td><code>ratio</code></td>
+<td><code>sampling/importance_sampling_ratio/{mean,min,max}</code></td>
+</tr>
+<tr>
+<td><code>kl</code> (k3 estimate against the sampler)</td>
+<td>removed. <code>sampling/sampling_logp_difference/{mean,max}</code> is GRPO’s measure of the same gap, and <code>kl</code> stays free for a reference-model KL</td>
+</tr>
+<tr>
+<td><code>frac_reward_zero_std</code></td>
+<td><code>frac_zero_std_groups</code> (GRPO and RLOO keep <code>frac_reward_zero_std</code>)</td>
+</tr>
+<tr>
+<td><code>reward_kept</code></td>
+<td><code>reward_trained</code></td>
+</tr>
+<tr>
+<td><code>rollout/inflight</code>, <code>rollout/inflight_cap</code></td>
+<td><code>rollout/concurrency</code>, <code>rollout/concurrency_cap</code></td>
+</tr>
+<tr>
+<td><code>rollout/kv_cache_usage</code></td>
+<td><code>rollout/vllm_kv_cache_usage_frac</code></td>
+</tr>
+<tr>
+<td><code>sample/rollout_queue_size</code></td>
+<td><code>rollout/queue_size</code></td>
+</tr>
+<tr>
+<td><code>rollout/generated_tok_s</code></td>
+<td><code>rollout/generated_tokens_per_s</code></td>
+</tr>
+<tr>
+<td><code>perf/forwarded_tok_s_fwd_bwd</code>, <code>perf/forwarded_tok_s_wall_clock</code>, <code>perf/trained_tok_s_wall_clock</code></td>
+<td><code>perf/fwd_bwd_forwarded_tokens_per_s</code>, <code>perf/wall_clock_forwarded_tokens_per_s</code>, <code>perf/wall_clock_trained_tokens_per_s</code></td>
+</tr>
+<tr>
+<td><code>perf/mfu_fwd_bwd</code>, <code>perf/mfu_wall_clock</code></td>
+<td><code>perf/fwd_bwd_mfu</code>, <code>perf/wall_clock_mfu</code></td>
+</tr>
+<tr>
+<td><code>sample/dropped_stale_total</code>, <code>batch/dropped_oversize_total</code>, <code>rollout/vllm_retry_total</code>, <code>tools/&#x3C;name>/call_total</code>, <code>tools/&#x3C;name>/failure_total</code>, <code>tools/unknown_name_total</code></td>
+<td>the same names ending in <code>_count</code></td>
+</tr>
+<tr>
+<td><code>rollout/vllm_preemptions_total</code></td>
+<td><code>rollout/vllm_preemption_count</code></td>
+</tr>
+<tr>
+<td><code>rollout/realign_frac</code></td>
+<td>removed, with <code>fork_threshold_tokens</code></td>
+</tr>
+</tbody>
+</table>
+<p>New: <code>num_tokens</code>, <code>completions/{mean,min,max}_length</code>, <code>completions/{mean,min,max}_terminated_length</code>, <code>completions/clipped_ratio</code>, <code>reward_zero_std_groups</code> (the mean reward of the dropped groups) and <code>completions/duplicate_frac</code>. Fixed: <code>tools/call_frequency</code> and <code>tools/failure_frequency</code> now count every rollout, as in GRPO, and <code>rewards/&#x3C;func>/mean</code> counts once per scored rollout.</p>
+<p>The PRs, by @AmineDiro, @qgallouedec and @lewtun unless noted:</p>
+<ul>
+<li><strong>Constructor and extension point.</strong> Drop the <code>weight_transfer</code> protocol (<a href="https://github.com/huggingface/trl/pull/8065">https://github.com/huggingface/trl/pull/8065</a>) and AsyncDistillation’s <code>rollout_worker</code> argument (<a href="https://github.com/huggingface/trl/pull/8066">https://github.com/huggingface/trl/pull/8066</a>), split the rollout loop into generate, reward and advantage stages (<a href="https://github.com/huggingface/trl/pull/8073">https://github.com/huggingface/trl/pull/8073</a>), make it public as <code>loop_cls</code> (<a href="https://github.com/huggingface/trl/pull/8096">https://github.com/huggingface/trl/pull/8096</a>), drop <code>rollout_worker</code> (<a href="https://github.com/huggingface/trl/pull/8107">https://github.com/huggingface/trl/pull/8107</a>), and replace <code>HarnessRolloutWorker</code> with <code>HarnessAsyncGRPOTrainer</code> (<a href="https://github.com/huggingface/trl/pull/8105">https://github.com/huggingface/trl/pull/8105</a>), all by @AmineDiro.</li>
+<li><strong>Config.</strong> Rename <code>max_inflight_tasks</code> and <code>heartbeat_stale_after_s</code> and merge the vLLM timeouts (<a href="https://github.com/huggingface/trl/pull/8063">https://github.com/huggingface/trl/pull/8063</a>), always fork on re-tokenization drift (<a href="https://github.com/huggingface/trl/pull/8159">https://github.com/huggingface/trl/pull/8159</a>), keep only the token-budget batcher (<a href="https://github.com/huggingface/trl/pull/8168">https://github.com/huggingface/trl/pull/8168</a>), hold generation to <code>max_staleness</code> in tokens (<a href="https://github.com/huggingface/trl/pull/8170">https://github.com/huggingface/trl/pull/8170</a>, <a href="https://github.com/huggingface/trl/pull/8243">https://github.com/huggingface/trl/pull/8243</a>), all by @AmineDiro. Drop <code>repetition_penalty</code> (<a href="https://github.com/huggingface/trl/pull/8139">https://github.com/huggingface/trl/pull/8139</a>) and default <code>remove_unused_columns</code> to <code>False</code> (<a href="https://github.com/huggingface/trl/pull/8281">https://github.com/huggingface/trl/pull/8281</a>) by @qgallouedec.</li>
+<li><strong>Metrics.</strong> GRPO names (<a href="https://github.com/huggingface/trl/pull/8064">https://github.com/huggingface/trl/pull/8064</a>), <code>_count</code> and <code>_per_s</code> suffixes (<a href="https://github.com/huggingface/trl/pull/8186">https://github.com/huggingface/trl/pull/8186</a>) and namespaces (<a href="https://github.com/huggingface/trl/pull/8188">https://github.com/huggingface/trl/pull/8188</a>) by @AmineDiro. Terminated-length metrics (<a href="https://github.com/huggingface/trl/pull/8247">https://github.com/huggingface/trl/pull/8247</a>) and per-rollout reward means (<a href="https://github.com/huggingface/trl/pull/8250">https://github.com/huggingface/trl/pull/8250</a>) by @qgallouedec. Saturation and duplicate-rollout metrics (<a href="https://github.com/huggingface/trl/pull/7901">https://github.com/huggingface/trl/pull/7901</a>) and the zero-std and trained reward renames (<a href="https://github.com/huggingface/trl/pull/8309">https://github.com/huggingface/trl/pull/8309</a>) by @lewtun.</li>
+<li><strong>Layout and promotion.</strong> Clean up comments and the <code>accelerator_config</code> code (<a href="https://github.com/huggingface/trl/pull/8191">https://github.com/huggingface/trl/pull/8191</a>), inline the rollout worker and packing into the trainer and move the vLLM client and weight transfer to <code>trl.generation</code> (<a href="https://github.com/huggingface/trl/pull/8274">https://github.com/huggingface/trl/pull/8274</a>), promote to the stable API (<a href="https://github.com/huggingface/trl/pull/8288">https://github.com/huggingface/trl/pull/8288</a>) and announce it in the README (<a href="https://github.com/huggingface/trl/pull/8292">https://github.com/huggingface/trl/pull/8292</a>), by @AmineDiro. Rewrite the docs on the layout of the stable trainer pages (<a href="https://github.com/huggingface/trl/pull/8131">https://github.com/huggingface/trl/pull/8131</a>), tag the model with <code>trl</code> and <code>async-grpo</code> (<a href="https://github.com/huggingface/trl/pull/8209">https://github.com/huggingface/trl/pull/8209</a>), and run the train test against a transformers-backed vLLM server (<a href="https://github.com/huggingface/trl/pull/8137">https://github.com/huggingface/trl/pull/8137</a>), by @qgallouedec.</li>
+</ul>
+<h3 id="other">Other</h3>
+<p><strong>GRPO server mode now renormalizes over vLLM’s candidate set.</strong> With <code>top_p</code>, <code>min_p</code> or structured outputs, vLLM’s log-probs are normalized over the tokens left after filtering. Colocate mode already handled this. In server mode the trainer normalized over the whole vocabulary, so GRPO warned that the importance sampling ratio was biased, or refused structured outputs. A vLLM server (>= 0.28) started with <code>--return-sampling-mask</code> now returns the candidate set of each sampled token, <code>VLLMClient.generate(return_sampling_mask=True)</code> reads it, and GRPO turns it on when the server reports the flag. With Qwen2.5-0.5B-Instruct, <code>top_k=10</code> and a vLLM 0.32 server, the ratio stays between 0.85 and 1.27 for structured outputs and <code>top_p=0.9</code>, where it was 1e-13 to 1e-31 for structured outputs without the candidate set. <code>trl vllm-serve</code> doesn’t add the flag by default, since the server then rejects every request with <code>top_k=0</code> or <code>temperature=0</code>. By @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8235">https://github.com/huggingface/trl/pull/8235</a></p>
+<p><strong>UDPO loss for noisy preferences.</strong> <code>DPOTrainer</code> gets <code>loss_type="udpo"</code>, the normalized Unbiased DPO loss from <a href="https://huggingface.co/papers/2607.03248">Unbiased Alignment for Large Language Models with Noisy Preferences</a>. It corrects for preference labels flipped with probability ε, read from <code>label_smoothing</code> in <code>[0.0, 0.5)</code>, and unlike <code>"robust"</code> it stays unbiased when ε is overestimated.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl </span><span style="color:#D73A49">import</span><span style="color:#24292E"> DPOConfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">training_args </span><span style="color:#D73A49">=</span><span style="color:#24292E"> DPOConfig(</span><span style="color:#E36209">loss_type</span><span style="color:#D73A49">=</span><span style="color:#032F62">"udpo"</span><span style="color:#24292E">, </span><span style="color:#E36209">label_smoothing</span><span style="color:#D73A49">=</span><span style="color:#005CC5">0.4</span><span style="color:#24292E">)</span></span></code></pre>
+<p>By @cswjl in <a href="https://github.com/huggingface/trl/pull/8211">https://github.com/huggingface/trl/pull/8211</a></p>
+<p><strong>Privileged-context distillation in GOLD.</strong> The teacher sees per-example extra context while the student keeps its original prompt, and both score the same completion tokens. Turn it on with <code>use_privileged_context=True</code>, and set <code>privileged_context_column</code> and <code>teacher_prompt_template</code> as needed. It supports text, off-policy (<code>lmbda=0</code>) standard JSD distillation only. See the <a href="https://huggingface.co/docs/trl/gold_trainer#privileged-context">GOLD docs</a>. By @eshwanthkartitr in <a href="https://github.com/huggingface/trl/pull/6437">https://github.com/huggingface/trl/pull/6437</a></p>
+<p><strong>MXFP4 and FP8 checkpoints load dequantized.</strong> With <code>kernels</code> installed, any trainer given <code>openai/gpt-oss-20b</code> by name refused to train: transformers rejects full fine-tuning of a quantized model, and PEFT finds nothing to adapt in the packed MXFP4 experts. Trainers now load MXFP4 and FP8 checkpoints dequantized. A <code>quantization_config</code> in <code>model_init_kwargs</code> still wins. FP8 needs transformers>=5.0.0, DeepSeek-V3/R1 still fail to dequantize upstream (huggingface/transformers#49873), and before transformers 5.23 MXFP4 experts come back bfloat16 whatever the dtype. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8070">https://github.com/huggingface/trl/pull/8070</a></p>
+<p><strong><code>import trl</code> no longer scans every installed package.</strong> It built a package-to-distribution map with <code>importlib.metadata.packages_distributions()</code>, which stats every file of every installed distribution without a <code>top_level.txt</code> (torch 2.14 ships none). The map is gone. Measured on a network filesystem, 8 alternating runs:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>before</th>
+<th>after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import trl</code></td>
+<td>13.1 s</td>
+<td>0.08 s</td>
+</tr>
+<tr>
+<td><code>from trl import SFTTrainer</code></td>
+<td>40.7 s</td>
+<td>27.4 s</td>
+</tr>
+</tbody>
+</table>
+<p>The second row gains less because transformers still makes its own call (huggingface/transformers#49591). By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7947">https://github.com/huggingface/trl/pull/7947</a></p>
+<p><strong>More chat templates for tool calling and assistant-only loss.</strong> <code>add_response_schema</code> (so <code>GRPOTrainer</code> with tools) and <code>assistant_only_loss=True</code> in SFT now work on many more checkpoints. All by @albertvillanova:</p>
+<ul>
+<li>Tool calling: DeepSeek-V3 / DeepSeek-R1 (#7961), GLM-5.3-Flash (#7957), GLM-4.7, GLM-5, GLM-5.1, GLM-5.2 and GLM-5.3 (#7958), Qwen3-Coder (#7964), Qwen3-Thinking-2507 (#7968), Qwen2.5 base (#7972), every Gemma 4 31B, 26B-A4B and 12B revision (#8041), and the Qwen3.6 and Qwen3.8 revisions with generation tags shipped since 2026-11-07 (#8181, #8183)</li>
+<li>Assistant-only loss: DeepSeek-R1-0528 (#7963), DeepSeek-V3 and DeepSeek-V3-0324 (#7978), Qwen3-Thinking-2507 (#7967), Qwen2.5 base (#7971)</li>
+<li>Both: the original Qwen3 template, which Qwen3 checkpoints shipped until May 2025 and the base checkpoints still ship (#7974), and Muse Spark Open (#8224, #8225)</li>
+<li>A tokenizer saved with one of TRL’s training templates after SFT is recognized for response parsing, so it works for tool calling and in AsyncGRPO (#8027)</li>
+<li><code>get_training_chat_template</code> gains <code>require_prefix_preservation</code>, and SFT uses TRL’s stored training template even when the chat template has <code>{% generation %}</code> markers of its own (#8184)</li>
+</ul>
+<p><strong><code>trl &#x3C;cmd></code> launches with torchrun.</strong> Arguments the script doesn’t know go to torchrun (<code>--nproc_per_node</code>, <code>--nnodes</code>, …), and DeepSpeed and FSDP are set through the training arguments (<code>--deepspeed zero3.json</code>, <code>--fsdp</code>), like for any <code>Trainer</code>. <code>accelerate launch</code> keeps working: until v2.0.0, <code>trl</code> still uses it, with a <code>FutureWarning</code>, for arguments only accelerate knows (<code>--num_processes</code>, <code>--accelerate_config</code>) and when an <code>accelerate config</code> default file exists. <code>examples/accelerate_configs/</code> is replaced by <code>examples/deepspeed_configs/*.json</code> and <code>examples/fsdp_configs/fsdp2.json</code>. See <a href="https://huggingface.co/docs/trl/clis">the CLI docs</a>. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7180">https://github.com/huggingface/trl/pull/7180</a></p>
+<p><strong><code>padding_free=True</code> works with <code>max_length</code> in SFT.</strong> SFT raised whenever <code>padding_free=True</code> met a <code>max_length</code> (including the default 1024) without packing. Truncation now happens during dataset preparation for padding-free too, so the guard only blocked a valid config. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8077">https://github.com/huggingface/trl/pull/8077</a></p>
+<ul>
+<li>Report Unsloth runs and trainer subclasses under their trainer in telemetry, instead of <code>trl/other</code>, by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7926">https://github.com/huggingface/trl/pull/7926</a></li>
+<li>Disable FP fusion explicitly on TRL’s Triton kernel launches, so they give the same results on Triton 3.9 and 3.10 (outputs move by at most 3.1e-05, at fp32 rounding level), by @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8143">https://github.com/huggingface/trl/pull/8143</a>, <a href="https://github.com/huggingface/trl/pull/8164">https://github.com/huggingface/trl/pull/8164</a> and <a href="https://github.com/huggingface/trl/pull/8185">https://github.com/huggingface/trl/pull/8185</a></li>
+<li>Use the <code>activation_checkpointing_*</code> methods on transformers 5.23, so GRPO, RLOO, DPO, KTO and Distillation stop emitting a <code>FutureWarning</code>, by @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8194">https://github.com/huggingface/trl/pull/8194</a></li>
+<li>Only force reentrant checkpointing for PEFT + ZeRO-3 on DeepSpeed &#x3C; 0.19.3 by @cm8908 in <a href="https://github.com/huggingface/trl/pull/8120">https://github.com/huggingface/trl/pull/8120</a></li>
+<li>Only call <code>enable_input_require_grads()</code> before transformers 5.0, which handles it, by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8252">https://github.com/huggingface/trl/pull/8252</a> and @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8266">https://github.com/huggingface/trl/pull/8266</a></li>
+<li>Load the AsyncGRPO tree attention kernel from <code>flash-attn4</code> version 1 on Blackwell, which trains Qwen3.8-27B on B200 / B300, by @younesbelkada in <a href="https://github.com/huggingface/trl/pull/7987">https://github.com/huggingface/trl/pull/7987</a></li>
+</ul>
+<h3 id="removals-and-requirement-bumps">Removals and requirement bumps</h3>
+<p>vLLM support follows the 5-month window: the minimum goes from 0.22.0 to 0.23.0, and 0.33.x is now supported, so the range is <code>vllm>=0.23.0,&#x3C;0.34.0</code>. vLLM 0.33.0 requires torch 2.14.0, so <code>pip install -U "trl[vllm]"</code> pulls it.</p>
+<ul>
+<li>Drop vLLM 0.22.0 support by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7801">https://github.com/huggingface/trl/pull/7801</a></li>
+<li>Add support for vLLM 0.33.x by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8075">https://github.com/huggingface/trl/pull/8075</a></li>
+<li>Drop vLLM 0.22.1 support by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8133">https://github.com/huggingface/trl/pull/8133</a></li>
+</ul>
+<h2 id="fixes">Fixes</h2>
+<p>Several of these change what a run trains on. The first one needs action on models you already saved.</p>
+<p><strong>MoE models saved by <code>SFTTrainer</code> v1.7.0 to v1.17.1 compute router logits at every forward, inference included.</strong> SFT wrote <code>output_router_logits=True</code> and <code>router_aux_loss_coef</code> into the model config and saved them, so fine-tuned MoE models kept returning their router logits, and an overridden coef carried over to the next fine-tune. Like GRPO, RLOO, DPO and KTO, SFT now leaves the config alone. It keeps the config the model was loaded with, though, so a model saved by one of these versions keeps the flag even after another fine-tune. To reset it, set it back to <code>False</code> and save again:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#24292E">model </span><span style="color:#D73A49">=</span><span style="color:#24292E"> AutoModelForCausalLM.from_pretrained(</span><span style="color:#032F62">"path/to/model"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">model.config.output_router_logits </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> False</span><span style="color:#6A737D">  # model.config.text_config.output_router_logits for a VLM</span></span>
+<span class="line"><span style="color:#24292E">model.save_pretrained(</span><span style="color:#032F62">"path/to/model"</span><span style="color:#24292E">)</span></span></code></pre>
+<p>By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8103">https://github.com/huggingface/trl/pull/8103</a></p>
+<p><strong>CISPO gradients were 5x too small by default.</strong> CISPO clips the importance weight itself, but an unset <code>epsilon_high</code> fell back to <code>epsilon=0.2</code>, so every on-policy weight was clipped to 0.2. With <code>loss_type="cispo"</code>, an unset <code>epsilon_high</code> now defaults to <code>5.0</code>, the value the docstring already recommended. On the repro, <code>grad_norm</code> goes from 0.0539 to 0.2693 and <code>cispo_clip_ratio</code> from 0.375 to 0. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7917">https://github.com/huggingface/trl/pull/7917</a></p>
+<p><strong>Assistant-only loss trained tokens the generation prompt already ends with.</strong> Several training templates put the turn opener or the pre-filled thinking block inside <code>{% generation %}</code>, so SFT trained tokens the model never generates. The rendered text doesn’t change, only the mask: Qwen3 (#8072), GLM-4-MoE (#8122), DeepSeek-R1/V3 and R1-Distill (#8060), Nemotron 3 (#8217), gpt-oss (#8219), Muse Glimmer (#8221), and the Qwen3.6 and Qwen3.8 revisions shipped since 2026-11-07, which bring their own markers (#8199, #8187). The DeepSeek-R1/V3 training template also dropped the reasoning of assistant turns from the target (#8061). All by @albertvillanova.</p>
+<p><strong>AsyncGRPO and AsyncDistillation reused prefix-cache KV computed by older weights.</strong> Each weight sync pauses vLLM without clearing its prefix cache, so a prefix shared by many prompts (system prompt, few-shot examples, tool schemas) kept the KV of the weights that first served it for the whole run. Rollout requests are now salted by model version. On a Qwen3.5-35B-A3B LoRA run with a ~2.4k-token shared prefix, mean train reward over steps 11-20 went from 0.726 to 0.781. By @AmineDiro in <a href="https://github.com/huggingface/trl/pull/8300">https://github.com/huggingface/trl/pull/8300</a></p>
+<p><strong>GKD divided its loss by the length of answers it threw away.</strong> On-policy and <code>seq_kd</code> steps counted <code>num_items_in_batch</code> on the dataset labels, then replaced them with generated completions. On the repro, <code>num_items_in_batch</code> goes from 172 to 16, the number of tokens the loss sums over. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7925">https://github.com/huggingface/trl/pull/7925</a></p>
+<p><strong>One rejected token vetoed a whole VESPO sequence.</strong> With <code>loss_type="vespo"</code> and <code>vllm_importance_sampling_mode="token_mask"</code>, a token outside the ratio bounds got a ratio of 0, whose clamped log collapsed the sequence weight to ~0, while the token itself kept its gradient. Rejected tokens are now dropped from both the sequence weight and the loss. By @yusufozdil in <a href="https://github.com/huggingface/trl/pull/8108">https://github.com/huggingface/trl/pull/8108</a></p>
+<p>GRPO configurations that trained nothing without an error now raise:</p>
+<ul>
+<li><code>repetition_penalty</code> with the vLLM importance sampling correction: vLLM applies the penalty to the log-probs it returns, so the ratio dropped to ~1e-28 and the gradient to 0. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7915">https://github.com/huggingface/trl/pull/7915</a></li>
+<li>Structured outputs with the importance sampling correction now need <code>top_k > 0</code>: the ratio fell to about 1e-17. By @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8145">https://github.com/huggingface/trl/pull/8145</a></li>
+<li>PEFT training separate copies of tied embeddings with vLLM: vLLM >= 0.29 raised during the weight sync, and older versions silently generated from weights the trainer didn’t have. By @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8144">https://github.com/huggingface/trl/pull/8144</a></li>
+</ul>
+<p>Crashes and hangs:</p>
+<ul>
+<li><strong>The async trainers hung when the rollout worker died</strong>, instead of raising <code>Rollout worker child has failed</code>. By @sergiopaniego in <a href="https://github.com/huggingface/trl/pull/8038">https://github.com/huggingface/trl/pull/8038</a></li>
+<li>AsyncGRPO and AsyncDistillation crashed at the end of the first step on most MoE families and on Gemma 4, and logged a wrong MFU for hybrids like Qwen3.5. FLOPs are now only estimated for the model types the formula describes, and MFU is omitted otherwise. By @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8236">https://github.com/huggingface/trl/pull/8236</a></li>
+<li>AsyncGRPO with a model sharded at load time (<code>model_init_kwargs={"distributed_config": DistributedConfig(...)}</code>) failed at init on Qwen3.5/3.6 hybrids, and its merged LoRA weight sync crashed on DTensor base weights. By @AmineDiro in <a href="https://github.com/huggingface/trl/pull/8294">https://github.com/huggingface/trl/pull/8294</a> and <a href="https://github.com/huggingface/trl/pull/8295">https://github.com/huggingface/trl/pull/8295</a></li>
+<li>AsyncGRPO on Gated DeltaNet models failed on AMD with an <code>AttributeError</code>, by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8290">https://github.com/huggingface/trl/pull/8290</a></li>
+<li>The fused LM head and AsyncDistillation raised on MoE configs without <code>num_experts</code> (Granite MoE, granite-4.0-h, PhiMoE), by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/7919">https://github.com/huggingface/trl/pull/7919</a></li>
+<li>GRPO (<code>beta != 0</code>) and RLOO with a pretrained adapter that has <code>modules_to_save</code> failed at the first vLLM weight sync, by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8079">https://github.com/huggingface/trl/pull/8079</a></li>
+<li><code>DPOTrainer</code> with <code>use_weighting=True</code> and the <code>"sft"</code> loss raised a <code>RuntimeError</code> at the first step, by @Sergasgr in <a href="https://github.com/huggingface/trl/pull/7651">https://github.com/huggingface/trl/pull/7651</a></li>
+<li>Qwen-VL policies on transformers&#x3C;5.3.0 could end a completion with <code>&#x3C;|vision_start|></code> and crash the forward, by @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8166">https://github.com/huggingface/trl/pull/8166</a></li>
+<li>The DeepSeek training templates crashed on a tool-call message without a <code>content</code> key, which transformers 5.23 produces, by @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8228">https://github.com/huggingface/trl/pull/8228</a></li>
+</ul>
+<p>The rest:</p>
+<ul>
+<li>GLM-4-MoE responses kept the <code>&#x3C;|observation|></code> stop token as content, and the legacy schema (transformers &#x3C; 5.13) returned tool calls as plain text, by @albertvillanova in <a href="https://github.com/huggingface/trl/pull/8030">https://github.com/huggingface/trl/pull/8030</a> and <a href="https://github.com/huggingface/trl/pull/8032">https://github.com/huggingface/trl/pull/8032</a></li>
+<li>The experimental SDFT and SDPO trainers logged a biased distillation-loss metric across ranks, by @ucalyptus in <a href="https://github.com/huggingface/trl/pull/7654">https://github.com/huggingface/trl/pull/7654</a></li>
+<li>The trainers treated peft 0.21.3 as having the MoE dense and shared layers fix, which it doesn’t, so they stopped warning while the shared experts went untrained, by @qgallouedec in <a href="https://github.com/huggingface/trl/pull/8323">https://github.com/huggingface/trl/pull/8323</a></li>
+</ul>
+<h3 id="clearer-errors">Clearer errors</h3>
+<p><strong>AsyncGRPO checks at init what GRPO checks.</strong> All by @qgallouedec: an unsupported <code>train_dataset</code> type (#8204), image datasets, since the trainer trains on text only (#8208), no reward source at all (#8249), GRPO’s tool requirements with <code>tools</code> or <code>environment_factory</code> (#8206), a response parser only when there are tools (#8242), the reward count, with a warning when every reward is <code>None</code> (#8205), and a passed <code>PeftModel</code> no longer crashes at the first step while prompt-learning adapters are refused (#8207).</p>
+<p><strong>The async trainers raise on a vLLM 4xx right away, with the server’s message</strong>, instead of retrying a bad request about 90 times and failing with <code>400, message='Bad Request'</code>, by @AmineDiro in <a href="https://github.com/huggingface/trl/pull/8190">https://github.com/huggingface/trl/pull/8190</a>. <strong>AsyncDistillation fails fast when a teacher has no room to score a sequence</strong>, instead of stalling on retried <code>400 Bad Request</code>s, by @sergiopaniego in <a href="https://github.com/huggingface/trl/pull/8015">https://github.com/huggingface/trl/pull/8015</a>.</p>
+<h2 id="documentation">Documentation</h2>
+<p><strong>Examples told as stories.</strong> Rewrite the gpt-oss example around chess puzzles: on 1,000 test puzzles, gpt-oss-20b goes from 14.8% to 71.8% solved after a full fine-tune, and 69.9% back in MXFP4 (#8085), by @qgallouedec. Add an LFM2.5-8B-A1B research agent example with SFT and GRPO, where held-out exact match goes from 35.8% to 47.8% (#7754), by @qgallouedec. Start the Wordle (#7932) and Sudoku (#8097) examples from SFT models with shaped rewards, add <code>examples/sft_agent_traces</code> to fine-tune a small model on a coding agent’s traces (#8222), use the released Open-MOPD experts in the MOPD example (#8014) and move it to its own folder (#8101), by @sergiopaniego. Pin the AsyncGRPO Harbor example to the OpenEnv 0.7.0 release (#8034) and use non-reentrant checkpointing in the Online DPO visual math example (#8268), by @albertvillanova.</p>
+<ul>
+<li>Document that the async trainers need <code>kernels</code> by @sergiopaniego in <a href="https://github.com/huggingface/trl/pull/8012">https://github.com/huggingface/trl/pull/8012</a>, and wrap async trainer doc snippets in a <code>__main__</code> guard by @sergiopaniego in <a href="https://github.com/huggingface/trl/pull/8282">https://github.com/huggingface/trl/pull/8282</a></li>
+<li>OpenEnv docs: the <code>openenv>=0.7.0</code> requirement for harnesses (#8035) and the removed <code>core</code> extra (#8083), by @albertvillanova</li>
+<li>Fix the <code>max_tool_calling_iterations</code> docstring by @AmineDiro in <a href="https://github.com/huggingface/trl/pull/8202">https://github.com/huggingface/trl/pull/8202</a></li>
+<li>Smaller fixes: the GLM-4-MoE and Qwen3 training template docs (#7975) and Jinja tags with plain braces (#8128) by @albertvillanova, the GRPO and RLOO reward examples (#8132) and the DPO section title in the paper index (#8277) by @qgallouedec</li>
+</ul>
+<h2 id="ci">CI</h2>
+<p><strong>Flash Attention compatible tiny models.</strong> Make the tiny Llama-3, Llama-3.1, Llama-3.2, Mistral-0.1, Mistral-0.2, Qwen2-R1-Distill, Qwen2SeqCls-2.5, Gemma, Gemma2, Cohere, Olmo3 and SmolLM3 models Flash Attention compatible (#8155, #8156, #8157, #8158, #8160, #8196, #8197, #8198, #8200, #8304, #8305, #8306) by @albertvillanova, and the tiny Qwen2.5, Qwen2.5-VL, Cohere2, GLM-4 MoE, GraniteMoE and PhiMoE ones (#8147, #8148, #8169, #8283, #8284, #8285, #8286) by @qgallouedec. Test SFT on tiny VLMs with images under Flash Attention (#8201) and skip the SFT Flash Attention xfails on torch versions that leak checkpoint hooks (#8303), by @albertvillanova.</p>
+<p><strong>Tiny models that look like their references.</strong> Add tiny GraniteMoe, PhiMoE and GraniteMoeHybrid models (#7920, #7921, #7922) and quantize the tiny DeepSeek-V3 and GPT-OSS models like their references (#8058), by @qgallouedec. Add a tiny GLM-5.3-Flash script (#8068, #8119, #8125, #8069), compare tiny-model dtypes with references that only ship consolidated safetensors (#8238), write the tiny Mistral Large 4 FP8 checkpoint in the reference layout (#8239), scale the tiny DeepSeek-V3 FP8 blocks to 32x32 (#8240), drop the pinned revisions of the merged tiny models (#8241) and compare saved checkpoints with the reference in <code>check_dtype_pattern</code> (#8118), by @albertvillanova.</p>
+<p><strong>Chat template tests.</strong> Check the most-downloaded checkpoint of each stored template against the Hub (#7956), derive the training template pairs in the response parsing test (#8084), test that the assistant mask starts where the generation prompt ends, with and without reasoning (#8110, #8124), assert training templates fail like their originals instead of skipping (#8141), and xfail the DeepSeek assistant-mask tests on transformers 5.23.0.dev0 until #8228 (#8215), by @albertvillanova.</p>
+<p><strong>Tests that run what users run.</strong> Reward with a function, not a reward model, in GRPO and RLOO tests (#8193), train on conversational data in trainer tests (#8195), test Qwen3.5 loaded as a text-only causal LM (#7763), stop the <code>sft_fa2</code> invariant class at step 4 (#8106) and skip the AsyncGRPO tests when <code>requests</code> is missing (#8291), by @qgallouedec. Build the OpenEnv harness loop with its real constructor (#7988), allow dropped group ids in the OpenEnv session failure test (#8029), fail instead of skip when GOLD test assets don’t load (#8090), load the GOLD Countdown examples from Countdown-Task-GOLD (#8091), drop the Llama4 case from the tree packing refusal test (#8138), and skip experimental Qwen3-VL, Gemma4 and LFM2.5-VL tests on old transformers (#8086, #8087, #8088), by @albertvillanova.</p>
+<p><strong>Workflows.</strong> Install, build and publish with uv (#7883, #7884), fail self-hosted test jobs when pytest doesn’t complete (#8006), test vLLM at both ends of the supported range (#7872), run CI when a draft PR is marked ready (#8100), skip the chat templates check on Dependabot PRs (#8152), pin ruff-pre-commit to a commit SHA (#8165) and doc-builder to v0.6.0 (#8154), and narrow then revert the Mistral Large 4 FP8 xfail (#8037, #8092), by @albertvillanova. Bump doc-builder for machine-translated docs (#8013) by @mishig25, and dependency bumps by @dependabot[bot] (#8151, #8153, #8179). Selective activation checkpointing on transformers 5.23 was wrapped and then unwrapped once transformers restored the old behavior (#8094, #8098), by @albertvillanova.</p>
+<p><strong>Dead code.</strong> Remove <code>is_unsloth_available</code> (#8043), <code>OnlineDPOTrainer.process_vision_row</code> (#8044), <code>IS_SAGEMAKER_MP_POST_1_10</code> (#8045), the SDPO and SDFT <code>config_cls</code> attributes (#8046), the async rollout workers’ <code>_generation_start_time</code> (#8047), <code>WeaveCallback._eval_logger</code> (#8048), an unused unpack in GOLD (#8049) and <code>adjusted_mfu</code> (#8245), by @qgallouedec.</p>
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+<li>@eshwanthkartitr made their first contribution in <a href="https://github.com/huggingface/trl/pull/6437">https://github.com/huggingface/trl/pull/6437</a></li>
+<li>@Sergasgr made their first contribution in <a href="https://github.com/huggingface/trl/pull/7651">https://github.com/huggingface/trl/pull/7651</a></li>
+<li>@yusufozdil made their first contribution in <a href="https://github.com/huggingface/trl/pull/8108">https://github.com/huggingface/trl/pull/8108</a></li>
+<li>@cm8908 made their first contribution in <a href="https://github.com/huggingface/trl/pull/8120">https://github.com/huggingface/trl/pull/8120</a></li>
+<li>@cswjl made their first contribution in <a href="https://github.com/huggingface/trl/pull/8211">https://github.com/huggingface/trl/pull/8211</a></li>
+</ul>
+<h2 id="whats-changed">What’s Changed</h2>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/huggingface/trl/compare/v1.17.0...v1.18.0">https://github.com/huggingface/trl/compare/v1.17.0…v1.18.0</a></p>
+<hr>
+<blockquote>
+<p><strong>Source</strong> <a href="https://github.com/huggingface/trl">huggingface/trl</a> · <code>v1.18.0</code> · 2026-11-13 · <a href="https://github.com/huggingface/trl/releases/tag/v1.18.0">upstream release</a></p>
+</blockquote>
+<p><em>Mirrored verbatim for indexing. All rights belong to the upstream project.</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> Release notes come from the upstream project. We organize and connect them so you can compare versions at a glance. All content rights belong to the original authors. </p> <nav class="pager" aria-label="Release navigation"> <a href="/releases/trl/1.18.1"> <span class="k">← Next</span> <span class="t">v1.18.1</span> </a> <a href="/releases/trl/1.17.1"> <span class="k">Previous →</span> <span class="t">v1.17.1</span> </a> </nav> <aside class="ad-slot" aria-label="Advertisement" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>Advertisement</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/trl/releases/tag/v1.18.0" target="_blank" rel="noopener"> <span>Original on GitHub</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span>huggingface/trl</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">On this page</div> <nav> <a href="#features" class>Features</a><a href="#mortar_board-asyncgrpotrainer-is-now-a-stable-trainer" class="lv3">:mortar_board: AsyncGRPOTrainer is now a stable trainer</a><a href="#other" class="lv3">Other</a><a href="#removals-and-requirement-bumps" class="lv3">Removals and requirement bumps</a><a href="#fixes" class>Fixes</a><a href="#clearer-errors" class="lv3">Clearer errors</a><a href="#documentation" class>Documentation</a><a href="#ci" class>CI</a><a href="#new-contributors" class>New Contributors</a><a href="#whats-changed" class>What’s Changed</a> </nav> </div> <div class="rail-card"> <div class="rail-title">Version history</div> <ul class="rail-list"> <li> <a href="/releases/trl/1.18.2"> <span class="v">v1.18.2</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/releases/trl/1.18.1"> <span class="v">v1.18.1</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/releases/trl/1.18.0" aria-current="true"> <span class="v">v1.18.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/releases/trl/1.17.1"> <span class="v">v1.17.1</span> <span class="d">26-10-30</span> </a> </li><li> <a href="/releases/trl/1.17.0"> <span class="v">v1.17.0</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/releases/trl/1.16.0"> <span class="v">v1.16.0</span> <span class="d">26-10-15</span> </a> </li><li> <a href="/releases/trl/1.15.0"> <span class="v">v1.15.0</span> <span class="d">26-10-08</span> </a> </li><li> <a href="/releases/trl/1.14.2"> <span class="v">v1.14.2</span> <span class="d">26-10-06</span> </a> </li> </ul> <a href="/releases/trl" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> View all 20 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>Open-source release intelligence, published daily.</p> </div> <div class="footer-col"> <h3>Track</h3> <ul> <li><a href="/releases">Releases</a></li> <li><a href="/projects">Projects</a></li> <li><a href="/releases.xml">RSS feed</a></li> </ul> </div> <div class="footer-col"> <h3>Archive</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">Chinese archive</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">Technical notes</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>Meta</h3> <ul> <li><a href="/privacy">Privacy policy</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release notes belong to their upstream projects.</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="Search releases"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="Search releases, projects, versions…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ navigate</span> <span>↵ open</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

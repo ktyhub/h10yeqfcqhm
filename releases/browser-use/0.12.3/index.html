@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>browser-use 0.12.3 — STAGS NextStack</title><meta name="description" content="The fastest browser automation for AI coding agents. 2x faster, 50% fewer tokens, and works with any CLI agent — Claude Code, Codex, and more."><meta name="keywords" content="open source release notes, release tracker, changelog aggregator, breaking changes, deprecation tracker, Kafka releases, Spring Boot releases, Kubernetes releases"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/releases/browser-use/0.12.3/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/browser-use/0.12.3/"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/browser-use/browser-use_0.12.3"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/browser-use/0.12.3/"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="browser-use 0.12.3 — STAGS NextStack"><meta property="og:description" content="The fastest browser automation for AI coding agents. 2x faster, 50% fewer tokens, and works with any CLI agent — Claude Code, Codex, and more."><meta property="og:url" content="https://www.stags.cn/releases/browser-use/0.12.3/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"en","description":"STAGS indexes release notes from infrastructure and AI projects — breaking changes, deprecations and migrations — in one English-first feed.","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/releases/browser-use/0.12.3/#article","headline":"browser-use 0.12.3 release notes","datePublished":"2026-03-23","inLanguage":"en","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/browser-use/browser-use"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">Skip to content</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/" class="brand" aria-label="STAGS NextStack — Open-source release intelligence"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/releases">Releases</a><a href="/projects">Projects</a><a href="/topics">Topics</a><a href="/compare">Compare</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="Open menu"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="Primary"> <a href="/releases" class="navmenu-item">Releases</a><a href="/projects" class="navmenu-item">Projects</a><a href="/topics" class="navmenu-item">Topics</a><a href="/compare" class="navmenu-item">Compare</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="Search releases"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">Search</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="Language"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">EN</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="Language"> <p class="langmenu-head">Language</p> <a class="langmenu-item" href="/releases/browser-use/0.12.3/" hreflang="en" lang="en" aria-current="true" data-on="true"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/browser-use/browser-use_0.12.3" hreflang="zh-Hans" lang="zh-CN" data-on="false"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/browser-use/0.12.3/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/browser-use/0.12.3/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/browser-use/0.12.3/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/browser-use/0.12.3/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/browser-use/0.12.3/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a> <span class="sep">/</span> <a href="/releases">Releases</a> <span class="sep">/</span> <a href="/releases/browser-use">browser-use</a> </nav> <h1 class="detail-title"> <span class="p">browser-use</span> 0.12.3 </h1> <div class="detail-meta"> <span class="chip chip--patch">patch</span> <span><span class="k">Published</span>Mar 23, 2026</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/browser-use/browser-use" target="_blank" rel="noopener"> <span class="k">Source</span>browser-use/browser-use </a>   <span class="sep" aria-hidden="true"></span> <a href="/zh/release_note/browser-use/browser-use_0.12.3"> Chinese translation </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/releases/browser-use/0.12.3/">Copy link</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="browser-use-0123">browser-use 0.12.3</h1>
+<h2 id="highlights">Highlights</h2>
+<ul>
+<li>
+<p><strong>CLI 2.0 architecture</strong> — The standalone CLI now drives Chrome directly through CDP, using DOM snapshots and element indices instead of screenshots or selectors. A persistent daemon eliminates per-command browser startup; upstream claims 2× faster automation, ~50 ms command latency, and 50% fewer tokens (#4364). The CLI supports Chrome/Chromium only—not Firefox or Safari.</p>
+</li>
+<li>
+<p><strong>Existing-browser and multi-session workflows</strong> — <code>--connect</code>, <code>--profile</code>, and <code>--cdp-url</code> let agents reuse running Chrome instances, profiles, cookies, and extensions, while named sessions (<code>-s work</code>, <code>-s personal</code>) isolate automation contexts. Adoption requires installing the CLI and agent skill; index-based interactions mean agents should refresh <code>browser-use state</code> after navigation or DOM changes.</p>
+</li>
+<li>
+<p><strong>More reliable page interactions</strong> — Cross-origin iframe elements are now indexed reliably (#4452), clicks that open tabs automatically switch context with a checkbox-toggle fallback (#4433), and highlight removal no longer blocks screenshots (#4381). Chrome 145+ extension handling was also repaired following Manifest V2 removal and flag changes (#4466).</p>
+</li>
+<li>
+<p><strong>Privacy and supply-chain hardening</strong> — Password field values are excluded from DOM snapshots sent to LLMs (#4388), reducing credential exposure but changing workflows that previously read those values back. Repository fixes also restrict workflow permissions, upgrade vulnerable dependencies, and remove unused authentication code (#4468).</p>
+</li>
+<li>
+<p><strong>Model support and extraction quality</strong> — LiteLLM integration (#4384) and revised ChatVercel API-key handling (#4270) expand provider options. Data-grounding fixes reduce unsupported completion claims (#4416, #4417), compaction hallucination is addressed (#4403), and extracted Markdown retains image URLs (#4427)—important for faithful scraping and document generation.</p>
+</li>
+<li>
+<p><strong>Breaking change: code agent removed</strong> — The built-in code agent was removed (#4438). Automation that depended on it must move orchestration to the standalone CLI plus an agent skill, or invoke the Python library directly.</p>
+</li>
+</ul>
+<h2 id="browser-use-cli-20">Browser Use CLI 2.0</h2>
+<p>The fastest browser automation for AI coding agents. 2x faster, 50% fewer tokens, and works with any CLI agent — Claude Code, Codex, and more.</p>
+<p>Built on direct CDP (Chrome DevTools Protocol) instead of Playwright, giving ~50ms command latency via a persistent background daemon.</p>
+<p><a href="https://github.com/user-attachments/assets/a604895b-4ff9-47be-8161-56c48773f93b">https://github.com/user-attachments/assets/a604895b-4ff9-47be-8161-56c48773f93b</a></p>
+<h3 id="install">Install</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Install the CLI</span></span>
+<span class="line"><span style="color:#6F42C1">curl</span><span style="color:#005CC5"> -fsSL</span><span style="color:#032F62"> https://browser-use.com/cli/install.sh</span><span style="color:#D73A49"> |</span><span style="color:#6F42C1"> bash</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Install the skill (for Claude Code / Codex)</span></span>
+<span class="line"><span style="color:#6F42C1">mkdir</span><span style="color:#005CC5"> -p</span><span style="color:#032F62"> ~/.claude/skills/browser-use</span></span>
+<span class="line"><span style="color:#6F42C1">curl</span><span style="color:#005CC5"> -o</span><span style="color:#032F62"> ~/.claude/skills/browser-use/SKILL.md</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#032F62">  https://raw.githubusercontent.com/browser-use/browser-use/main/skills/browser-use/SKILL.md</span></span></code></pre>
+<blockquote>
+<p>Works with <strong>any CLI coding agent</strong> — Claude Code, Codex, OpenClaw, and more. Just install the CLI and the skill.</p>
+</blockquote>
+<hr>
+<h3 id="quick-start">Quick Start</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://example.com</span><span style="color:#6A737D">   # Navigate (starts browser if needed)</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> state</span><span style="color:#6A737D">                      # Returns clickable elements: [0] button "Submit", [1] input "Email"...</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> click</span><span style="color:#005CC5"> 0</span><span style="color:#6A737D">                    # Click by index</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> input</span><span style="color:#005CC5"> 3</span><span style="color:#032F62"> "hello@example.com"</span><span style="color:#6A737D"> # Click element, then type</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> type</span><span style="color:#032F62"> "search query"</span><span style="color:#6A737D">        # Type into focused element</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> screenshot</span><span style="color:#032F62"> page.png</span><span style="color:#6A737D">        # See the page</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> close</span><span style="color:#6A737D">                      # Done</span></span></code></pre>
+<p>The CLI uses element indices from <code>state</code> — no selectors to maintain. <code>browser-use state</code> is optimized for agents: fast, token-efficient, and returns every interactable element on the page.</p>
+<hr>
+<h3 id="️-browser-modes">🖥️ Browser Modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Headless</td>
+<td><code>browser-use open &#x3C;url></code></td>
+<td>Default, fast, invisible</td>
+</tr>
+<tr>
+<td>Headed</td>
+<td><code>browser-use --headed open &#x3C;url></code></td>
+<td>Visible window for debugging</td>
+</tr>
+<tr>
+<td>Real Chrome</td>
+<td><code>browser-use --profile "Default" open &#x3C;url></code></td>
+<td>Your Chrome with existing logins &#x26; cookies</td>
+</tr>
+<tr>
+<td>Connect</td>
+<td><code>browser-use --connect open &#x3C;url></code></td>
+<td>Auto-discover and attach to running Chrome via CDP</td>
+</tr>
+<tr>
+<td>CDP URL</td>
+<td><code>browser-use --cdp-url ws://localhost:9222/... open &#x3C;url></code></td>
+<td>Connect to any browser via CDP URL</td>
+</tr>
+<tr>
+<td>☁️ Cloud</td>
+<td><code>browser-use cloud connect</code></td>
+<td>Stealth cloud browser + proxies included</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Chrome only.</strong> The CLI uses Chrome DevTools Protocol (CDP), which is Chrome/Chromium-specific. Safari and Firefox are not supported.</p>
+</blockquote>
+<blockquote>
+<p><strong>Cloud browser</strong> requires <code>BROWSER_USE_API_KEY</code> from <a href="https://cloud.browser-use.com">cloud.browser-use.com</a>. Cloud gives you agent-ready browsers with anti-detection, proxies, and massive parallelization.</p>
+</blockquote>
+<hr>
+<h3 id="-connect-to-running-chrome">🔗 Connect to Running Chrome</h3>
+<p>One of the most requested features — connect to your already-running Chrome with all your logins, cookies, and extensions:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Auto-discover running Chrome's CDP endpoint</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#005CC5"> --connect</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://github.com</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Or use an existing Chrome profile directly</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#005CC5"> --profile</span><span style="color:#032F62"> "Default"</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://github.com</span><span style="color:#6A737D">    # Already logged in!</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#005CC5"> --profile</span><span style="color:#032F62"> "Profile 1"</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://gmail.com</span><span style="color:#6A737D">   # Named profile</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># List available profiles</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> profile</span><span style="color:#032F62"> list</span></span></code></pre>
+<blockquote>
+<p><strong>Tip for WSL2 users:</strong> Add <code>browser-use --cdp-url</code> to your CLAUDE.md to control the host browser from WSL2.</p>
+</blockquote>
+<hr>
+<h3 id="-multiple-sessions">🔀 Multiple Sessions</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#005CC5"> -s</span><span style="color:#032F62"> work</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://work.example.com</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#005CC5"> -s</span><span style="color:#032F62"> personal</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://gmail.com</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> sessions</span><span style="color:#6A737D">       # List all</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> close</span><span style="color:#005CC5"> --all</span><span style="color:#6A737D">    # Close all</span></span></code></pre>
+<hr>
+<h3 id="-forms-uploads--interactions">📤 Forms, Uploads &#x26; Interactions</h3>
+<p>The CLI excels at form filling and complex interactions:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> input</span><span style="color:#005CC5"> 5</span><span style="color:#032F62"> "user@example.com"</span><span style="color:#6A737D">   # Fill email field</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> input</span><span style="color:#005CC5"> 6</span><span style="color:#032F62"> "password123"</span><span style="color:#6A737D">        # Fill password</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> click</span><span style="color:#005CC5"> 7</span><span style="color:#6A737D">                      # Submit button</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> select</span><span style="color:#005CC5"> 3</span><span style="color:#032F62"> "United States"</span><span style="color:#6A737D">     # Dropdown selection</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> upload</span><span style="color:#005CC5"> 4</span><span style="color:#032F62"> ./resume.pdf</span><span style="color:#6A737D">        # Upload a file</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> hover</span><span style="color:#005CC5"> 2</span><span style="color:#6A737D">                      # Hover over element</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> keys</span><span style="color:#032F62"> "Enter"</span><span style="color:#6A737D">                 # Send keyboard keys</span></span></code></pre>
+<hr>
+<h3 id="-data-extraction">📊 Data Extraction</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> get</span><span style="color:#032F62"> title</span><span style="color:#6A737D">                    # Page title</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> get</span><span style="color:#032F62"> html</span><span style="color:#005CC5"> --selector</span><span style="color:#032F62"> "table"</span><span style="color:#6A737D">  # Scoped HTML</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> get</span><span style="color:#032F62"> text</span><span style="color:#005CC5"> 5</span><span style="color:#6A737D">                   # Element text</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> eval</span><span style="color:#032F62"> "document.title"</span><span style="color:#6A737D">        # Run JavaScript</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> screenshot</span><span style="color:#005CC5"> --full</span><span style="color:#032F62"> page.png</span><span style="color:#6A737D">   # Full-page screenshot</span></span></code></pre>
+<hr>
+<h3 id="-persistent-python-session">🐍 Persistent Python Session</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> python</span><span style="color:#032F62"> "browser.goto('https://example.com')"</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> python</span><span style="color:#032F62"> "items = browser.html"</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> python</span><span style="color:#032F62"> "print(len(items))"</span><span style="color:#6A737D">    # Variables persist across calls</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> python</span><span style="color:#005CC5"> --vars</span><span style="color:#6A737D">                  # Show defined variables</span></span></code></pre>
+<hr>
+<h3 id="-tunnels-expose-local-dev">🌐 Tunnels (Expose Local Dev)</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> tunnel</span><span style="color:#005CC5"> 3000</span><span style="color:#6A737D">                   # → https://abc.trycloudflare.com</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> open</span><span style="color:#032F62"> https://abc.trycloudflare.com</span></span>
+<span class="line"><span style="color:#6F42C1">browser-use</span><span style="color:#032F62"> tunnel</span><span style="color:#032F62"> stop</span><span style="color:#005CC5"> --all</span></span></code></pre>
+<hr>
+<h3 id="how-it-works">How It Works</h3>
+<p>The CLI doesn’t use screenshots or image detection. Instead, it directly reads the browser’s DOM tree via CDP and returns structured, token-efficient element data. Your coding agent processes the content; the CLI handles browser context and command execution. Every command shares the same battle-tested implementation as the browser-use Python library.</p>
+<p><strong>Architecture:</strong> A background daemon keeps the browser alive between commands, so there’s no startup cost per command — just ~50ms latency.</p>
+<hr>
+<h3 id="faq">FAQ</h3>
+<p><strong>Does it work with Codex / other CLI agents?</strong>
+Yes — it works with any CLI coding agent. Install the CLI and the skill file.</p>
+<p><strong>Can it run headless?</strong>
+Yes, headless is the default. Use <code>--headed</code> when you want to see the browser.</p>
+<p><strong>How does it compare to the Claude Chrome extension?</strong>
+The Browser Use CLI is also free, faster and more token efficient, doesn’t require a Chrome extension, and works with any CLI agent (not just Claude).</p>
+<p><strong>How does it compare to Vercel Agent Browser?</strong>
+2x the speed for half the cost with half the commands.</p>
+<p><strong>Does it work with Safari/Firefox?</strong>
+No — it uses Chrome DevTools Protocol (CDP), which is Chrome/Chromium only.</p>
+<p><strong>Can it upload files?</strong>
+Yes! Use <code>browser-use upload &#x3C;index> &#x3C;path></code>.</p>
+<p><strong>What about security/pentesting?</strong>
+Yes — popular use cases include form filling, QA/pentesting, and general web automation.</p>
+<hr>
+<h2 id="whats-changed">What’s Changed</h2>
+<ul>
+<li>docs: clarify open-source model prompt guidance by @tsubasakong in <a href="https://github.com/browser-use/browser-use/pull/4314">https://github.com/browser-use/browser-use/pull/4314</a></li>
+<li>Enhance ChatVercel model support and update API key handling by @AntonVishal in <a href="https://github.com/browser-use/browser-use/pull/4270">https://github.com/browser-use/browser-use/pull/4270</a></li>
+<li>fix(browser): prevent remove_highlights() from blocking screenshot ha… by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4381">https://github.com/browser-use/browser-use/pull/4381</a></li>
+<li>[feat] add litellm by @shanyu-strix in <a href="https://github.com/browser-use/browser-use/pull/4384">https://github.com/browser-use/browser-use/pull/4384</a></li>
+<li>added better data grounding in done action by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4416">https://github.com/browser-use/browser-use/pull/4416</a></li>
+<li>Fix(DOM): Exclude Password Field Values from DOM Snapshots sent to LLM by @zachdotai in <a href="https://github.com/browser-use/browser-use/pull/4388">https://github.com/browser-use/browser-use/pull/4388</a></li>
+<li>fix: prevent compaction hallucination by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4403">https://github.com/browser-use/browser-use/pull/4403</a></li>
+<li>docs: update CLOUD.md to reflect 5 free tasks offer by @lukasec in <a href="https://github.com/browser-use/browser-use/pull/4425">https://github.com/browser-use/browser-use/pull/4425</a></li>
+<li>fixed system prompt for data grounding by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4417">https://github.com/browser-use/browser-use/pull/4417</a></li>
+<li>fix image URLs stripped from extracted markdown by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4427">https://github.com/browser-use/browser-use/pull/4427</a></li>
+<li>Enhance User-Agent header handling in BrowserSession by @reformedot in <a href="https://github.com/browser-use/browser-use/pull/4431">https://github.com/browser-use/browser-use/pull/4431</a></li>
+<li>huge cli update by @ShawnPana in <a href="https://github.com/browser-use/browser-use/pull/4364">https://github.com/browser-use/browser-use/pull/4364</a></li>
+<li>rm code agent by @laithrw in <a href="https://github.com/browser-use/browser-use/pull/4438">https://github.com/browser-use/browser-use/pull/4438</a></li>
+<li>widen retry timing assertions so CI stops flaking by @laithrw in <a href="https://github.com/browser-use/browser-use/pull/4439">https://github.com/browser-use/browser-use/pull/4439</a></li>
+<li>fix: index elements inside cross-origin iframes reliably by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4452">https://github.com/browser-use/browser-use/pull/4452</a></li>
+<li>fix: auto-switch to new tabs after click and add checkbox toggle fall… by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4433">https://github.com/browser-use/browser-use/pull/4433</a></li>
+<li>docs: add browser-use-docs skill with cloud API and open-source .md files by @ShawnPana in <a href="https://github.com/browser-use/browser-use/pull/4450">https://github.com/browser-use/browser-use/pull/4450</a></li>
+<li>fix: extensions broken on Chrome 145+ (MV2 removal + flag changes) by @laithrw in <a href="https://github.com/browser-use/browser-use/pull/4466">https://github.com/browser-use/browser-use/pull/4466</a></li>
+<li>fix open security advisories: restrict workflow permissions, bump vulnerable deps, remove unused authlib by @laithrw in <a href="https://github.com/browser-use/browser-use/pull/4468">https://github.com/browser-use/browser-use/pull/4468</a></li>
+<li>add bu benchmark plot and cloud vs oss discussion in readme by @Alezander9 in <a href="https://github.com/browser-use/browser-use/pull/4454">https://github.com/browser-use/browser-use/pull/4454</a></li>
+<li>Update pyproject.toml by @sauravpanda in <a href="https://github.com/browser-use/browser-use/pull/4495">https://github.com/browser-use/browser-use/pull/4495</a></li>
+</ul>
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+<li>@tsubasakong made their first contribution in <a href="https://github.com/browser-use/browser-use/pull/4314">https://github.com/browser-use/browser-use/pull/4314</a></li>
+<li>@shanyu-strix made their first contribution in <a href="https://github.com/browser-use/browser-use/pull/4384">https://github.com/browser-use/browser-use/pull/4384</a></li>
+<li>@zachdotai made their first contribution in <a href="https://github.com/browser-use/browser-use/pull/4388">https://github.com/browser-use/browser-use/pull/4388</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/browser-use/browser-use/compare/0.12.2...0.12.3">https://github.com/browser-use/browser-use/compare/0.12.2…0.12.3</a></p>
+<hr>
+<blockquote>
+<p><strong>Source</strong> <a href="https://github.com/browser-use/browser-use">browser-use/browser-use</a> · <code>0.12.3</code> · 2026-03-23 · <a href="https://github.com/browser-use/browser-use/releases/tag/0.12.3">upstream release</a></p>
+</blockquote>
+<p><em>Mirrored verbatim for indexing. All rights belong to the upstream project.</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> Release notes come from the upstream project. We organize and connect them so you can compare versions at a glance. All content rights belong to the original authors. </p> <nav class="pager" aria-label="Release navigation"> <a href="/releases/browser-use/0.12.4"> <span class="k">← Next</span> <span class="t">0.12.4</span> </a> <a href="/releases/browser-use/0.12.2"> <span class="k">Previous →</span> <span class="t">0.12.2</span> </a> </nav> <aside class="ad-slot" aria-label="Advertisement" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>Advertisement</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/browser-use/browser-use/releases/tag/0.12.3" target="_blank" rel="noopener"> <span>Original on GitHub</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/browser-use/browser-use" target="_blank" rel="noopener"> <span>browser-use/browser-use</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">On this page</div> <nav> <a href="#highlights" class>Highlights</a><a href="#browser-use-cli-20" class>Browser Use CLI 2.0</a><a href="#install" class="lv3">Install</a><a href="#quick-start" class="lv3">Quick Start</a><a href="#️-browser-modes" class="lv3">🖥️ Browser Modes</a><a href="#-connect-to-running-chrome" class="lv3">🔗 Connect to Running Chrome</a><a href="#-multiple-sessions" class="lv3">🔀 Multiple Sessions</a><a href="#-forms-uploads--interactions" class="lv3">📤 Forms, Uploads &amp; Interactions</a><a href="#-data-extraction" class="lv3">📊 Data Extraction</a><a href="#-persistent-python-session" class="lv3">🐍 Persistent Python Session</a><a href="#-tunnels-expose-local-dev" class="lv3">🌐 Tunnels (Expose Local Dev)</a><a href="#how-it-works" class="lv3">How It Works</a><a href="#faq" class="lv3">FAQ</a><a href="#whats-changed" class>What’s Changed</a><a href="#new-contributors" class>New Contributors</a> </nav> </div> <div class="rail-card"> <div class="rail-title">Version history</div> <ul class="rail-list"> <li> <a href="/releases/browser-use/1.0.8"> <span class="v">1.0.8</span> <span class="d">26-11-22</span> </a> </li><li> <a href="/releases/browser-use/1.0.7"> <span class="v">1.0.7</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/releases/browser-use/1.0.6"> <span class="v">1.0.6</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/releases/browser-use/1.0.5"> <span class="v">1.0.5</span> <span class="d">26-11-14</span> </a> </li><li> <a href="/releases/browser-use/1.0.4"> <span class="v">1.0.4</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/releases/browser-use/1.0.3"> <span class="v">1.0.3</span> <span class="d">26-11-12</span> </a> </li><li> <a href="/releases/browser-use/1.0.2"> <span class="v">1.0.2</span> <span class="d">26-11-11</span> </a> </li><li> <a href="/releases/browser-use/1.0.1"> <span class="v">1.0.1</span> <span class="d">26-11-10</span> </a> </li> </ul> <a href="/releases/browser-use" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> View all 35 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>Open-source release intelligence, published daily.</p> </div> <div class="footer-col"> <h3>Track</h3> <ul> <li><a href="/releases">Releases</a></li> <li><a href="/projects">Projects</a></li> <li><a href="/releases.xml">RSS feed</a></li> </ul> </div> <div class="footer-col"> <h3>Archive</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">Chinese archive</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">Technical notes</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>Meta</h3> <ul> <li><a href="/privacy">Privacy policy</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release notes belong to their upstream projects.</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="Search releases"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="Search releases, projects, versions…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ navigate</span> <span>↵ open</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

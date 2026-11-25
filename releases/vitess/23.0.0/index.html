@@ -1,0 +1,917 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>vitess v23.0.0 — STAGS NextStack</title><meta name="description" content="Major Changes · Breaking Changes · Flag Naming Convention Migration · New default versions"><meta name="keywords" content="open source release notes, release tracker, changelog aggregator, breaking changes, deprecation tracker, Kafka releases, Spring Boot releases, Kubernetes releases"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/releases/vitess/23.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/vitess/23.0.0/"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/vitess/vitess_v23.0.0"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/vitess/23.0.0/"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="vitess v23.0.0 — STAGS NextStack"><meta property="og:description" content="Major Changes · Breaking Changes · Flag Naming Convention Migration · New default versions"><meta property="og:url" content="https://www.stags.cn/releases/vitess/23.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"en","description":"STAGS indexes release notes from infrastructure and AI projects — breaking changes, deprecations and migrations — in one English-first feed.","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/releases/vitess/23.0.0/#article","headline":"vitess v23.0.0 release notes","datePublished":"2025-11-04","inLanguage":"en","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/vitessio/vitess"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">Skip to content</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/" class="brand" aria-label="STAGS NextStack — Open-source release intelligence"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/releases">Releases</a><a href="/projects">Projects</a><a href="/topics">Topics</a><a href="/compare">Compare</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="Open menu"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="Primary"> <a href="/releases" class="navmenu-item">Releases</a><a href="/projects" class="navmenu-item">Projects</a><a href="/topics" class="navmenu-item">Topics</a><a href="/compare" class="navmenu-item">Compare</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="Search releases"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">Search</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="Language"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">EN</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="Language"> <p class="langmenu-head">Language</p> <a class="langmenu-item" href="/releases/vitess/23.0.0/" hreflang="en" lang="en" aria-current="true" data-on="true"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/vitess/vitess_v23.0.0" hreflang="zh-Hans" lang="zh-CN" data-on="false"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/vitess/23.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/vitess/23.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/vitess/23.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/vitess/23.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/vitess/23.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a> <span class="sep">/</span> <a href="/releases">Releases</a> <span class="sep">/</span> <a href="/releases/vitess">vitess</a> </nav> <h1 class="detail-title"> <span class="p">vitess</span> v23.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">major</span> <span><span class="k">Published</span>Nov 4, 2025</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/vitessio/vitess" target="_blank" rel="noopener"> <span class="k">Source</span>vitessio/vitess </a>   <span class="sep" aria-hidden="true"></span> <a href="/zh/release_note/vitess/vitess_v23.0.0"> Chinese translation </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/releases/vitess/23.0.0/">Copy link</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="vitess-v2300">vitess v23.0.0</h1>
+<h1 id="release-of-vitess-v2300">Release of Vitess v23.0.0</h1>
+<h2 id="summary">Summary</h2>
+<h3 id="table-of-contents">Table of Contents</h3>
+<ul>
+<li><strong><a href="#major-changes">Major Changes</a></strong>
+<ul>
+<li><strong><a href="#breaking-changes">Breaking Changes</a></strong></li>
+<li><strong><a href="#flag-naming-convention-migration">Flag Naming Convention Migration</a></strong></li>
+<li><strong><a href="#new-default-versions">New default versions</a></strong>
+<ul>
+<li><a href="#upgrade-to-mysql-8-4">Upgrade to MySQL 8.4</a></li>
+</ul>
+</li>
+<li><strong><a href="#new-support">New Support</a></strong>
+<ul>
+<li><a href="#multi-query-execution">Multi-Query Execution</a></li>
+<li><a href="#transaction-timeout-session-variable">Transaction Timeout Session Variable</a></li>
+<li><a href="#query-throttler">Experimental: Query Throttler</a></li>
+<li><a href="#multiple-lookup-vindexes-support">Multiple Lookup Vindexes Support</a></li>
+<li><a href="#reference-tables-in-materialize-workflows">Reference Tables in Materialize Workflows</a></li>
+<li><a href="#online-ddl-shard-specific-completion">Online DDL Shard-Specific Completion</a></li>
+<li><a href="#with-recursive-ctes">WITH RECURSIVE CTEs</a></li>
+<li><a href="#create-table-select-support">CREATE TABLE … SELECT Support</a></li>
+</ul>
+</li>
+<li><strong><a href="#deprecations">Deprecations</a></strong>
+<ul>
+<li><a href="#deprecated-metrics">Metrics</a></li>
+<li><a href="#deprecated-cli-flags">CLI Flags</a></li>
+</ul>
+</li>
+<li><strong><a href="#deletions">Deletions</a></strong>
+<ul>
+<li><a href="#deleted-metrics">Metrics</a></li>
+</ul>
+</li>
+<li><strong><a href="#new-metrics">New Metrics</a></strong>
+<ul>
+<li><a href="#new-vtgate-metrics">VTGate</a></li>
+<li><a href="#new-vttablet-metrics">VTTablet</a></li>
+<li><a href="#new-vtorc-metrics">VTOrc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes">Minor Changes</a></strong>
+<ul>
+<li><strong><a href="#new-cli-flags">New CLI Flags</a></strong>
+<ul>
+<li><a href="#new-vreplication-flags">VReplication/Materialize</a></li>
+<li><a href="#new-observability-flags">Observability</a></li>
+<li><a href="#new-vtorc-flags">VTOrc</a></li>
+<li><a href="#new-backup-flags">Backup/Restore</a></li>
+<li><a href="#new-cli-tool-flags">CLI Tools</a></li>
+<li><a href="#new-vtadmin-flags">VTAdmin</a></li>
+<li><a href="#new-vtgate-flags-section">VTGate</a></li>
+</ul>
+</li>
+<li><strong><a href="#modified-metrics">Modified Metrics</a></strong></li>
+<li><strong><a href="#parser-sql-enhancements">Parser/SQL Enhancements</a></strong></li>
+<li><strong><a href="#query-planning-improvements">Query Planning Improvements</a></strong></li>
+<li><strong><a href="#minor-changes-topo">Topology</a></strong>
+<ul>
+<li><a href="#consul-auth-static-file-check-creds"><code>--consul-auth-static-file</code> requires 1 or more credentials</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vtorc">VTOrc</a></strong>
+<ul>
+<li><a href="#aggregated-discovery-metrics-api-removed">Aggregated Discovery Metrics HTTP API removed</a></li>
+<li><a href="#vtorc-dynamic-ers-disabled">Dynamic control of <code>EmergencyReparentShard</code>-based recoveries</a></li>
+<li><a href="#recoveries-stats-keyspace-shard">Recovery stats to include keyspace/shard</a></li>
+<li><a href="#replication-analysis-api-deprecation"><code>/api/replication-analysis</code> HTTP API deprecation</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vttablet">VTTablet</a></strong>
+<ul>
+<li><a href="#api-changes">API Changes</a></li>
+<li><a href="#flags-vttablet">CLI Flags</a></li>
+<li><a href="#mysql-caching-sha2-password">Managed MySQL configuration defaults to caching-sha2-password</a></li>
+<li><a href="#mysql-timezone-env">MySQL timezone environment propagation</a></li>
+<li><a href="#grpctmclient-err-changes">gRPC <code>tabletmanager</code> client error changes</a></li>
+</ul>
+</li>
+<li><strong><a href="#docker">Docker</a></strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="major-changes"><a id="major-changes">Major Changes</a></h2>
+<h3 id="breaking-changes"><a id="breaking-changes">Breaking Changes</a></h3>
+<h4 id="deleted-vtgate-metrics"><a id="deleted-metrics-breaking">Deleted VTGate Metrics</a></h4>
+<p>Four deprecated VTGate metrics have been completely removed in v23.0.0. These metrics were deprecated in v22.0.0:</p>
+<table>
+<thead>
+<tr>
+<th>Metric Name</th>
+<th>Component</th>
+<th>Deprecated In</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QueriesProcessed</code></td>
+<td>vtgate</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><code>QueriesRouted</code></td>
+<td>vtgate</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><code>QueriesProcessedByTable</code></td>
+<td>vtgate</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><code>QueriesRoutedByTable</code></td>
+<td>vtgate</td>
+<td>v22.0.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact</strong>: Any monitoring dashboards or alerting systems using these metrics must be updated to use the replacement metrics introduced in v22.0.0:</p>
+<ul>
+<li>Use <code>QueryExecutions</code> instead of <code>QueriesProcessed</code></li>
+<li>Use <code>QueryRoutes</code> instead of <code>QueriesRouted</code></li>
+<li>Use <code>QueryExecutionsByTable</code> instead of <code>QueriesProcessedByTable</code> and <code>QueriesRoutedByTable</code></li>
+</ul>
+<p>See the <a href="https://github.com/vitessio/vitess/blob/main/changelog/22.0/22.0.0/release_notes.md#new-vtgate-metrics">v22.0.0 release notes</a> for details on the new metrics.</p>
+<h4 id="executefetchasdba-no-longer-accepts-multi-statement-sql"><a id="executefetchasdba-multistatement">ExecuteFetchAsDba No Longer Accepts Multi-Statement SQL</a></h4>
+<p>The <code>ExecuteFetchAsDba</code> RPC method in TabletManager now explicitly rejects SQL queries containing multiple statements (as of <a href="https://github.com/vitessio/vitess/pull/18183">PR #18183</a>).</p>
+<p><strong>Impact</strong>: Code or automation that previously passed multiple semicolon-separated SQL statements to <code>ExecuteFetchAsDba</code> will now receive an error. Each SQL statement must be sent in a separate RPC call.</p>
+<p><strong>Migration</strong>: Split multi-statement SQL into individual RPC calls:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// Before (no longer works):</span></span>
+<span class="line"><span style="color:#6F42C1">ExecuteFetchAsDba</span><span style="color:#24292E">(</span><span style="color:#032F62">"CREATE TABLE t1 (id INT); CREATE TABLE t2 (id INT);"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After (required in v23+):</span></span>
+<span class="line"><span style="color:#6F42C1">ExecuteFetchAsDba</span><span style="color:#24292E">(</span><span style="color:#032F62">"CREATE TABLE t1 (id INT);"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#6F42C1">ExecuteFetchAsDba</span><span style="color:#24292E">(</span><span style="color:#032F62">"CREATE TABLE t2 (id INT);"</span><span style="color:#24292E">)</span></span></code></pre>
+<h4 id="grpc-tabletmanager-error-code-changes"><a id="grpc-error-codes">gRPC TabletManager Error Code Changes</a></h4>
+<p>The <code>vttablet</code> gRPC <code>tabletmanager</code> client now returns errors wrapped by the internal <code>go/vt/vterrors</code> package (<a href="https://github.com/vitessio/vitess/pull/18565">PR #18565</a>).</p>
+<p><strong>Impact</strong>: External automation relying on google-gRPC error codes must be updated to use <code>vterrors.Code(err)</code> to inspect error codes, which returns <code>vtrpcpb.Code</code>s defined in <a href="https://github.com/vitessio/vitess/blob/main/proto/vtrpc.proto#L60">proto/vtrpc.proto</a>.</p>
+<p><strong>Migration</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// Before:</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> status.</span><span style="color:#6F42C1">Code</span><span style="color:#24292E">(err) </span><span style="color:#D73A49">==</span><span style="color:#24292E"> codes.NotFound { </span><span style="color:#D73A49">...</span><span style="color:#24292E"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After:</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> vterrors.</span><span style="color:#6F42C1">Code</span><span style="color:#24292E">(err) </span><span style="color:#D73A49">==</span><span style="color:#24292E"> vtrpcpb.Code_NOT_FOUND { </span><span style="color:#D73A49">...</span><span style="color:#24292E"> }</span></span></code></pre>
+<h4 id="gtid-api-signature-changes"><a id="gtid-api-changes">GTID API Signature Changes</a></h4>
+<p>Several GTID-related API signatures changed in <a href="https://github.com/vitessio/vitess/pull/18196">PR #18196</a> as part of GTID performance optimizations:</p>
+<p><strong>Changed</strong>: <code>BinlogEvent.GTID()</code> method signature
+<strong>Impact</strong>: Code directly using the GTID parsing APIs may need updates. Most users are unaffected as these are internal APIs.</p>
+<h4 id="generateshardranges-api-signature-change"><a id="generateshardranges-api">GenerateShardRanges API Signature Change</a></h4>
+<p>The <code>key.GenerateShardRanges()</code> function signature changed in <a href="https://github.com/vitessio/vitess/pull/18633">PR #18633</a> to add a new <code>hexChars int</code> parameter controlling the hex width of generated shard names.</p>
+<p><strong>Impact</strong>: Code calling <code>GenerateShardRanges()</code> directly must be updated to pass the new parameter.</p>
+<p>The corresponding vtctldclient command gained a new <code>--chars</code> flag to control this behavior.</p>
+<hr>
+<h3 id="flag-naming-convention-migration"><a id="flag-naming-convention-migration">Flag Naming Convention Migration</a></h3>
+<p>Vitess v23.0.0 includes a major standardization of CLI flag naming conventions across all binaries. <strong>989 flags</strong> have been migrated from underscore notation (<code>flag_name</code>) to dash notation (<code>flag-name</code>) in <a href="https://github.com/vitessio/vitess/pull/18280">PR #18280</a> and related PRs.</p>
+<h4 id="backward-compatibility">Backward Compatibility</h4>
+<ul>
+<li><strong>v23.0.0 and v24.0.0</strong>: Both underscore and dash formats are supported. Underscore format is <strong>deprecated</strong> but functional.</li>
+<li><strong>v25.0.0</strong>: Underscore format will be <strong>removed</strong>. Only dash format will be accepted.</li>
+</ul>
+<h4 id="automatic-normalization">Automatic Normalization</h4>
+<p>Flag normalization happens automatically at the <code>pflag</code> level (<a href="https://github.com/vitessio/vitess/pull/18642">PR #18642</a>), so both formats are accepted without requiring code changes in v23/v24.</p>
+<h4 id="example-flag-renames">Example Flag Renames</h4>
+<p>Common flags affected (full list of 989 flags available in PR #18280):</p>
+<p><strong>Backup flags</strong>:</p>
+<ul>
+<li><code>--azblob_backup_account_name</code> → <code>--azblob-backup-account-name</code></li>
+<li><code>--s3_backup_storage_bucket</code> → <code>--s3-backup-storage-bucket</code></li>
+<li><code>--xtrabackup_root_path</code> → <code>--xtrabackup-root-path</code></li>
+</ul>
+<p><strong>Replication flags</strong>:</p>
+<ul>
+<li><code>--heartbeat_enable</code> → <code>--heartbeat-enable</code></li>
+<li><code>--replication_connect_retry</code> → <code>--replication-connect-retry</code></li>
+</ul>
+<p><strong>gRPC flags</strong> (<a href="https://github.com/vitessio/vitess/pull/18009">PR #18009</a>):</p>
+<ul>
+<li>All gRPC-related flags standardized (30+ flags)</li>
+</ul>
+<h4 id="action-required">Action Required</h4>
+<p>Users should update configuration files, scripts, and automation to use dash-based flag names before upgrading to v25.0.0. The migration is backward compatible in v23 and v24, allowing gradual updates.</p>
+<hr>
+<h3 id="new-default-versions"><a id="new-default-versions">New default versions</a></h3>
+<h4 id="upgrade-to-mysql-84"><a id="upgrade-to-mysql-8-4">Upgrade to MySQL 8.4</a></h4>
+<p>The default major MySQL version used by our <code>vitess/lite:latest</code> image is going from <code>8.0.40</code> to <code>8.4.6</code>.
+This change was merged in <a href="https://github.com/vitessio/vitess/pull/18569">#18569</a>.</p>
+<p>VTGate also advertises MySQL version <code>8.4.6</code> by default instead of <code>8.0.40</code>. If that is not what you are running, you can set the <code>mysql_server_version</code> flag to advertise the desired version.</p>
+<blockquote>
+<p>⚠️ Upgrading to this release with vitess-operator:</p>
+<p>If you are using the <code>vitess-operator</code>, considering that we are bumping the MySQL version from <code>8.0.40</code> to <code>8.4.6</code>, you will have to manually upgrade:</p>
+<ol>
+<li>Add <code>innodb_fast_shutdown=0</code> to your extra cnf in your YAML file.</li>
+<li>Apply this file.</li>
+<li>Wait for all the pods to be healthy.</li>
+<li>Then change your YAML file to use the new Docker Images (<code>vitess/lite:v23.0.0</code>).</li>
+<li>Remove <code>innodb_fast_shutdown=0</code> from your extra cnf in your YAML file.</li>
+<li>Apply this file.</li>
+</ol>
+<p>This is only needed once when going from the latest <code>8.0.x</code> to <code>8.4.x</code>. Once you’re on <code>8.4.x</code>, it is possible to upgrade and downgrade between <code>8.4.x</code> versions without needing to run <code>innodb_fast_shutdown=0</code>.</p>
+</blockquote>
+<hr>
+<h3 id="new-support"><a id="new-support">New Support</a></h3>
+<h4 id="multi-query-execution"><a id="multi-query-execution">Multi-Query Execution</a></h4>
+<p>Vitess v23.0.0 introduces native support for executing multiple queries in a single RPC call through new <code>ExecuteMulti</code> and <code>StreamExecuteMulti</code> APIs (<a href="https://github.com/vitessio/vitess/pull/18059">PR #18059</a>).</p>
+<p>This feature provides more efficient batch query execution without requiring manual query splitting or multiple round trips.</p>
+<p><strong>Usage Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#24292E">queries </span><span style="color:#D73A49">:=</span><span style="color:#24292E"> []</span><span style="color:#D73A49">string</span><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#032F62">    "SELECT * FROM users WHERE id = 1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">    "SELECT * FROM orders WHERE user_id = 1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">    "SELECT * FROM payments WHERE user_id = 1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"><span style="color:#24292E">results, err </span><span style="color:#D73A49">:=</span><span style="color:#24292E"> vtgateConn.</span><span style="color:#6F42C1">ExecuteMulti</span><span style="color:#24292E">(ctx, queries)</span></span></code></pre>
+<p><strong>Configuration</strong>: Enable with the <code>--mysql-server-multi-query-protocol</code> flag on VTGate.</p>
+<h4 id="transaction-timeout-session-variable"><a id="transaction-timeout-session-variable">Transaction Timeout Session Variable</a></h4>
+<p>A new <code>transaction_timeout</code> session variable has been added (<a href="https://github.com/vitessio/vitess/pull/18560">PR #18560</a>), allowing per-session control over transaction timeout duration.</p>
+<p><strong>Usage</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Set transaction timeout to 30 seconds for this session</span></span>
+<span class="line"><span style="color:#D73A49">SET</span><span style="color:#24292E"> transaction_timeout </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 30</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Begin a transaction that will automatically rollback if not committed within 30s</span></span>
+<span class="line"><span style="color:#D73A49">BEGIN</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#6A737D">-- ... perform operations ...</span></span>
+<span class="line"><span style="color:#D73A49">COMMIT</span><span style="color:#24292E">;</span></span></code></pre>
+<p>This provides more granular timeout control compared to global server settings, useful for:</p>
+<ul>
+<li>Long-running batch operations that need extended timeouts</li>
+<li>Interactive sessions that should fail fast</li>
+<li>Different timeout requirements per application workload</li>
+</ul>
+<h4 id="experimental-query-throttler"><a id="query-throttler">Experimental: Query Throttler</a></h4>
+<p>Vitess v23.0.0 introduces a new, experimental Query Throttler framework for rate-limiting incoming queries (<a href="https://github.com/vitessio/vitess/issues/18412">RFC issue #18412</a>, <a href="https://github.com/vitessio/vitess/pull/18449">PR #18449</a>, <a href="https://github.com/vitessio/vitess/pull/18657">PR #18657</a>). Work on this new throttler is ongoing with the potential for breaking changes in the future.</p>
+<p>Feedback on this experimental feature is appreciated in GitHub issues or the <code>#feat-handling-overload</code> channel of the <a href="https://vitess.io/slack">Vitess Community Slack</a>.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>File-based configuration for throttling rules</li>
+<li>Dry-run mode for testing throttling without enforcement</li>
+<li>Dynamic rule reloading</li>
+</ul>
+<p><strong>Configuration</strong>:</p>
+<ul>
+<li><code>--query-throttler-config-refresh-interval</code> - How often to reload throttler configuration</li>
+</ul>
+<p><strong>Dry-run Mode</strong>: Test throttling rules without actually blocking queries, useful for validating configuration before enforcement.</p>
+<h4 id="multiple-lookup-vindexes-support"><a id="multiple-lookup-vindexes-support">Multiple Lookup Vindexes Support</a></h4>
+<p>Creating multiple lookup vindexes in a single workflow is now supported through the <code>--params-file</code> flag (<a href="https://github.com/vitessio/vitess/pull/17566">PR #17566</a>).</p>
+<p><strong>Usage</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Create multiple lookup vindexes from JSON configuration</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> LookupVindexCreate</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --workflow</span><span style="color:#032F62"> my_lookup_workflow</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --params-file</span><span style="color:#032F62"> /path/to/params.json</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#032F62">  commerce</span></span></code></pre>
+<p><strong>params.json example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "vindexes"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"user_email_lookup"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"consistent_lookup_unique"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner"</span><span style="color:#24292E">: </span><span style="color:#032F62">"users"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner_columns"</span><span style="color:#24292E">: [</span><span style="color:#032F62">"email"</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"user_name_lookup"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"consistent_lookup"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner"</span><span style="color:#24292E">: </span><span style="color:#032F62">"users"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner_columns"</span><span style="color:#24292E">: [</span><span style="color:#032F62">"name"</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  ]</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<p>This significantly improves workflow efficiency when setting up multiple vindexes, reducing the number of separate operations required.</p>
+<h4 id="reference-tables-in-materialize-workflows"><a id="reference-tables-in-materialize-workflows">Reference Tables in Materialize Workflows</a></h4>
+<p>Reference tables can now be added to existing materialize workflows using the new <code>Materialize ... update</code> sub-command (<a href="https://github.com/vitessio/vitess/pull/17804">PR #17804</a>).</p>
+<p><strong>Usage</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Add reference tables to an existing workflow</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> Materialize</span><span style="color:#005CC5"> --workflow</span><span style="color:#032F62"> my_workflow</span><span style="color:#032F62"> update</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --add-reference-tables</span><span style="color:#032F62"> ref_table1,ref_table2</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --target-keyspace</span><span style="color:#032F62"> my_keyspace</span></span></code></pre>
+<p><strong>Use Case</strong>: Incrementally add reference tables to running materialize workflows without recreating the entire workflow, improving operational flexibility.</p>
+<h4 id="online-ddl-shard-specific-completion"><a id="online-ddl-shard-specific-completion">Online DDL Shard-Specific Completion</a></h4>
+<p>Online DDL migrations can now be completed on a per-shard basis using the new <code>COMPLETE VITESS_SHARDS</code> syntax (<a href="https://github.com/vitessio/vitess/pull/18331">PR #18331</a>).</p>
+<p><strong>Usage</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Complete migration on specific shards only</span></span>
+<span class="line"><span style="color:#D73A49">ALTER</span><span style="color:#24292E"> VITESS_MIGRATION </span><span style="color:#032F62">'9e8a9249_3976_11ed_9442_0a43f95f28a3'</span></span>
+<span class="line"><span style="color:#24292E">  COMPLETE VITESS_SHARDS </span><span style="color:#032F62">'-80,80-'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Complete migration on all remaining shards</span></span>
+<span class="line"><span style="color:#D73A49">ALTER</span><span style="color:#24292E"> VITESS_MIGRATION </span><span style="color:#032F62">'9e8a9249_3976_11ed_9442_0a43f95f28a3'</span></span>
+<span class="line"><span style="color:#24292E">  COMPLETE;</span></span></code></pre>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Gradual rollout of schema changes across shards</li>
+<li>Ability to validate changes on subset of shards before full rollout</li>
+<li>Better control over migration timing and impact</li>
+</ul>
+<h4 id="with-recursive-ctes"><a id="with-recursive-ctes">WITH RECURSIVE CTEs</a></h4>
+<p>Vitess now supports <code>WITH RECURSIVE</code> common table expressions (<a href="https://github.com/vitessio/vitess/pull/18590">PR #18590</a>), enabling recursive queries for hierarchical data.</p>
+<p><strong>Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Find all employees in a management hierarchy</span></span>
+<span class="line"><span style="color:#D73A49">WITH</span><span style="color:#D73A49"> RECURSIVE</span><span style="color:#24292E"> employee_hierarchy </span><span style="color:#D73A49">AS</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#24292E"> id, </span><span style="color:#D73A49">name</span><span style="color:#24292E">, manager_id, </span><span style="color:#005CC5">1</span><span style="color:#D73A49"> as</span><span style="color:#D73A49"> level</span></span>
+<span class="line"><span style="color:#D73A49">    FROM</span><span style="color:#24292E"> employees</span></span>
+<span class="line"><span style="color:#D73A49">    WHERE</span><span style="color:#24292E"> manager_id </span><span style="color:#D73A49">IS</span><span style="color:#D73A49"> NULL</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    UNION ALL</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#005CC5"> e</span><span style="color:#24292E">.</span><span style="color:#005CC5">id</span><span style="color:#24292E">, </span><span style="color:#005CC5">e</span><span style="color:#24292E">.</span><span style="color:#005CC5">name</span><span style="color:#24292E">, </span><span style="color:#005CC5">e</span><span style="color:#24292E">.</span><span style="color:#005CC5">manager_id</span><span style="color:#24292E">, </span><span style="color:#005CC5">eh</span><span style="color:#24292E">.</span><span style="color:#005CC5">level</span><span style="color:#D73A49"> +</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">    FROM</span><span style="color:#24292E"> employees e</span></span>
+<span class="line"><span style="color:#D73A49">    INNER JOIN</span><span style="color:#24292E"> employee_hierarchy eh </span><span style="color:#D73A49">ON</span><span style="color:#005CC5"> e</span><span style="color:#24292E">.</span><span style="color:#005CC5">manager_id</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> eh</span><span style="color:#24292E">.</span><span style="color:#005CC5">id</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> employee_hierarchy </span><span style="color:#D73A49">ORDER BY</span><span style="color:#D73A49"> level</span><span style="color:#24292E">, </span><span style="color:#D73A49">name</span><span style="color:#24292E">;</span></span></code></pre>
+<p>This is a major SQL compatibility enhancement for applications with hierarchical or graph-like data structures.</p>
+<h4 id="create-table--select-support"><a id="create-table-select-support">CREATE TABLE … SELECT Support</a></h4>
+<p>The SQL parser now supports <code>CREATE TABLE ... SELECT</code> statements (<a href="https://github.com/vitessio/vitess/pull/18443">PR #18443</a>), improving MySQL compatibility.</p>
+<p><strong>Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Create a table from a query result</span></span>
+<span class="line"><span style="color:#D73A49">CREATE</span><span style="color:#D73A49"> TABLE</span><span style="color:#6F42C1"> recent_orders</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> orders</span></span>
+<span class="line"><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> order_date </span><span style="color:#D73A49">></span><span style="color:#24292E"> DATE_SUB(</span><span style="color:#D73A49">NOW</span><span style="color:#24292E">(), INTERVAL </span><span style="color:#005CC5">30</span><span style="color:#D73A49"> DAY</span><span style="color:#24292E">);</span></span></code></pre>
+<hr>
+<h3 id="deprecations"><a id="deprecations">Deprecations</a></h3>
+<h4 id="metrics"><a id="deprecated-metrics">Metrics</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Component</th>
+<th align="center">Metric Name</th>
+<th align="center">Notes</th>
+<th align="center">Deprecation PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>vtorc</code></td>
+<td align="center"><code>DiscoverInstanceTimings</code></td>
+<td align="center">Replaced by <code>DiscoveryInstanceTimings</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18406">#18406</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="cli-flags"><a id="deprecated-cli-flags">CLI Flags</a></h4>
+<p>As part of the <a href="#flag-naming-convention-migration">Flag Naming Convention Migration</a>, <strong>989 CLI flags</strong> across all Vitess binaries have been deprecated in their underscore format. The dash format should be used going forward.</p>
+<p><strong>Deprecation Timeline</strong>:</p>
+<ul>
+<li><strong>v23.0.0 and v24.0.0</strong>: Underscore format deprecated but functional</li>
+<li><strong>v25.0.0</strong>: Underscore format will be removed</li>
+</ul>
+<p><strong>Action Required</strong>: Migrate to dash-based flag names before v25.0.0. See <a href="#flag-naming-convention-migration">Flag Naming Convention Migration</a> for details.</p>
+<hr>
+<h3 id="deletions"><a id="deletions">Deletions</a></h3>
+<h4 id="metrics-1"><a id="deleted-metrics">Metrics</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Component</th>
+<th align="center">Metric Name</th>
+<th align="center">Was Deprecated In</th>
+<th align="center">Deprecation PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesProcessed</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesRouted</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesProcessedByTable</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesRoutedByTable</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="#deleted-metrics-breaking">Breaking Changes</a> for migration guidance.</p>
+<hr>
+<h3 id="new-metrics"><a id="new-metrics">New Metrics</a></h3><a id="new-metrics">
+</a><h4 id="vtgate"><a id="new-metrics"></a><a id="new-vtgate-metrics">VTGate</a></h4><a id="new-vtgate-metrics">
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">Dimensions</th>
+<th align="center">Description</th>
+<th align="center">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>TransactionsProcessed</code></td>
+<td align="center"><code>Shard</code>, <code>Type</code></td>
+<td align="center">Counts transactions processed at VTGate by shard distribution and transaction type.</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18171">#18171</a></td>
+</tr>
+<tr>
+<td align="center"><code>OptimizedQueryExecutions</code></td>
+<td align="center">N/A</td>
+<td align="center">Counter tracking queries that used deferred optimization execution path.</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18067">#18067</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Transaction Types in <code>TransactionsProcessed</code></strong>:</p>
+<ul>
+<li><code>Single</code> - Single-shard transactions</li>
+<li><code>Multi</code> - Multi-shard transactions</li>
+<li><code>TwoPC</code> - Two-phase commit transactions</li>
+</ul>
+<p><strong>Use Case</strong>: The <code>TransactionsProcessed</code> metric helps identify transaction patterns and shard distribution, useful for:</p>
+<ul>
+<li>Monitoring transaction types across your deployment</li>
+<li>Identifying queries that could be optimized to single-shard</li>
+<li>Tracking two-phase commit usage and potential bottlenecks</li>
+</ul>
+</a><h4 id="vttablet"><a id="new-vtgate-metrics"></a><a id="new-vttablet-metrics">VTTablet</a></h4><a id="new-vttablet-metrics">
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">Dimensions</th>
+<th align="center">Description</th>
+<th align="center">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>OnlineDDLStaleMigrationMinutes</code></td>
+<td align="center">N/A</td>
+<td align="center">Minutes since the oldest pending/ready migration was submitted.</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18417">#18417</a></td>
+</tr>
+<tr>
+<td align="center"><code>vttablet_tablet_server_state</code></td>
+<td align="center"><code>type</code>, <code>keyspace</code>, <code>shard</code></td>
+<td align="center">Enhanced with additional dimensions for better observability.</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18451">#18451</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use Case for <code>OnlineDDLStaleMigrationMinutes</code></strong>: Alert on stalled Online DDL migrations that haven’t progressed for an extended period, helping identify migrations that may need intervention.</p>
+</a><h4 id="vtorc"><a id="new-vttablet-metrics"></a><a id="new-vtorc-metrics">VTOrc</a></h4><a id="new-vtorc-metrics">
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">Dimensions</th>
+<th align="center">Description</th>
+<th align="center">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>SkippedRecoveries</code></td>
+<td align="center"><code>RecoveryName</code>, <code>Keyspace</code>, <code>Shard</code>, <code>Reason</code></td>
+<td align="center">Count of skipped recoveries with reason tracking.</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18644">#18644</a></td>
+</tr>
+<tr>
+<td align="center"><code>EmergencyReparentShardDisabled</code></td>
+<td align="center"><code>Keyspace</code>, <code>Shard</code></td>
+<td align="center">Gauge indicating if ERS is disabled per keyspace/shard.</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17985">#17985</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use Case for <code>EmergencyReparentShardDisabled</code></strong>: Create alerts to ensure EmergencyReparentShard-based recoveries are not disabled for an undesired period, maintaining high availability posture.</p>
+<p><strong><code>SkippedRecoveries</code> Reasons</strong>: The <code>Reason</code> dimension tracks why recoveries were skipped (e.g., “ERSDisabled”, “ReplicationLagHigh”, “NotEnoughReplicas”), providing actionable insights for operational troubleshooting.</p>
+<hr>
+</a><h2 id="minor-changes"><a id="new-vtorc-metrics"></a><a id="minor-changes">Minor Changes</a></h2>
+<h3 id="new-cli-flags"><a id="new-cli-flags">New CLI Flags</a></h3>
+<h4 id="vreplicationmaterialize"><a id="new-vreplication-flags">VReplication/Materialize</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Component</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--params-file</code></td>
+<td align="left">vtctldclient</td>
+<td align="left">JSON file containing lookup vindex parameters for creating multiple lookup vindexes in a single workflow. Mutually exclusive with <code>--type</code>, <code>--table-owner</code>, and <code>--table-owner-columns</code>.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/17566">#17566</a></td>
+</tr>
+<tr>
+<td align="left"><code>--add-reference-tables</code></td>
+<td align="left">vtctldclient</td>
+<td align="left">Comma-separated list of reference tables to add to an existing materialize workflow using the <code>update</code> sub-command.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/17804">#17804</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="observability"><a id="new-observability-flags">Observability</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Component</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--skip-user-metrics</code></td>
+<td align="left">vttablet</td>
+<td align="left">If enabled, replaces the username label in user-based metrics with “UserLabelDisabled” to prevent metric cardinality explosion in environments with many unique users.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18085">#18085</a></td>
+</tr>
+<tr>
+<td align="left"><code>--querylog-emit-on-any-condition-met</code></td>
+<td align="left">vtgate, vttablet, vtcombo</td>
+<td align="left">Changes query log emission to emit when ANY logging condition is met (row-threshold, time-threshold, filter-tag, or error) rather than requiring ALL conditions. Default: false.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18546">#18546</a></td>
+</tr>
+<tr>
+<td align="left"><code>--querylog-time-threshold</code></td>
+<td align="left">vtgate, vttablet</td>
+<td align="left">Duration threshold for query logging. Queries exceeding this duration will be logged. Works with <code>--querylog-emit-on-any-condition-met</code>.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18520">#18520</a></td>
+</tr>
+<tr>
+<td align="left"><code>--grpc-enable-orca-metrics</code></td>
+<td align="left">vtgate, vttablet</td>
+<td align="left">Enable ORCA (Open Request Cost Aggregation) backend metrics reporting via gRPC for load balancing decisions. Default: false.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18282">#18282</a></td>
+</tr>
+<tr>
+<td align="left"><code>--datadog-trace-debug-mode</code></td>
+<td align="left">All components</td>
+<td align="left">Makes Datadog trace debug mode configurable instead of always-on. Default: false.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18347">#18347</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="vtorc-1"><a id="new-vtorc-flags">VTOrc</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Component</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--allow-recovery</code></td>
+<td align="left">vtorc</td>
+<td align="left">Boolean flag to disable all VTOrc recovery operations from startup. When false, VTOrc runs in monitoring-only mode. Default: true.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18005">#18005</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use Case</strong>: The <code>--allow-recovery=false</code> flag is useful for:</p>
+<ul>
+<li>Testing VTOrc capacity/discovery performance ahead of a rollout, for example: migrating to VTOrc from another solution.</li>
+<li>Maintenance windows where automatic failovers should be prevented</li>
+<li>Debugging VTOrc behavior without triggering recoveries</li>
+<li>Running VTOrc in observation-only mode</li>
+</ul>
+<h4 id="backuprestore"><a id="new-backup-flags">Backup/Restore</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Component</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--xtrabackup-should-drain</code></td>
+<td align="left">vttablet</td>
+<td align="left">Makes the ShouldDrainForBackup behavior configurable for xtrabackup engine. When true, tablet drains traffic before backup. Default: true.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18431">#18431</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="cli-tools"><a id="new-cli-tool-flags">CLI Tools</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Component</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--chars</code></td>
+<td align="left">vtctldclient</td>
+<td align="left">Specifies the hex width (number of hex characters) to use when generating shard ranges with <code>GenerateShardRanges</code> command. Allows fine-grained control over shard naming.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18633">#18633</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Generate shard ranges with 4 hex characters</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> GenerateShardRanges</span><span style="color:#005CC5"> --shards</span><span style="color:#005CC5"> 16</span><span style="color:#005CC5"> --chars</span><span style="color:#005CC5"> 4</span></span>
+<span class="line"><span style="color:#6A737D"># Output: -1000,1000-2000,2000-3000,...,f000-</span></span></code></pre>
+<h4 id="vtadmin"><a id="new-vtadmin-flags">VTAdmin</a></h4>
+<p>Five new TLS-related flags were added for secure vtctld connections (<a href="https://github.com/vitessio/vitess/pull/18556">PR #18556</a>):</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--vtctld-grpc-ca</code></td>
+<td align="left">CA certificate file for vtctld gRPC TLS</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-cert</code></td>
+<td align="left">Client certificate file for vtctld gRPC TLS</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-key</code></td>
+<td align="left">Client key file for vtctld gRPC TLS</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-server-name</code></td>
+<td align="left">Server name for vtctld gRPC TLS validation</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-crl</code></td>
+<td align="left">Certificate revocation list for vtctld gRPC TLS</td>
+</tr>
+</tbody>
+</table>
+<p>These flags enable mTLS (mutual TLS) authentication between VTAdmin and vtctld for enhanced security.</p>
+<h4 id="vtgate-1"><a id="new-vtgate-flags-section">VTGate</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Component</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--vtgate-grpc-fail-fast</code></td>
+<td align="left">vtgate</td>
+<td align="left">Enable gRPC fail-fast mode for faster error responses when backends are unavailable. Default: false.</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18551">#18551</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="modified-metrics"><a id="modified-metrics">Modified Metrics</a></h3>
+<h4 id="vtorc-recovery-metrics-enhanced-with-keyspaceshard-labels">VTOrc Recovery Metrics Enhanced with Keyspace/Shard Labels</h4>
+<p>The following VTOrc recovery metrics now include <code>Keyspace</code> and <code>Shard</code> labels in addition to the existing <code>RecoveryType</code> label (<a href="https://github.com/vitessio/vitess/pull/18304">PR #18304</a>):</p>
+<ol>
+<li><code>FailedRecoveries</code></li>
+<li><code>PendingRecoveries</code></li>
+<li><code>RecoveriesCount</code></li>
+<li><code>SuccessfulRecoveries</code></li>
+</ol>
+<p><strong>Impact</strong>: Monitoring queries and dashboards using these metrics may need updates to account for the additional label dimensions.</p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>More granular observability into which keyspaces/shards are experiencing recovery issues</li>
+<li>Ability to alert on recovery patterns per keyspace/shard</li>
+<li>Better troubleshooting of cluster-specific issues</li>
+</ul>
+<p><strong>Example PromQL Query</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span># Before (v22): Recovery count by type only</span></span>
+<span class="line"><span>sum(rate(RecoveriesCount[5m])) by (RecoveryType)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># After (v23): Recovery count by type, keyspace, and shard</span></span>
+<span class="line"><span>sum(rate(RecoveriesCount[5m])) by (RecoveryType, Keyspace, Shard)</span></span></code></pre>
+<h4 id="vtgate-queryexecutionsbytable-behavior-change">VTGate QueryExecutionsByTable Behavior Change</h4>
+<p>The <code>QueryExecutionsByTable</code> metric now only counts successful query executions (<a href="https://github.com/vitessio/vitess/pull/18584">PR #18584</a>). Previously, it counted all query attempts regardless of success/failure.</p>
+<p><strong>Impact</strong>:</p>
+<ul>
+<li>Metric values may decrease if your workload had significant query failures</li>
+<li>More accurate representation of successful query volume</li>
+<li>Failed queries are tracked separately via error metrics</li>
+</ul>
+<hr>
+<h3 id="parsersql-enhancements"><a id="parser-sql-enhancements">Parser/SQL Enhancements</a></h3>
+<p>Vitess v23.0.0 includes significant SQL parser improvements for better MySQL compatibility:</p>
+<h4 id="new-sql-syntax-support">New SQL Syntax Support</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Feature</th>
+<th align="left">Description</th>
+<th align="left">PR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>CREATE TABLE ... SELECT</code></td>
+<td align="left">Full support for creating tables from SELECT query results</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18443">#18443</a></td>
+</tr>
+<tr>
+<td align="left"><code>WITH RECURSIVE</code></td>
+<td align="left">Recursive common table expressions for hierarchical queries</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18590">#18590</a></td>
+</tr>
+<tr>
+<td align="left"><code>SET NAMES binary</code></td>
+<td align="left">Support for binary character set specification</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18582">#18582</a></td>
+</tr>
+<tr>
+<td align="left"><code>ALTER VITESS_MIGRATION ... POSTPONE COMPLETE</code></td>
+<td align="left">Syntax for postponing Online DDL migration completion</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18118">#18118</a></td>
+</tr>
+<tr>
+<td align="left"><code>VALUE</code> keyword in INSERT/REPLACE</td>
+<td align="left">Support for <code>VALUE</code> (singular) in addition to <code>VALUES</code></td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18116">#18116</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="create-procedure-improvements">CREATE PROCEDURE Improvements</h4>
+<p>Enhanced <code>CREATE PROCEDURE</code> statement parsing (<a href="https://github.com/vitessio/vitess/pull/18142">PR #18142</a>, <a href="https://github.com/vitessio/vitess/pull/18279">PR #18279</a>):</p>
+<ul>
+<li>Better handling of <code>DEFINER</code> clauses with various formats</li>
+<li>Differentiation between <code>BEGIN...END</code> blocks and <code>START TRANSACTION</code> statements</li>
+<li>Support for <code>SET</code> statements within procedure bodies</li>
+<li>Improved handling of semicolons within procedure definitions</li>
+</ul>
+<h4 id="operator-precedence-fixes">Operator Precedence Fixes</h4>
+<ul>
+<li>Fixed <code>MEMBER OF</code> operator precedence with <code>AND</code> (<a href="https://github.com/vitessio/vitess/pull/18237">PR #18237</a>)</li>
+<li>Ensures correct query evaluation when combining JSON operations with boolean logic</li>
+</ul>
+<hr>
+<h3 id="query-planning-improvements"><a id="query-planning-improvements">Query Planning Improvements</a></h3>
+<h4 id="window-functions-in-single-shard-queries">Window Functions in Single-Shard Queries</h4>
+<p>Window functions can now be pushed down to single-shard queries (<a href="https://github.com/vitessio/vitess/pull/18103">PR #18103</a>), improving performance for analytics workloads.</p>
+<p><strong>Before v23</strong>: Window functions were always executed at VTGate level, even for single-shard queries.</p>
+<p><strong>After v23</strong>: Window functions are pushed down when the query targets a single shard, reducing data transfer and improving performance.</p>
+<p><strong>Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- This query now executes entirely on the target shard</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span></span>
+<span class="line"><span style="color:#24292E">    user_id,</span></span>
+<span class="line"><span style="color:#24292E">    order_date,</span></span>
+<span class="line"><span style="color:#24292E">    amount,</span></span>
+<span class="line"><span style="color:#005CC5">    SUM</span><span style="color:#24292E">(amount) </span><span style="color:#D73A49">OVER</span><span style="color:#24292E"> (</span><span style="color:#D73A49">PARTITION</span><span style="color:#D73A49"> BY</span><span style="color:#24292E"> user_id </span><span style="color:#D73A49">ORDER BY</span><span style="color:#24292E"> order_date) </span><span style="color:#D73A49">as</span><span style="color:#24292E"> running_total</span></span>
+<span class="line"><span style="color:#D73A49">FROM</span><span style="color:#24292E"> orders</span></span>
+<span class="line"><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> user_id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 12345</span><span style="color:#24292E">;  </span><span style="color:#6A737D">-- Single-shard query</span></span></code></pre>
+<h4 id="union-query-merging-improvements">UNION Query Merging Improvements</h4>
+<p>UNION query optimization has been significantly enhanced (<a href="https://github.com/vitessio/vitess/pull/18289">PR #18289</a>, <a href="https://github.com/vitessio/vitess/pull/18393">PR #18393</a>):</p>
+<p><strong>Extended UNION Merging</strong>: UNION queries with <code>Equal</code> and <code>IN</code> opcodes can now be merged more aggressively, generating simpler SQL.</p>
+<p><strong>Derived Table Elimination</strong>: Unnecessary derived table wrapping is avoided for UNION queries, producing cleaner and more efficient SQL.</p>
+<p><strong>Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Query:</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">UNION</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Before v23: Wrapped in derived table</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">    UNION</span></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 2</span></span>
+<span class="line"><span style="color:#24292E">) </span><span style="color:#D73A49">AS</span><span style="color:#24292E"> dt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- After v23: Direct UNION (simpler, more efficient)</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">UNION</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">;</span></span></code></pre>
+<h4 id="multi-shard-read-only-transactions-in-single-mode">Multi-Shard Read-Only Transactions in SINGLE Mode</h4>
+<p>Read-only transactions can now span multiple shards when using <code>SINGLE</code> transaction mode (<a href="https://github.com/vitessio/vitess/pull/18173">PR #18173</a>).</p>
+<p><strong>Before v23</strong>: SINGLE mode restricted all transactions to single shards, even read-only ones.</p>
+<p><strong>After v23</strong>: Read-only transactions can access multiple shards in SINGLE mode, improving flexibility without sacrificing consistency guarantees.</p>
+<p><strong>Impact</strong>: Applications using SINGLE transaction mode can now perform multi-shard read queries within transactions without needing to upgrade to MULTI or TWOPC modes.</p>
+<h4 id="deferred-optimization-for-prepared-statements">Deferred Optimization for Prepared Statements</h4>
+<p>Prepared statements now support deferred optimization (<a href="https://github.com/vitessio/vitess/pull/18126">PR #18126</a>), allowing preparation to succeed even when plan generation requires runtime values.</p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>More prepared statements succeed at preparation time</li>
+<li>Better support for queries with parameter-dependent optimization</li>
+<li>Reduced application errors from failed PREPARE statements</li>
+</ul>
+<p><strong>Behavior</strong>: When a prepared statement cannot be fully optimized at preparation time, optimization is deferred to execution time when bind variable values are available.</p>
+<h4 id="query-buffering-for-instant-ddl">Query Buffering for INSTANT DDL</h4>
+<p>Query buffering has been implemented for <code>INSTANT</code> DDL operations (<a href="https://github.com/vitessio/vitess/pull/17945">PR #17945</a>), reducing query failures during schema changes.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Automatic buffering of queries during INSTANT DDL execution</li>
+<li>Forced termination of blocking transactions</li>
+<li>Transparent to applications</li>
+</ul>
+<p><strong>Impact</strong>: Applications experience fewer query errors during schema changes, improving availability during DDL operations.</p>
+<hr>
+<h3 id="topology"><a id="minor-changes-topo">Topology</a></h3>
+<h4 id="--consul-auth-static-file-requires-1-or-more-credentials"><a id="consul-auth-static-file-check-creds"><code>--consul-auth-static-file</code> requires 1 or more credentials</a></h4>
+<p>The <code>--consul-auth-static-file</code> flag used in several components now requires that 1 or more credentials can be loaded from the provided json file (<a href="https://github.com/vitessio/vitess/pull/18152">PR #18152</a>).</p>
+<p><strong>Impact</strong>: Configurations with empty or invalid credential files will now fail at startup rather than silently continuing with no authentication.</p>
+<hr>
+<h3 id="vtorc-2"><a id="minor-changes-vtorc">VTOrc</a></h3>
+<h4 id="aggregated-discovery-metrics-http-api-removed"><a id="aggregated-discovery-metrics-api-removed">Aggregated Discovery Metrics HTTP API removed</a></h4>
+<p>VTOrc’s undocumented <code>/api/aggregated-discovery-metrics</code> HTTP API endpoint was removed (<a href="https://github.com/vitessio/vitess/pull/18672">PR #18672</a>). The list of documented VTOrc APIs can be found <a href="https://vitess.io/docs/current/reference/vtorc/ui_api_metrics/#apis">here</a>.</p>
+<p>We recommend using the standard VTOrc metrics to gather the same metrics. If you find that a metric is missing in standard metrics, please open an issue or PR to address this.</p>
+<h4 id="dynamic-control-of-emergencyreparentshard-based-recoveries"><a id="vtorc-dynamic-ers-disabled">Dynamic control of <code>EmergencyReparentShard</code>-based recoveries</a></h4>
+<p><strong>Note: disabling <code>EmergencyReparentShard</code>-based recoveries introduces availability risks; please use with extreme caution! If you rely on this functionality often, for example in automation, this may be signs of an anti-pattern. If so, please open an issue to discuss supporting your use case natively in VTOrc.</strong></p>
+<p>The new <code>vtctldclient</code> RPC <code>SetVtorcEmergencyReparent</code> was introduced (<a href="https://github.com/vitessio/vitess/pull/17985">PR #17985</a>) to allow VTOrc recoveries involving <code>EmergencyReparentShard</code> actions to be disabled on a per-keyspace and/or per-shard basis. Previous to this version, disabling EmergencyReparentShard-based recoveries was only possible globally/per-VTOrc-instance. VTOrc will now consider this keyspace/shard-level setting that is refreshed from the topo on each recovery. The disabled state is determined by first checking if the keyspace, and then the shard state. Removing a keyspace-level override does not remove per-shard overrides.</p>
+<p>To provide observability of keyspaces/shards with EmergencyReparentShard-based VTOrc recoveries disabled, the <code>EmergencyReparentShardDisabled</code> metric was added. This metric label can be used to create alerting to ensure EmergencyReparentShard-based recoveries are not disabled for an undesired period of time.</p>
+<p><strong>Example</strong>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Disable ERS recoveries for a keyspace</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> SetVtorcEmergencyReparent</span><span style="color:#005CC5"> --keyspace</span><span style="color:#032F62"> commerce</span><span style="color:#005CC5"> --enabled=false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Disable ERS recoveries for a specific shard</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> SetVtorcEmergencyReparent</span><span style="color:#005CC5"> --keyspace</span><span style="color:#032F62"> commerce</span><span style="color:#005CC5"> --shard</span><span style="color:#032F62"> 80-</span><span style="color:#005CC5"> --enabled=false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Re-enable ERS recoveries</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> SetVtorcEmergencyReparent</span><span style="color:#005CC5"> --keyspace</span><span style="color:#032F62"> commerce</span><span style="color:#005CC5"> --enabled=true</span></span></code></pre>
+<h4 id="recovery-stats-to-include-keyspaceshard"><a id="recoveries-stats-keyspace-shard">Recovery stats to include keyspace/shard</a></h4>
+<p>The following recovery-related stats now include labels for keyspaces and shards (<a href="https://github.com/vitessio/vitess/pull/18304">PR #18304</a>):</p>
+<ol>
+<li><code>FailedRecoveries</code></li>
+<li><code>PendingRecoveries</code></li>
+<li><code>RecoveriesCount</code></li>
+<li><code>SuccessfulRecoveries</code></li>
+</ol>
+<p>Previous to this release, only the recovery “type” was included in labels. See <a href="#modified-metrics">Modified Metrics</a> for more details.</p>
+<h4 id="apireplication-analysis-http-api-deprecation"><a id="replication-analysis-api-deprecation"><code>/api/replication-analysis</code> HTTP API deprecation</a></h4>
+<p>The <code>/api/replication-analysis</code> HTTP API endpoint is now deprecated and is replaced with <code>/api/detection-analysis</code> (<a href="https://github.com/vitessio/vitess/pull/18615">PR #18615</a>), which currently returns the same response format.</p>
+<p><strong>Timeline</strong>: The <code>/api/replication-analysis</code> endpoint will be removed in a future version. Users should migrate to <code>/api/detection-analysis</code>.</p>
+<hr>
+<h3 id="vttablet-1"><a id="minor-changes-vttablet">VTTablet</a></h3>
+<h4 id="api-changes"><a id="api-changes">API Changes</a></h4>
+<ul>
+<li>
+<p><strong>Added</strong> <code>RestartReplication</code> method to <code>TabletManagerClient</code> interface (<a href="https://github.com/vitessio/vitess/pull/18628">PR #18628</a>). This new RPC allows stopping and restarting MySQL replication with semi-sync configuration in a single call, providing a convenient alternative to separate <code>StopReplication</code> and <code>StartReplication</code> calls.</p>
+</li>
+<li>
+<p><strong>Added</strong> <code>GetMaxValueForSequences</code> and <code>UpdateSequenceTables</code> gRPC RPCs (<a href="https://github.com/vitessio/vitess/pull/18172">PR #18172</a>) for VReplication sequence management during <code>SwitchWrites</code> operations.</p>
+</li>
+</ul>
+<h4 id="cli-flags-1"><a id="flags-vttablet">CLI Flags</a></h4>
+<ul>
+<li><code>--skip-user-metrics</code> flag if enabled, replaces the username label with “UserLabelDisabled” to prevent metric explosion in environments with many unique users (<a href="https://github.com/vitessio/vitess/pull/18085">PR #18085</a>).</li>
+</ul>
+<p>See <a href="#new-cli-flags">New CLI Flags</a> for complete list of new flags.</p>
+<h4 id="managed-mysql-configuration-defaults-to-caching-sha2-password"><a id="mysql-caching-sha2-password">Managed MySQL configuration defaults to caching-sha2-password</a></h4>
+<p>The default authentication plugin for MySQL 8.0.26 and later is now <code>caching_sha2_password</code> instead of <code>mysql_native_password</code> (<a href="https://github.com/vitessio/vitess/pull/18010">PR #18010</a>). This change is made because <code>mysql_native_password</code> is deprecated and removed in future MySQL versions. <code>mysql_native_password</code> is still enabled for backwards compatibility.</p>
+<p>This change specifically affects the replication user. If you have a user configured with an explicit password, it is recommended to make sure to upgrade this user after upgrading to v23 with a statement like the following:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49">ALTER</span><span style="color:#D73A49"> USER</span><span style="color:#032F62"> 'vt_repl'</span><span style="color:#24292E">@</span><span style="color:#032F62">'%'</span><span style="color:#24292E"> IDENTIFIED </span><span style="color:#D73A49">WITH</span><span style="color:#24292E"> caching_sha2_password </span><span style="color:#D73A49">BY</span><span style="color:#032F62"> 'your-existing-password'</span><span style="color:#24292E">;</span></span></code></pre>
+<p>In future Vitess versions, the <code>mysql_native_password</code> authentication plugin will be disabled for managed MySQL instances.</p>
+<h4 id="mysql-timezone-environment-propagation"><a id="mysql-timezone-env">MySQL timezone environment propagation</a></h4>
+<p>Fixed a bug where environment variables like <code>TZ</code> were not propagated from mysqlctl to the mysqld process (<a href="https://github.com/vitessio/vitess/pull/18561">PR #18561</a>).
+As a result, timezone settings from the environment were previously ignored. Now mysqld correctly inherits environment variables.</p>
+<p>⚠️ <strong>Deployment Impact</strong>: Deployments that relied on the old behavior and explicitly set a non-UTC timezone may see changes in how DATETIME values are interpreted. To preserve compatibility, set <code>TZ=UTC</code> explicitly in MySQL pods.</p>
+<h4 id="grpc-tabletmanager-client-error-changes"><a id="grpctmclient-err-changes">gRPC <code>tabletmanager</code> client error changes</a></h4>
+<p>The <code>vttablet</code> gRPC <code>tabletmanager</code> client now returns errors wrapped by the internal <code>go/vt/vterrors</code> package (<a href="https://github.com/vitessio/vitess/pull/18565">PR #18565</a>). External automation relying on google-gRPC error codes should now use <code>vterrors.Code(err)</code> to inspect the code of an error, which returns <code>vtrpcpb.Code</code>s defined in <a href="https://github.com/vitessio/vitess/blob/main/proto/vtrpc.proto#L60">the <code>proto/vtrpc.proto</code> protobuf</a>.</p>
+<p>See <a href="#grpc-error-codes">Breaking Changes</a> for migration guidance.</p>
+<hr>
+<h3 id="docker"><a id="docker">Docker</a></h3>
+<p><a href="https://www.debian.org/releases/">Bullseye went EOL 1 year ago</a>, so starting from v23, we will no longer build or publish images based on debian:bullseye (<a href="https://github.com/vitessio/vitess/pull/18609">PR #18609</a>).</p>
+<p>Builds will continue for Debian Bookworm, and add the recently released Debian Trixie. v23 explicitly does not change the default Debian tag to Trixie.</p>
+<hr>
+<h2 id="additional-information">Additional Information</h2>
+<p>The entire changelog for this release can be found <a href="https://github.com/vitessio/vitess/blob/main/changelog/23.0/23.0.0/changelog.md">here</a>.</p>
+<p>The release includes 246 merged Pull Requests.</p>
+<p>Thanks to all our contributors: @Arshdeep54, @BenjaminLockhart, @GrahamCampbell, @GuptaManan100, @HenryCaiHaiying, @app/dependabot, @app/vitess-bot, @arthurschreiber, @bantyK, @beingnoble03, @canoriz, @chapsuk, @chrisplim, @corbantek, @davidpiegza, @dbussink, @deepthi, @demmer, @derekperkins, @frouioui, @harshit-gangal, @jdoupe, @jeefy, @leejones, @mattlord, @maxenglander, @mdlayher, @mhamza15, @morgo, @mounicasruthi, @nickvanw, @notfelineit, @rohit-nayak-ps, @rvrangel, @shlomi-noach, @siddharth16396, @stankevich, @stutibiyani, @systay, @timvaillancourt, @twthorn, @vitess-bot, @wukuai, @yoheimuta</p>
+<hr>
+<blockquote>
+<p><strong>Source</strong> <a href="https://github.com/vitessio/vitess">vitessio/vitess</a> · <code>v23.0.0</code> · 2025-11-04 · <a href="https://github.com/vitessio/vitess/releases/tag/v23.0.0">upstream release</a></p>
+</blockquote>
+<p><em>Mirrored verbatim for indexing. All rights belong to the upstream project.</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> Release notes come from the upstream project. We organize and connect them so you can compare versions at a glance. All content rights belong to the original authors. </p> <nav class="pager" aria-label="Release navigation"> <a href="/releases/vitess/21.0.6"> <span class="k">← Next</span> <span class="t">v21.0.6</span> </a> <a href="/releases/vitess/22.0.1"> <span class="k">Previous →</span> <span class="t">v22.0.1</span> </a> </nav> <aside class="ad-slot" aria-label="Advertisement" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>Advertisement</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/vitessio/vitess/releases/tag/v23.0.0" target="_blank" rel="noopener"> <span>Original on GitHub</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/vitessio/vitess" target="_blank" rel="noopener"> <span>vitessio/vitess</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">On this page</div> <nav> <a href="#summary" class>Summary</a><a href="#table-of-contents" class="lv3">Table of Contents</a><a href="#major-changes" class>Major Changes</a><a href="#breaking-changes" class="lv3">Breaking Changes</a><a href="#flag-naming-convention-migration" class="lv3">Flag Naming Convention Migration</a><a href="#new-default-versions" class="lv3">New default versions</a><a href="#new-support" class="lv3">New Support</a><a href="#deprecations" class="lv3">Deprecations</a><a href="#deletions" class="lv3">Deletions</a><a href="#new-metrics" class="lv3">New Metrics</a><a href="#minor-changes" class>Minor Changes</a><a href="#new-cli-flags" class="lv3">New CLI Flags</a><a href="#modified-metrics" class="lv3">Modified Metrics</a><a href="#parsersql-enhancements" class="lv3">Parser/SQL Enhancements</a><a href="#query-planning-improvements" class="lv3">Query Planning Improvements</a><a href="#topology" class="lv3">Topology</a><a href="#vtorc-2" class="lv3">VTOrc</a><a href="#vttablet-1" class="lv3">VTTablet</a><a href="#docker" class="lv3">Docker</a><a href="#additional-information" class>Additional Information</a> </nav> </div> <div class="rail-card"> <div class="rail-title">Version history</div> <ul class="rail-list"> <li> <a href="/releases/vitess/24.0.5"> <span class="v">v24.0.5</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/releases/vitess/23.0.8"> <span class="v">v23.0.8</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/releases/vitess/24.0.4"> <span class="v">v24.0.4</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/releases/vitess/23.0.7"> <span class="v">v23.0.7</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/releases/vitess/24.0.3"> <span class="v">v24.0.3</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/releases/vitess/23.0.6"> <span class="v">v23.0.6</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/releases/vitess/24.0.2"> <span class="v">v24.0.2</span> <span class="d">26-06-24</span> </a> </li><li> <a href="/releases/vitess/23.0.5"> <span class="v">v23.0.5</span> <span class="d">26-06-24</span> </a> </li> </ul> <a href="/releases/vitess" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> View all 20 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>Open-source release intelligence, published daily.</p> </div> <div class="footer-col"> <h3>Track</h3> <ul> <li><a href="/releases">Releases</a></li> <li><a href="/projects">Projects</a></li> <li><a href="/releases.xml">RSS feed</a></li> </ul> </div> <div class="footer-col"> <h3>Archive</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">Chinese archive</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">Technical notes</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>Meta</h3> <ul> <li><a href="/privacy">Privacy policy</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release notes belong to their upstream projects.</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="Search releases"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="Search releases, projects, versions…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ navigate</span> <span>↵ open</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

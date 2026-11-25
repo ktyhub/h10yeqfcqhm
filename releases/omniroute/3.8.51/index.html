@@ -1,0 +1,1735 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OmniRoute v3.8.51 — STAGS NextStack</title><meta name="description" content="2,022 documented changes — 235 features, 1,454 fixes and 333 maintenance entries from 1,973 commits in the cycle, with 301 external contributors. Thank you all."><meta name="keywords" content="open source release notes, release tracker, changelog aggregator, breaking changes, deprecation tracker, Kafka releases, Spring Boot releases, Kubernetes releases"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/releases/omniroute/3.8.51/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/omniroute/3.8.51/"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.51"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/omniroute/3.8.51/"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="OmniRoute v3.8.51 — STAGS NextStack"><meta property="og:description" content="2,022 documented changes — 235 features, 1,454 fixes and 333 maintenance entries from 1,973 commits in the cycle, with 301 external contributors. Thank you all."><meta property="og:url" content="https://www.stags.cn/releases/omniroute/3.8.51/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"en","description":"STAGS indexes release notes from infrastructure and AI projects — breaking changes, deprecations and migrations — in one English-first feed.","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/releases/omniroute/3.8.51/#article","headline":"OmniRoute v3.8.51 release notes","datePublished":"2026-09-30","inLanguage":"en","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/cheaper-inference/OmniRoute"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">Skip to content</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/" class="brand" aria-label="STAGS NextStack — Open-source release intelligence"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/releases">Releases</a><a href="/projects">Projects</a><a href="/topics">Topics</a><a href="/compare">Compare</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="Open menu"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="Primary"> <a href="/releases" class="navmenu-item">Releases</a><a href="/projects" class="navmenu-item">Projects</a><a href="/topics" class="navmenu-item">Topics</a><a href="/compare" class="navmenu-item">Compare</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="Search releases"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">Search</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="Language"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">EN</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="Language"> <p class="langmenu-head">Language</p> <a class="langmenu-item" href="/releases/omniroute/3.8.51/" hreflang="en" lang="en" aria-current="true" data-on="true"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/OmniRoute/OmniRoute_v3.8.51" hreflang="zh-Hans" lang="zh-CN" data-on="false"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/omniroute/3.8.51/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/omniroute/3.8.51/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/omniroute/3.8.51/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/omniroute/3.8.51/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/omniroute/3.8.51/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a> <span class="sep">/</span> <a href="/releases">Releases</a> <span class="sep">/</span> <a href="/releases/omniroute">OmniRoute</a> </nav> <h1 class="detail-title"> <span class="p">OmniRoute</span> v3.8.51 </h1> <div class="detail-meta"> <span class="chip chip--patch">patch</span> <span><span class="k">Published</span>Sep 30, 2026</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/cheaper-inference/OmniRoute" target="_blank" rel="noopener"> <span class="k">Source</span>cheaper-inference/OmniRoute </a>   <span class="sep" aria-hidden="true"></span> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.51"> Chinese translation </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/releases/omniroute/3.8.51/">Copy link</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="omniroute-v3851">OmniRoute v3.8.51</h1>
+<h1 id="omniroute-v3851-1">OmniRoute v3.8.51</h1>
+<p><strong>2,022 documented changes</strong> — 235 features, 1,454 fixes and 333 maintenance entries from 1,973 commits in the cycle, with <strong>301 external contributors</strong>. Thank you all.</p>
+<p>📄 <strong>Complete release notes</strong> (every entry, full description and credit): attached below as <code>CHANGELOG-v3.8.51.md</code>, and in <a href="https://github.com/diegosouzapw/OmniRoute/blob/main/CHANGELOG.md"><code>CHANGELOG.md</code> → <code>[3.8.51]</code></a>. GitHub caps a release body at 125,000 characters, so the 1,454 fixes and 333 maintenance entries live there in full.</p>
+<h3 id="-release-by-the-numbers">📊 Release by the numbers</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👥 People who contributed</td>
+<td align="right"><strong>325</strong></td>
+</tr>
+<tr>
+<td>📝 Commits in the cycle</td>
+<td align="right"><strong>1,972</strong></td>
+</tr>
+<tr>
+<td>🔀 Pull requests referenced</td>
+<td align="right"><strong>1,942</strong></td>
+</tr>
+<tr>
+<td>📋 Changelog entries</td>
+<td align="right"><strong>2,022</strong></td>
+</tr>
+<tr>
+<td>🙌 Contributors credited in entries</td>
+<td align="right"><strong>322</strong></td>
+</tr>
+<tr>
+<td>🤖 Automated dependency commits</td>
+<td align="right">33</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Entries by type</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th align="right">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🐛 Fixes</td>
+<td align="right">1443</td>
+</tr>
+<tr>
+<td>✨ Features</td>
+<td align="right">228</td>
+</tr>
+<tr>
+<td>🧹 Chore</td>
+<td align="right">135</td>
+</tr>
+<tr>
+<td>🧪 Tests</td>
+<td align="right">90</td>
+</tr>
+<tr>
+<td>📚 Docs</td>
+<td align="right">72</td>
+</tr>
+<tr>
+<td>⚙️ CI</td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td>♻️ Refactor</td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td>⚡ Performance</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>🏗️ Build</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td>🔒 Security</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td>📦 Dependencies</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>⏪ Reverts</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-top-25-contributors-this-cycle">🏆 Top 25 contributors this cycle</h3>
+<p><em>By commits in <code>091589089c..4aed4b4a08</code>, author identities consolidated via <code>.mailmap</code> and the merged PR’s GitHub login. Bots excluded.</em></p>
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>Contributor</th>
+<th align="right">Commits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">🥇</td>
+<td>diegosouzapw</td>
+<td align="right">589</td>
+</tr>
+<tr>
+<td align="right">🥈</td>
+<td>Dizzle (@maxmad64bis)</td>
+<td align="right">175</td>
+</tr>
+<tr>
+<td align="right">🥉</td>
+<td>Bob.Hou (@HouMinXi)</td>
+<td align="right">167</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>Paco Cartones (@pacocartones)</td>
+<td align="right">93</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>Koosha Paridehpour (@KooshaPari)</td>
+<td align="right">50</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>Ravi Tharuma (@RaviTharuma)</td>
+<td align="right">43</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>Markus Hartung (@hartmark)</td>
+<td align="right">33</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td>Nguyen Thanh Dat (@ntdatt812)</td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td>QuangBlue</td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td>Webman (@jonlwheat2-gif)</td>
+<td align="right">23</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td>Goni Sulaiman (@gonisulaimann)</td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td>lorenzozane (@lorenzozanee)</td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td>anhtahaylove</td>
+<td align="right">19</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td>backryun</td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td>Fouad Salkini (@fouadSalkini)</td>
+<td align="right">16</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td>Abhishek Sharma (@abhisheksharma2411)</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td>Nguyen Thanh Dat (@datrixlab)</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td>Patryk Kopyciński (@patrykkopycinski)</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td>Rafa Martins (@rafacpti23)</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td>Caio Figueiroa (@shipsfromrio)</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td>initguru</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td>Jan Leon (@JxnLexn)</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td>Syed Raheemuddin (@raheemuddin786)</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td>Xmon Dai (@xiechimon)</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td>Nguyễn Viết Tuấn (@TheDemonTuan)</td>
+<td align="right">11</td>
+</tr>
+</tbody>
+</table>
+<h2 id="highlights">Highlights</h2>
+<ul>
+<li><strong>Providers and catalogs</strong> (42 provider features): new gateways and web-session providers (UC / UC Direct, Lyceum, regolo /v1), GPT-6 Astra/Sol/Luna in the Codex and OpenAI catalogs with effort aliases, account-live listings as the chat catalog source for Claude/Codex/Copilot/AGY, safe Codex model discovery.</li>
+<li><strong>Routing and resilience</strong>: hierarchical concurrency admission, adaptive reasoning effort (<code>auto</code>), <code>expiry-first</code> account fallback, per-kind breaker cooldown escalation, provider-breaker close on a successful probe, local-cooldown 429s no longer read as quota exhaustion.</li>
+<li><strong>Proxies</strong>: pools stop re-serving a member the provider just refused, refused-egress set-aside tuning, egress-IP visibility per pool, selector steering away from recently refused members, persisted blocked-verdict history.</li>
+<li><strong>Video / Audio Bridge</strong>: hardened drill-down cache substrate, bounded transcript contract, opt-in audio extraction + STT, earned “embedded” transcript provenance.</li>
+<li><strong>Free tier and Radar</strong>: eligibility-gated free-tier bucket, <code>customModels[].isFree</code>, free-tier capability in the plugin manifest, Radar rate-limit and rules surfacing.</li>
+<li><strong>Dashboard and observability</strong>: continuous call-log export, orchestration “Repeat”, managed-lease sessions view, per-attempt upstream timing on proxy logs (opt-in), logs-export truncation notice.</li>
+<li><strong>Security hardening</strong> (late in the cycle): pre-request hooks in an isolated realm (GHSA-9p9m), IP allow/deny judged on the connection, trailing-dot internal hosts, management auth on OAuth routes, OIDC/Trae/GHE Copilot guards, constant-time token comparison, loopback-only version manager, traversal refused in the Codex <code>/v1/responses</code> subpath, linear-time tool-markup scanners.</li>
+<li><strong>Release engineering</strong>: npm Trusted Publishing (OIDC), lockfile valid for npm 10/11/12 again, AI-attribution gate with a reviewed historical allowlist.</li>
+</ul>
+<h3 id="-new-features">✨ New Features</h3>
+<ul>
+<li><strong>feat(audio):</strong> proxy native ElevenLabs voices, text-to-speech, and speech-to-text HTTP routes through stored OmniRoute credentials, preserving query strings, multipart uploads, binary responses, and upstream errors (#10556 #11434) — thanks @hartmark</li>
+<li>Added Google AI Studio Gemini batch text-to-speech support through <code>POST /v1/audio/speech</code> (#11434) — thanks @hartmark</li>
+<li>Run synchronous RTK and Caveman request compression in a bounded worker-thread pool, keeping large <code>/v1/responses</code> compression heaps outside the HTTP isolate while preserving strict fail-open behavior and per-engine telemetry (#11434) — thanks @hartmark</li>
+<li><strong>feat(routing):</strong> subscription-first auto groupings — <code>auto/subscription</code> routes only through plan-included connections with a documented hard-stop overage and fails closed on exhaustion, while <code>auto/thrifty</code> orders the pool <code>subscription → keyless → free → cheap → premium</code> and steps up one rung at a time as each is exhausted. Billing class comes from a curated per-connection catalog (uncurated is treated as metered, never plan-included), both reuse STRICT_ZERO_COST’s per-connection verification, and a quota reading whose <code>resetAt</code> has passed is now refreshed regardless of TTL so routing returns to plan… (#11146) — thanks @yourspraveen</li>
+<li><strong>feat(providers):</strong> publish a management-authenticated versioned web-session credential contract from OmniRoute’s canonical browser credential metadata (#11340) — thanks @Zartharas</li>
+<li><strong>feat(video bridge):</strong> harden the optional drill-down cache substrate with exact-path broker policy, canonical principal/session/media isolation, independent retained-byte quotas, cancellation-safe commits, rejection of excess or non-canonical Base64 padding and non-JPEG/truncated media, warning-sensitive full JPEG canonicalization that strips trailing polyglot bytes, server-derived dimensions, and auditable derivation metadata; production tenant binding and multi-resolution selection remain follow-up work (#11369 #11434) — thanks @hartmark</li>
+<li><strong>feat(search):</strong> Add Xquik X search with typed results, credential validation, REST routing, and MCP selection (#11370) — thanks @kriptoburak</li>
+<li><strong>feat(video):</strong> add an opt-in focused analysis mode that safely uses a normalized, 500-code-point latest-user hint for task-aware frame captions while preserving full-mode prompts, temporal-window isolation, and cache identity without storing raw task text (#11383 #11434) — thanks @hartmark</li>
+<li><strong>feat(dashboard):</strong> surface durable exclusive managed leases in the existing Sessions view, keeping leased clients visible across idle gaps while marking connections with in-flight work as active (#11389) — thanks @KaspaPulse</li>
+<li><strong>build(bun):</strong> allow Turbopack bundler flag on Bun 1.4+ with configurable Webpack fallback (#11471) — thanks @TheDemonTuan</li>
+<li>feat(api): add an opt-in <code>modelVisibilityAllowlist</code>/<code>modelVisibilityDenylist</code> settings pair to curate exactly which models <code>/v1/models</code> advertises, mirrored into every <code>auto/*</code> combo candidate pool so a denied model cannot be routed to via combo selection either (#11481 #11997)</li>
+<li><strong>feat(rankings):</strong> the Free Provider Rankings page shows what each provider actually served over the last 24 h. It ranked by ELO alone, which left a provider that answers every call with an error in first place; the usage data was already served by the API but never requested. A provider with too small a sample shows a dash, not a number (#11546 #11553) — thanks @maxmad64bis</li>
+<li><strong>feat(guardrails):</strong> enforce a bounded, deterministic contract for Video Bridge transcripts — 256 cues, 4096 input code units and 4 KiB UTF-8 per cue, 64 KiB total text, malformed-Unicode rejection, focus-window scoping, cross-source reconciliation with contributing-source metadata, and a structural provenance trust boundary so caller JSON can never self-assert <code>embedded</code>/<code>audio-bridge</code> provenance (#11652 #12009)</li>
+<li><strong>feat(video):</strong> orchestrate optional Video Bridge audio extraction and Audio Bridge STT behind a dual opt-in (operator setting AND per-request signal) — a new loopback-only broker <code>mode=audio</code> operation shares the frame path’s exact process queue, deadline, AbortSignal, and byte budgets to extract a bounded mono 16 kHz PCM WAV from the same already-downloaded video, then reuses the existing Audio Bridge transcription boundary; provider segment timing is preserved when available and marked coarse otherwise, and every failure degrades to a visual-only-safe partial instead of throwing (#11654 #12012)</li>
+<li>Add a tenant-bound Video Bridge drill-down lifecycle on top of the existing secure cache substrate: opaque hashed handles (never raw session/video identifiers), preview/standard/detail multiresolution variants resampled on read, response pagination capped at 8 frames and 32 MiB, and a new authenticated <code>/api/v1/video-bridge/drilldown</code> consumer route that stays disabled for remote access by default and denies cross-key access with the same response as a nonexistent handle (no existence oracle) (#12006)</li>
+<li><strong>test(video):</strong> Add the Video Bridge FU-07/FU-09 promotion-evidence harness — a frozen Zod manifest schema covering the 8 required scenario kinds (static scenes, rapid cuts, late facts, fades, blur, small text, close events, visual prompt injection) with a minimum of 3 repetitions per case, deterministic declarative fixture recipes (<code>videoBridgePromotionFixtures.ts</code>), a pure medians/p95 metrics aggregator, a pure FU-07/FU-09 promotion-verdict evaluator applying the ticket’s exact thresholds (missing token usage always holds), a digest-only persistence layer that never retains raw media or raw model… (#11656 #12008)</li>
+<li><strong>feat(video bridge):</strong> “embedded” transcript provenance can now be legitimately earned instead of merely asserted — a bounded, allowlisted (<code>mov_text</code>/<code>subrip</code>/<code>webvtt</code>) subtitle probe runs through the loopback-only Video Bridge broker (at most 2 streams, 10s subdeadline bounded by the request deadline, 256 KiB output, 4096-code-unit lines), normalized through a bounded, ReDoS-safe WebVTT parser and Zod-validated end to end. The adapter always resolves to an explicit <code>success</code>/<code>absent</code>/<code>transient_failure</code> outcome — a subtitle failure never breaks the visual description path, and only a fingerprint-verified broker… (#11659 #12011)</li>
+<li>Default new Antigravity-family connections (agy CLI imports and Antigravity OAuth connects) to model auto-sync, so live model discovery lands in the synced catalog and <code>/v1/models</code> picks up freshly released upstream models (e.g. Gemini 3.7 Flash tiers) without code changes. Existing connections keep their current setting; the per-connection dashboard toggle remains the opt-out (#11685 #11887) — thanks @MumuTW</li>
+<li><strong>feat(ui):</strong> enable React Compiler (<code>reactCompiler: true</code> + <code>babel-plugin-react-compiler</code>) for automatic memoization at build time (#11783) — thanks @jonlwheat2-gif</li>
+<li><strong>feat(providers):</strong> add SeekAi (<code>seekai.cc</code>) as an OpenAI-compatible New-API gateway — catalog id <code>seekai</code> (alias <code>ska</code>), <code>https://seekai.cc/v1</code>, live <code>/v1/models</code> via <code>passthroughModels</code>, aggregator-list membership so New-API balance detection can opt in. No referral/aff codes (#11786 #12557) — thanks @HouMinXi</li>
+<li><strong>feat(zai):</strong> add GLM-5.3-Flash Coding Plan support (1M context, 128K output, vision, <code>low|high|max</code> reasoning) and route <code>zai</code> GLM-5.3-family API-key traffic through the OpenAI-compatible Coding Plan endpoint with native thinking defaults (#11801) — thanks @Neuron-Mr-White</li>
+<li><strong>feat(combo):</strong> choose how combo models are ordered — manual, provider, score, or name — via a sort control in the dashboard builder, persisted in <code>config.modelSort</code> and re-applied on load and after add (#11812) — thanks @maxmad64bis</li>
+<li><strong>feat(free):</strong> custom models can be marked free-tier via <code>customModels[].isFree</code>; <code>isFreeModel()</code> is the first door and <code>hidePaidModels</code> respects it even for providers outside the free budget (#11843) — thanks @maxmad64bis</li>
+<li><strong>feat(nodejs):</strong> add <code>5dive</code> as a <code>configure</code> target — <code>omniroute configure 5dive</code> / <code>omniroute setup-5dive</code> write a 5dive auth profile that points an agent fleet’s <code>claude</code> seats at OmniRoute, with the root-only write, the loopback-vs-<code>https</code> endpoint rule and the per-seat model pin handled explicitly (#11852) — thanks @5dive-bot</li>
+<li><strong>feat(sse):</strong> treat <code>max</code> as a first-class reasoning-effort tier and clamp per model family (GLM 5.1+/DeepSeek V4+/Kimi K3+ keep native <code>max</code>; o1/MiniMax/Grok/Muse Spark clamp to their upstream ceiling) (#11875) — thanks @Chewji9875</li>
+<li><strong>feat(providers):</strong> the provider plugin manifest now advertises a <code>usage-fetch</code> capability for the 40 providers that have a wired usage/quota fetcher, so external dashboards can read it from <code>GET /api/v1/provider-plugin-manifest</code> instead of parsing <code>open-sse/services/usage.ts</code> after every release. Discovery only — no new fetcher, no quota change, and the Dashboard quota widget stays gated by <code>USAGE_SUPPORTED_PROVIDERS</code>. <code>USAGE_FETCHER_PROVIDERS</code> moved to a zero-dependency leaf (<code>open-sse/services/usage/fetcherProviders.ts</code>) and is re-exported from <code>services/usage.ts</code>, keeping the manifest module a light leaf… (#11903) — thanks @maxmad64bis @pacocartones</li>
+<li><strong>feat(plugins):</strong> <code>OMNIROUTE_PLUGINS_DIR</code> sets the directory the runtime plugin scanner reads — and the root the plugin manager installs into — overriding the <code>HOME</code>-derived default, so a Docker/K8s deployment can point straight at its bind-mounted plugin tree instead of moving <code>HOME</code> just to relocate the scan path. An image that exports no home no longer scans <code>/tmp/.omniroute/plugins</code> in silence: the resolved directory is logged once at startup as <code>scanner.dir_resolved</code>, naming the input that won. Unset, behaviour is unchanged. Distinct from the CLI-only <code>OMNIROUTE_PLUGIN_PATH</code>, which finds <code>omniroute-cmd-*</code>… (#11906) — thanks @amaleta @pacocartones</li>
+<li><strong>feat(leases):</strong> add an explicit owner-authenticated status action that returns only the active lease’s privacy-safe configured connection and provider labels, with generation fencing and no credential or internal-id disclosure (#11910) — thanks @KaspaPulse</li>
+<li><strong>feat(providers):</strong> import-from-file modal shows per-row API errors and ships a downloadable CSV template (#12071 #12504) — thanks @HouMinXi</li>
+<li><strong>feat(providers):</strong> dashboard search matches connection name and <code>baseUrl</code> so imported OpenAI-compat nodes surface on the provider card (#12108 #12495) — thanks @HouMinXi</li>
+<li><strong>feat(routing):</strong> add a <code>score</code> Auto router strategy that selects the highest configured weighted score and reuses <code>explorationRate</code> (#12155) — thanks @jacobsparts</li>
+<li>Add a runtime feature flag to disable universal context handoffs globally without changing the default behavior (#12167) — thanks @jacobsparts</li>
+<li><strong>feat(providers):</strong> the provider plugin manifest now also advertises a <code>usage-supported</code> capability for the 46 providers whose usage API is accepted by the server and Dashboard routes, so integrators can distinguish “the server will serve quota for this provider” from “a fetcher is wired” without reading TypeScript. Discovery only — no fetcher or quota change. <code>usage-fetch</code> resolves on id or alias (the usage dispatcher accepts both); <code>usage-supported</code> resolves on id alone, matching the runtime guard <code>USAGE_SUPPORTED_PROVIDERS.includes(providerId)</code>. <code>USAGE_SUPPORTED_PROVIDERS</code> moved to a zero-dependency leaf… (#11903 #12214) — thanks @maxmad64bis</li>
+<li><strong>feat(rankings):</strong> order Free Provider Rankings by what each provider actually served — <code>GET /api/free-provider-rankings?sortBy=reliability</code> and a “Most reliable first” toggle on the page. Providers with too few calls to state a success rate keep their score order below the measured ones; the default order is unchanged (#12218) — thanks @maxmad64bis</li>
+<li><strong>perf(sse):</strong> defer <code>cloneLogPayload()</code> in the structured SSE collector until after the <code>maxEvents</code>/<code>maxBytes</code> cap check, eliminating ~9,800 wasted <code>structuredClone</code> calls per streaming response (65–71% faster <code>push()</code>). Reducer snapshot isolation restored for OpenAI and Responses summaries (#12241 #12243) — thanks @PauloHSOliveira</li>
+<li><strong>feat(usage):</strong> Devin CLI agentic quota (Codeium seat-management GetUserStatus) and OpenRouter key limits plus account credits now surface in Provider Limits (#12256) — thanks @Neuron-Mr-White</li>
+<li><strong>feat(settings):</strong> persist <code>headroomUrl</code> through Settings so status/start use the operator URL instead of only <code>HEADROOM_URL</code> (#12306 #12487) — thanks @HouMinXi</li>
+<li><strong>feat(auto-combo):</strong> Auto-Combo scoring can now weigh how often a provider/model has actually succeeded. The engine already carried that number on every candidate — 24 hours of usage history behind a ten-sample floor, real-time metrics otherwise — and the scoring function never read it, while the weight table described <code>stability</code> as if it did. <code>reliability</code> (<code>1 - failureRate</code>, with the same field precedence and the same rate-bounding the speed ranking already uses, so a corrupt reading means “nothing observed” rather than “fails every call”) is now a declared factor shipping at weight <code>0</code>, so routing is… (#12317) — thanks @maxmad64bis</li>
+<li><strong>feat(routing):</strong> With <code>freeAccessPolicy: "strict"</code>, the read-only candidate listing (<code>GET /v1/auto-combo/{channel}/candidates</code>) no longer hides the candidates the zero-cost guard excludes — the same read-only transparency the resilience filter already honours . Each candidate now carries <code>freeAccessExclusion</code> saying why it would be kept out, and it tells an exhausted allowance apart from a quota reading that never arrived or went stale, which used to look identical from the outside. Routing is unchanged: the listing reports, it never enforces. The separate <code>excludeTosAvoid</code> guard still drops its candidates… (#9133 #12319) — thanks @maxmad64bis</li>
+<li><strong>feat(radar):</strong> The Radar catalog table now shows two facts it was already receiving from the feed and dropping on the floor: the per-model rate limits (requests and tokens, per minute and per day) in a new column, and a badge when a provider’s terms state it may train on the prompts you send. A limit of zero renders as zero rather than “rate-only” — for a ceiling those are opposite facts — and a model with no training statement gets no badge, because an absent statement is not a guarantee (#12320) — thanks @maxmad64bis</li>
+<li><strong>feat(radar):</strong> explain Community, single-use, contributor, supporter, recovery, abuse, offers, and privacy rules before either Radar activation action, and remove the superseded fixed-PR grant promise from every UI locale (#12342)</li>
+<li><strong>feat(gamification):</strong> the dashboard Profile page now shows the real daily streak — <code>/api/gamification/level</code> returns <code>streak: { current, longest }</code> (per key with <code>apiKeyId</code>, operator-wide maximum otherwise) and the streak card reads it instead of a hard-coded 0 (#2403 #12377) — thanks @pacocartones</li>
+<li><strong>feat(gamification):</strong> the dashboard leaderboard now shows each API key’s display name under the Name column instead of a truncated key id; <code>GET /api/gamification/leaderboard</code> attaches <code>name</code> per entry (name only — no key material), while the shared ranking helper and the federation leaderboard stay id-only (#12385) — thanks @pacocartones</li>
+<li><strong>feat(gamification):</strong> enforce the documented 1000 XP/min per-API-key anti-cheat rate limit on the XP award path; over-limit awards are logged and skipped instead of persisted, and the sliding window now matches the timestamp format stored in <code>xp_audit_log</code> (#2403 #12390) — thanks @pacocartones</li>
+<li><strong>feat(admin):</strong> localize the gamification anomalies page — the loading state, the Status column and the Suspicious badge now come from the <code>common</code> catalog (new <code>common.suspicious</code> key propagated to every locale) — add it to the Gamification sidebar group as <code>gamification-admin</code> (<code>/dashboard/gamification/admin</code>), and expose the loading and empty states as polite <code>role="status"</code> live regions (#12401) — thanks @pacocartones</li>
+<li><strong>feat(providers):</strong> skip GitHub combo members missing from the live synced catalog, and drop Copilot models that are policy-disabled or hidden from the model picker (#12473) — thanks @RaviTharuma</li>
+<li><strong>feat(i18n):</strong> locale-expansion tooling — <code>npm run i18n:add-locale</code> adds a language to config, dashboard, docs mirrors, CLI, README/indexes and site in one command; browser, CLI and cookie detection resolve <code>uk</code>, <code>fil</code>/<code>tl</code>, <code>zh-Hant</code> (and the retired legacy <code>in</code> → <code>id</code>) via config aliases; <code>config/i18n.json</code> now ships in the npm package so the published CLI can read it; new real-translation ratio gate (<code>npm run i18n:check-ratio</code>, advisory) with a per-locale ratchet baseline; <code>run-translation --adopt</code> restores <code>.i18n-state.json</code>; <code>sync-language-bars</code> generates 🌐 bars from config; <code>validate_translation.py</code>… (#12496)</li>
+<li><strong>feat(api):</strong> Emit gateway-measured <code>tokens_per_second</code> (TTFT excluded) on streaming usage and <code>X-OmniRoute-Tokens-Per-Second</code> when first-token latency is known (#12616 #12631) — thanks @RaviTharuma</li>
+<li><strong>feat(opencode-plugin): map gateway cost/usage/tok/s onto OpenCode inference payloads</strong> the official plugin copies <code>X-OmniRoute-Response-Cost</code>, token counts, <code>X-OmniRoute-Tokens-Per-Second</code> / <code>usage.tokens_per_second</code>, TTFT, and the winning <code>X-OmniRoute-Model</code> onto the JSON/SSE body OpenCode already consumes. Missing tok/s is left unset (never <code>tokens / latency</code>) (#12636) — thanks @RaviTharuma</li>
+<li><strong>feat(combo):</strong> add combo strategy <code>quota-weighted</code>: skip exhausted accounts, then weighted-draw by leftover / in-flight load; existing conversations stay pinned until the account is empty (#12789) — thanks @HouMinXi</li>
+<li><strong>feat(models):</strong> Account live listings become the chat catalog source for Claude, Codex, Copilot, and AGY; public metadata only fills prices on IDs those accounts already list (#12866) — thanks @HouMinXi</li>
+<li><strong>fix(models):</strong> Union <code>agy</code> and <code>antigravity</code> live catalogs so <code>agy/gemini-3.8-flash-high</code> is not rejected after the prefix folds to <code>antigravity</code> (#12866) — thanks @HouMinXi</li>
+<li><strong>feat(opencode):</strong> Add <code>@omniroute/opencode-plugin-v2</code>, an opencode v2 plugin that gives a v2 install a route to an OmniRoute gateway: it publishes models, combos and auto-combos into the host catalog, refreshes them lazily behind a 300s TTL, and keeps serving the last known catalog from an on-disk snapshot when the gateway is unreachable. The v1 plugin (<code>@omniroute/opencode-plugin</code>) is untouched and keeps working as before. The plugin adapts to the host instead of assuming one shape: it reads the shape the host seeds into the catalog draft and publishes the <code>api</code> block, the pre-<code>api</code> top-level fields, or both.… (#12870) — thanks @omniroute @maxmad64bis</li>
+<li>feat(services): show sanitized CLIProxyAPI account health from its authenticated management API without exposing credentials, file paths, or raw account metadata (#6342 #11434) — thanks @hartmark</li>
+<li><strong>feat(search):</strong> Add AnySearch free web search + URL extract (webFetch) with typed results, credential validation, REST routing, and MCP selection - fallback-only (#11690) — thanks @Xxx91n</li>
+<li><strong>feat(dashboard):</strong> display clamped <code>[0, 100]%</code> cached input token ratio in request logs table (#11970) — thanks @b3nw</li>
+<li><strong>feat(catalog):</strong> add <code>OMNIROUTE_DISABLE_THINKING_LEVEL_VARIANTS</code> feature flag to optionally filter out thinking level variants from model catalog (#11971) — thanks @b3nw</li>
+<li><strong>feat(dashboard):</strong> continuously export call logs to external analytics stores. A pluggable destination registry ships the full Logs-tab record set on an hourly <code>JobRegistry</code> cron, with a persisted per-destination cursor, batched inserts, a config UI rendered from each destination’s own field descriptors, and a REST layer (<code>/api/log-export/*</code>) for CRUD, a connection test, and an on-demand run. A destination can opt into <code>includeBodies</code> to also ship the request and response payloads shown in the Logs detail pane, including the client and provider views of each call; this is off by default, and payloads inherit… (#11945) — thanks @dpozimski</li>
+<li><strong>feat(providers):</strong> add MaxAI as a signed, OpenAI-compatible provider serving its 13 paid chat models (GPT-5.6 / Luna / Thinking, Claude 5 Sonnet, Claude Haiku 4.5, Gemini 3.1 Pro / Flash-Lite, Grok 4.1-fast / 4.5, DeepSeek V3.2 / R1, Llama 3.3 70B) through OmniRoute’s <code>/v1</code> endpoint, with per-request HMAC-SHA1→SM3→AES request signing, live model + context-window discovery from <code>/models/get_config</code>, and prompted tool-calling translated to OpenAI <code>tool_calls</code> (#11461) — thanks @arminanton</li>
+<li><strong>feat(providers):</strong> MaxAI vision input — image_url content parts are forwarded inline in <code>message_content</code> to the 6 vision-capable models (GPT-5.6 / Luna / Thinking, Claude Haiku 4.5, Gemini 3.1 Pro / Flash-Lite) (#11461) — thanks @arminanton</li>
+<li><strong>feat(providers):</strong> MaxAI image generation — 6 image models (gpt-image-1, dall-e-3, flux-1-schnell/dev/pro, sd3-medium) exposed through <code>POST /v1/images/generations</code> (#11461) — thanks @arminanton</li>
+<li><strong>feat(providers):</strong> MaxAI document RAG — inline base64 file/document attachments are uploaded to MaxAI (content-addressed <code>doc_id</code>) and attached to the chat via <code>doc_list</code> (#11461) — thanks @arminanton</li>
+<li><strong>feat(providers):</strong> browserless MaxAI onboarding — email device-pair login (<code>/api/providers/[id]/login</code>) and signed access-token refresh, so a connection can be created and kept fresh without a real browser or Google OAuth (#11461) — thanks @arminanton</li>
+<li><strong>feat(providers):</strong> per-provider TLS impersonation profile (MaxAI presents a Windows Firefox-150 client fingerprint) so its bot-sensitive endpoints accept OmniRoute traffic (#11461) — thanks @arminanton</li>
+<li><strong>feat(providers):</strong> add <strong>Nimble</strong> as a web-search and web-fetch provider (<code>nimble-search</code>) — <code>/v1/search</code> routes to Nimble’s search API at <code>lite</code> depth (locale, freshness and include/exclude domain filters mapped onto the shared request contract), and <code>/v1/web/fetch</code> routes to Nimble Extract, which covers all four fetch formats (<code>markdown</code>, <code>html</code>, <code>links</code>, <code>screenshot</code>) from a single call. One API key serves both surfaces (#11620) — thanks @wildcard</li>
+<li>The npm publish is automatic again, through npm Trusted Publishing (OIDC): the hosted <code>stage-npm</code> job publishes with a short-lived credential minted from GitHub’s id-token — no <code>NPM_TOKEN</code>, no 2FA prompt, provenance attached. <code>publish_mode=staged</code> (owner approves with 2FA) and <code>direct</code> (token) remain available on <code>workflow_dispatch</code> (#11931)</li>
+<li><strong>feat(providers):</strong> Add <strong>Opper</strong> as an API-key gateway provider — EU-hosted AI gateway with 700+ models from 30+ providers behind one OpenAI-compatible API and one key (<code>OPPER_API_KEY</code>); model ids use <code>provider/model</code> format (e.g. <code>anthropic/claude-sonnet-4-6</code>, <code>openai/gpt-5</code>); live model catalog at <code>https://api.opper.ai/v3/compat/models</code>; entry mirrors <code>requesty</code> (same shape, <code>passthroughModels: true</code>, no static seed) (#11629)</li>
+<li><strong>feat(dashboard):</strong> the <code>/dashboard/orchestration</code> snapshot hook now subscribes to the <code>agents</code> WebSocket channel (<code>agent.task.updated</code>) instead of <code>requests</code> as its refetch trigger, and relaxes its background poll from 5s to 30s while that WS connection is up — falling back to the tighter 5s cadence, reprogrammed live on any connect/disconnect transition, whenever the socket is down (#12409)</li>
+<li><strong>feat(dashboard):</strong> Orchestration canvas quick wins — search box plus state/source/provider filter chips with a one-click clear, and per-source collapse/expand, all reflected in the URL so a filtered/collapsed view is shareable and survives a refresh; the detail drawer gained a “copy trace JSON” action and hardened error/empty-state and accessibility handling; the Agents-tab edges now animate traveling particles along active (running) connections; and the canvas node/edge status colors moved off fixed hex values onto theme-aware <code>--orch-status-*</code> CSS custom properties, so they adapt correctly to light/dark mode (#12393)</li>
+<li><strong>chore(dashboard):</strong> Orchestration UI hardening pass and the missing component/model test coverage it called for — <code>OrchestratorNode</code>/<code>ActivityNode</code>/<code>OverflowNode</code> rendering, the <code>?node=</code>/overflow-click page routing, the Agents-tab orchestrator-click no-op and <code>showCompleted</code> toggle, and the overview kanban’s done-column sort order (#12270 #12271 #12393)</li>
+<li>New <code>/dashboard/orchestration</code> page: live unified view of everything running — Cloud Agent, A2A and Conductor as a real-time graph (Agents tab), the combo cascade (Routing tab, reusing the Combo Live Studio) and a state kanban (Overview tab), with a detail drawer (trace, cost, approve/cancel). Read-only over existing APIs — no new backend. Canvas concept credit: PR (#11815 #12261)</li>
+<li><strong>feat(dashboard):</strong> new “History” tab on <code>/dashboard/orchestration</code> — an Airflow-style grid of finished runs over a 24h/7d/30d preset window, one row per (source, identity), clicking a cell opens the existing detail drawer. It is backed by real persistence: A2A task lifecycle transitions are now written to the <code>a2a_tasks</code> table (purged after 30 days, configurable via <code>OMNIROUTE_A2A_HISTORY_RETENTION_DAYS</code>) and served by the new <code>GET /api/a2a/tasks/history</code> listing endpoint, with the task-detail route falling back to persisted history once a run leaves the in-memory snapshot. Conductor runs stay remote and are… (#12479)</li>
+<li><strong>feat(dashboard):</strong> the orchestration detail drawer gained a “Repeat” action for Cloud Agent, A2A and Conductor tasks — a two-click confirm (click once to arm, click again within the confirm window to fire) re-submits the original prompt/input as a new run. The button is disabled with an explanatory tooltip whenever the original input can’t be recovered from the loaded task detail (e.g. it never carried a prompt, or the detail failed to load). Two limitations of the A2A variant, by design: it targets the <code>/a2a</code> JSON-RPC endpoint, which authenticates with an API key only (<code>REQUIRE_API_KEY=true</code> or a configured… (#12508)</li>
+<li><strong>feat(a2a):</strong> A2A task execution now records which memories were consulted for the task’s last user message as <code>metadata.memoryHits</code> (id/key/type/content-snippet) plus a <code>memory_hits</code> history event, purely for observability — the retrieved memory is never injected into a skill’s prompt or behavior. Gated by the <code>OMNIROUTE_A2A_MEMORY_HITS</code> kill-switch (default enabled; set to <code>0</code> to skip the recall lookup entirely). The drawer’s new “Memory used” section lists these hits for a2a tasks and is omitted whenever there are none. Known limitation: recall only resolves under the keyless posture — a keyed caller’s… (#12508)</li>
+<li><strong>feat(providers):</strong> add a Perplexity Agent API provider (<code>perplexity-agent</code> / <code>pplx-agent</code>) for Perplexity <code>/v1/responses</code>, including the documented Anthropic, OpenAI, Google, xAI, DeepSeek, Z.AI, Moonshot/Kimi, NVIDIA, and Perplexity model IDs plus Anthropic-model <code>max_output_tokens</code> compatibility (#12103) — thanks @AIB1TAL0S</li>
+<li><strong>feat(providers):</strong> add RPD (Requests Per Day) limit to provider rate limit overrides across UI, schemas, DB, and i18n (#12147) — thanks @b3nw</li>
+<li><strong>feat(providers): add UC Direct (uncensored.com Developer API), the metered OpenAI-compatible surface.</strong> A standard OpenAI-compatible passthrough (default executor) for uncensored.com’s official REST API at <code>https://api.uncensored.com/api/v1</code>: <code>X-api-key</code> auth (never-expiring <code>uai_sk_live_</code> key), <code>POST /chat/completions</code> with streaming SSE and native tool-calling, and the full live metered catalog (82 models across 15 providers, discovered from the public <code>GET /v1/models</code>). Registered as provider <code>uc-direct</code> (alias <code>ucd</code>). Complements the un-metered <code>uc</code> persona provider — same models, metered credits and a plain API key instead of a subscription session (#11513) — thanks @arminanton</li>
+<li><strong>feat(providers): add UC (uncensored.com), the un-metered subscription “persona” chat as an OpenAI-compatible provider.</strong> A WebSocket web-app port: a durable Clerk credential mints a short-lived session token per connect (browserless — no API key), driving UC’s persona socket. Ships the browserless email-code login (request → verify → harvest), the 19 verified persona models (Claude Opus, Gemini, Grok, GLM, Kimi, DeepSeek, MiniMax, incl. the uncensored variants), prompted <code>&#x3C;tool></code> tool-calling with a per-model code-style dialect + auto-cure retry for guardrailed models, live <code>&#x3C;think></code>/reasoning split, streaming + non-streaming OpenAI responses, and full quota/auth error surfacing (paywall / message-limit /… (#11513) — thanks @arminanton</li>
+<li><strong>feat(logs):</strong> add copy-all button to request detail modal (#11083) — thanks @AndrianBalanescu</li>
+<li><strong>feat(check):</strong> make serviceKinds required and add the reverse-walk provider consistency gate (#11392) — thanks @Tushar49</li>
+<li><strong>feat(providers):</strong> only advertise verified-working connections by default (#11448) — thanks @alltomatos</li>
+<li><strong>feat(resilience):</strong> add hierarchical concurrency admission (#11493)</li>
+<li><strong>feat(providers):</strong> derive + surface expiry for JWT-bearing web cookies (#11497 #11505) — thanks @oyi77</li>
+<li><strong>feat(tunnels):</strong> support named cloudflared tunnels via CLOUDFLARED_CONFIG (#11561) — thanks @ggiak</li>
+<li><strong>feat(compression):</strong> make proactive context-compression threshold a live setting (#11564) — thanks @ragnar-claude</li>
+<li><strong>feat(resilience):</strong> add provider peak-hour protection (#11622) — thanks @Neuron-Mr-White</li>
+<li><strong>feat(providers):</strong> add 1min.ai provider (#11631) — thanks @zero-executioner</li>
+<li><strong>feat(dashboard):</strong> collapsible JSON tree viewer for request/response payloads (#11703) — thanks @hartmark</li>
+<li><strong>feat(routing):</strong> add LiquidAI LFM2.5-2.6B free tier via OpenRouter (#11752) — thanks @brick30llc-ctrl</li>
+<li><strong>feat(pricing):</strong> add GLM-5.3-Flash pricing, model specs, and catalog registration (#11830) — thanks @AndrianBalanescu</li>
+<li><strong>feat(routing):</strong> add relayMode for schema-locked context handoffs (#11839) — thanks @raheemuddin786</li>
+<li><strong>feat(config):</strong> add support for runtime system prompt configuration and hot-reloading (#11841) — thanks @raheemuddin786</li>
+<li><strong>feat(routing):</strong> expand connection-aware quota prefilter across combo strategies (#11682 #11850) — thanks @HouMinXi</li>
+<li><strong>feat(models):</strong> reactive discovery sync after Antigravity model-not-found 404 (#11888) — thanks @MumuTW</li>
+<li><strong>feat(models):</strong> auto-aliases and token limits from synced Antigravity discovery (#11889) — thanks @MumuTW</li>
+<li><strong>feat(settings):</strong> raise sticky round-robin limit caps to 1000 (#12015) — thanks @adivekar-utexas</li>
+<li><strong>feat(resilience):</strong> operator-configurable global credential health check interval (#12043) — thanks @adivekar-utexas</li>
+<li><strong>feat(quota):</strong> use official OpenCode Go usage API (#12124) — thanks @ddarkr</li>
+<li><strong>feat(resilience):</strong> default the credential health check sweep to 60 minutes (#12138) — thanks @adivekar-utexas</li>
+<li><strong>feat(quality):</strong> new-code mode for the complexity and dead-code ratchets (Clean as You Code) (#12142)</li>
+<li><strong>feat(dashboard):</strong> orchestration canvas — unified model + snapshot hook (part 1/2) (#12156)</li>
+<li><strong>feat(usage):</strong> add Kilo Code balance and Kilo Pass quotas (#12178) — thanks @killer30001000</li>
+<li><strong>feat(providers):</strong> refresh vendored ChatGPT Web connector to v4.0.7 (#12181) — thanks @backryun</li>
+<li><strong>feat(providers):</strong> manual “Clear cooldown” action in the cooling panel (#12224) — thanks @patrykkopycinski</li>
+<li><strong>feat(providers):</strong> restore ChatGPT Web via clean-room browser transport (#12239) — thanks @backryun</li>
+<li><strong>feat(sse):</strong> wire the PROVIDER_PROFILES window gate into the global provider cooldown (#12247)</li>
+<li><strong>feat(providers):</strong> modernize CLOVA Studio chat and embeddings (#12277) — thanks @backryun</li>
+<li><strong>feat(browser):</strong> adopt Obscura as primary headless browser engine with Chromium fallback (#12286) — thanks @opensource-elearning</li>
+<li><strong>feat(sse):</strong> full language parity for output styles (es/de/fr/it/ru/zh + autoDetect) (#12289)</li>
+<li><strong>feat(quality):</strong> complete test:scoped — —full map rebuild, stdin selection, CI loader parity (#8084 #12353)</li>
+<li><strong>feat(providers):</strong> refresh Fable, Cursor, and Devin catalogs (#12367) — thanks @backryun</li>
+<li><strong>feat(video):</strong> redact transcript text from logs and durable memory (#12150 #12427)</li>
+<li><strong>feat(dashboard):</strong> parent-link, genuine-continuation badge, and modal perf fixes (#12448) — thanks @hartmark</li>
+<li><strong>feat(dashboard):</strong> adaptive context-budget dial on compression panel (#12488) — thanks @HouMinXi</li>
+<li><strong>feat(providers):</strong> refresh Z.ai Web models and browser transport (#12524) — thanks @backryun</li>
+<li><strong>feat(video):</strong> redact raw client-snapshot transcript fields in the detailed log (#12150 #12528)</li>
+<li><strong>feat(providers):</strong> refresh NVIDIA hosted models (#12538) — thanks @backryun</li>
+<li><strong>feat(quota):</strong> Moonshot Open Platform balance and TPD lock for custom nodes (#12590) — thanks @HouMinXi</li>
+<li><strong>feat(video):</strong> redact transcript in the in-memory pending-request snapshot (#12430 #12596)</li>
+<li><strong>feat(dashboard):</strong> link a log entry’s Conversation Context to its owning conversation (#12646) — thanks @hartmark</li>
+<li><strong>feat(catalog):</strong> eligibility-gated free-tier bucket (#12669)</li>
+<li><strong>feat(db):</strong> fail-closed previous_response_id continuation for redacted video turns (#12150 #12707)</li>
+<li><strong>feat(gamification): pay the documented <code>streak_bonus</code> and <code>badge_unlock</code> XP rewards.</strong> <code>XP_REWARDS</code> listed both rewards but the award pipeline never paid them: the private reward table in <code>events.ts</code> omitted them, <code>updateStreak()</code> did not report when a streak extended, and badge unlocks carried no XP. Every request that extends a daily streak now pays <code>streak_bonus × streak length</code> once per UTC day (guarded by a same-day <code>xp_audit_log</code> check), and every badge unlocked through the pipeline pays <code>badge_unlock</code> once per badge (guarded by the <code>user_badges</code> primary key; <code>unlockBadge()</code> now reports whether it inserted). Bonus XP flows through the same <code>addXp</code> + level sync +… (#12522) — thanks @pacocartones</li>
+<li><strong>feat(providers):</strong> advertise a <code>free-tier</code> capability in the provider plugin manifest for every provider with documented free models, so sidecars and dashboards can filter free-capable providers without reading the quota catalog (#12786) — thanks @maxmad64bis</li>
+<li><strong>feat(providers):</strong> Added EURouter as an OpenAI-compatible API-key gateway (<code>https://api.eurouter.ai/v1</code>), with live model discovery via <code>passthroughModels</code>. Its copy states that models are served by third-party upstreams listed per model, so an EU-based router is not read as EU data residency for inference (#13025) — thanks @ntdatt812</li>
+<li><strong>feat(providers):</strong> Added GreenPT as an OpenAI-compatible API-key provider (<code>https://api.greenpt.ai/v1</code>), with live model discovery via <code>passthroughModels</code>. No free-inference badge: the published docs describe a free API subscription billed per token, not a free tier (#13024) — thanks @ntdatt812</li>
+<li><strong>feat(i18n):</strong> 9 new locales — Greek (<code>el</code>), Croatian (<code>hr</code>), Serbian (<code>sr</code>), Lithuanian (<code>lt</code>), Estonian (<code>et</code>), Latvian (<code>lv</code>), Slovenian (<code>sl</code>), Maltese (<code>mt</code>), Irish (<code>ga</code>) — across the dashboard, docs mirrors, CLI, README and the site; OmniRoute now ships every official EU language (51 locales) (#13044)</li>
+<li><strong>feat(i18n):</strong> 8 new locales — Kannada (<code>kn</code>), Malayalam (<code>ml</code>), Odia (<code>or</code>), Punjabi (<code>pa</code>), Nepali (<code>ne</code>), Sinhala (<code>si</code>), Burmese (<code>my</code>), Khmer (<code>km</code>) — across the dashboard, docs mirrors, CLI, README and the site (59 locales). The translator now restores the ICU literal escape around angle placeholders and splits oversized docs sections before translating (#0000 #13660)</li>
+<li>feat(providers): <strong>list Agnes 3.0 Flash as the current free chat model, drop retired 1.5 Flash, add Image 2.0/2.5 Flash plus Video 2.5/2.5 Flash, and discover the live <code>/v1/models</code> catalog (including the CN host <code>api.agnes-ai.cn</code>).</strong> <code>agnes-1.5-flash</code> now forwards to <code>agnes-3.0-flash</code>. Video 2.5 polls <code>GET /v1/videos/{id}</code> (not the V2.0 <code>/agnesapi</code> contract). Live <code>/v1/models</code> (2026-09-09) no longer serves 1.5; the wiki marks it deprecated. 3.0 Flash is 512K context / 65,536 max output, same window as 2.5. CN-region keys use the existing per-connection base-URL field, default stays… (#13120) — thanks @HouMinXi</li>
+<li><strong>feat(sse):</strong> Codex and OpenAI catalogs list GPT-6 Astra with effort aliases (<code>-low</code> through <code>-ultra</code>); Codex CLI identity pins <code>@openai/codex@0.153.4</code> in lockstep with the image (#13026) — thanks @openai @0 @HouMinXi</li>
+<li><strong>feat(dashboard):</strong> the orchestration History tab gained a “Compare runs” mode — toggling it turns each grid cell into a 2-item selection queue (a 3rd click drops the oldest pick), and picking two cells opens a side-by-side comparison panel instead of the usual detail drawer. The panel fetches both runs’ detail the same way the drawer does (falling back to persisted history once a run leaves the live TTL window) and shows, per side: identity/source/state, start time, a signed <code>right - left</code> delta for duration/cost/event count, the event timeline aligned by index, and any memory hits. One side’s fetch failing… (#12677)</li>
+<li><strong>feat(dashboard):</strong> badge a conversation that never reached a clean stop (#12717) — thanks @hartmark</li>
+<li><strong>feat(release):</strong> reconcile-changelog tool + version-anchored fragment aggregation (#12987)</li>
+<li><strong>feat(mcp):</strong> carry context_length through MCP list_models_catalog projection (#12776 #13406) — thanks @KooshaPari</li>
+<li><strong>feat(cli):</strong> make startup readiness budget configurable (#13369 #13433) — thanks @KooshaPari</li>
+<li><strong>feat(docs):</strong> every Markdown page under <code>docs/</code> is now mirrored in all 65 dashboard locales, not only the 22-page core set — 152 sources × 65 locales = 9,880 mirrors (6,208 new), with the 🌐 language bar of every mirror rewritten for the full locale list. The docs drift gate (<code>npm run i18n:check</code>, blocking in CI) derives its scope from the tree, so it now guards all 152 pages. Found and fixed by the run in <code>scripts/i18n/run-translation.mjs</code>: a markdown table or tight bullet list with no blank line inside it (PROVIDER_REFERENCE.md’s 244-row table, FREE_TIERS.md’s 71-item list) was sent as one 16–40 KB… (#14106)</li>
+<li><strong>feat(usage):</strong> <code>openai-compatible-*</code> connections can now report billing/quota in Provider Limits. The connection declares its own quota endpoint, auth mode and a dot-path mapping onto <code>UsageQuota</code> in <code>providerSpecificData.quotaEndpoint</code>, so no upstream-specific code is needed per service — a mapping that resolves nothing reports no quota rather than an exhausted-looking 0/0 (#13616 #13673) — thanks @abhisheksharma2411</li>
+<li><strong>feat(sse):</strong> track LLM Gateway DevPass quota — the <code>llmgateway</code> provider now reads its monthly plan-credit and weekly premium-model allowance from <code>GET /v1/key</code> and surfaces both windows in Dashboard › Limits and quota-aware preflight (#12462) — thanks @PixmaNts</li>
+<li><strong>feat(providers):</strong> register <code>gemini-3.8-flash</code> — Gemini 3.8 Flash (DeepMind 2026-09-02) with tool calling and vision support (#12638 #12663) — thanks @toor11</li>
+<li><strong>feat(proxylogs):</strong> proxy log columns and detail pane now show the registry proxy name instead of a bare <code>host:port</code> when several registry entries share the same gateway (#12814) — thanks @tiangao88</li>
+<li><strong>compression:</strong> add Hungarian Caveman language pack with Hungarian-specific rules, language detection, localized output instructions, and language-pack tests (#12825) — thanks @botii16</li>
+<li><strong>feat(sse):</strong> parse/scrub DSML tool-call markers embedded in reasoning and recognize adaptive thinking on the response side — <code>dsmlToolCalls.ts</code> module + translator/stream/handler wiring (#12905) — thanks @initguru</li>
+<li><strong>feat(codex):</strong> safely discover compatible models by classifying upstream models before activation to keep hidden, unsupported, retired, or newer-client models out of the active catalog, exposing candidate diagnostics while persisting only active models, adding GPT-6 Astra fallback definitions, and bumping the tested Codex CLI version to 0.153.4 (#12933) — thanks @TheDemonTuan</li>
+<li><strong>feat(api):</strong> <code>POST /api/keys</code> accepts <code>expiresAt</code> (ISO datetime, nullable) with the same semantics as the key-update path, so automation can create an expiring key in one operation instead of create-then-update. Omitted/null preserves the current non-expiring behavior; enforcement reuses the existing expiry policy (#12952) — thanks @caniko</li>
+<li><strong>feat(build):</strong> add build:fast and start:fast to bypass standalone tracing (#13021) — thanks @tuandinh0801</li>
+<li><strong>feat(sse):</strong> <code>OMNIROUTE_DISABLE_CONVERSATION_TRACKING=1</code> turns off conversation-history collection for operators who do not use the dashboard’s conversation view. <code>resolveConversationId()</code> returns an untracked result before it reads SQLite or parses message history, and the switch also covers client-supplied session IDs. Routing-session handling is unchanged, tracking stays on by default, and existing records are not deleted. One reporting install held 5.97 million turn records at about 4.26 GB (#13150) — thanks @cryptiklemur</li>
+<li><strong>feat(providers):</strong> Add <code>auto/kimi</code>, <code>auto/qwen</code>, <code>auto/deepseek</code>, <code>auto/gpt</code>, and the <code>auto/claude-haiku</code> fast variant to the built-in routing catalog, including bare <code>k3</code> models on Kimi coding and web backends (issue (#13214 #13709) — thanks @keii-2596</li>
+<li><strong>feat(usage):</strong> Claude OAuth usage now shows the separate weekly Fable limit next to the shared five-hour and weekly meters. Anthropic reports it as a <code>weekly_scoped</code> entry in <code>limits[]</code>, which OmniRoute ignored, so the pool was invisible. The provider-limits cache keeps <code>modelQuotas</code> and restores it on stale-data fallback. The Fable meter is display-only and does not affect routing, account selection, or cooldowns (#13266) — thanks @cryptiklemur</li>
+<li><strong>feat(playground): copy an individual Compare column’s response.</strong> Each column in the Compare tab now has a copy button beside the remove button, reusing the existing <code>useCopyToClipboard</code> hook to copy that column’s response text and show a checkmark while <code>disabled</code> on an empty response. (The independent-scrolling half of this PR was already fixed separately in (#13532 #13317) — thanks @ventulus95</li>
+<li><strong>feat(models):</strong> add Gemini 3.8 Flash tiers to Antigravity and AGY catalogs , with credit to (#13318 #12499) — thanks @tuandinh0801 @Abhishekchhetri020</li>
+<li><strong>feat(reasoning):</strong> adaptive reasoning effort (<code>auto</code>) — the gateway resolves the thinking budget per user turn from deterministic request-shape signals (stateless per-turn pin) instead of forwarding a literal <code>auto</code>, applied at the gateway pre-translation for any harness (Claude Code, Cursor, Codex, opencode, Hermes) whose request dispatches to an OpenAI Chat-Completions-shaped upstream (<code>targetFormat === FORMATS.OPENAI</code> — <code>reasoning_effort</code> is an OpenAI-shaped field, so a Claude- or Gemini-targeted request is unaffected). Opt in via <code>X-OmniRoute-Effort: auto</code> or a model’s <code>defaultReasoningEffort: "auto"</code> (now… (#13448) — thanks @patrykkopycinski</li>
+<li><strong>feat(dashboard):</strong> Add a dedicated, full-width API-key routing editor with explicit model/combo choices, searchable selectors and protection for unsaved rule drafts (#13555) — thanks @JxnLexn</li>
+<li><strong>feat(proxies):</strong> proxy pools and opencode’s per-account rotation stop re-serving a proxy that just failed (refused TCP probe, or a 429 through it) for a period that doubles on each repeat up to a cap, without writing any proxy status; with every candidate set aside the choice is unchanged. Opt-in via the <code>PROXY_SKIP_RECENTLY_FAILED</code> feature flag (default off: selection unchanged) (#13578) — thanks @maxmad64bis</li>
+<li><strong>feat(proxy-logs):</strong> proxy log rows keep the HTTP status the provider actually returned (<code>upstream_status</code>, null when no response arrived), so a throttled egress IP (429), a refused one (403) and a provider outage (500) are no longer the same “error” line, and a 429 generated locally is no longer mistaken for one from the provider (#13580) — thanks @maxmad64bis</li>
+<li><strong>feat(proxies):</strong> the proxy pool editor shows, for the last 24 h, how many distinct egress IPs actually served the pool’s members, how many connections went through them and the most seen behind one IP, read from the proxy log through a separate route so it can never break the pool screen; opt-in with the <code>PROXY_POOL_EGRESS_OBSERVATION</code> feature flag (default off) (#13581) — thanks @maxmad64bis</li>
+<li><strong>feat(sse): learn hard request caps stated in 429 bodies and pace under them.</strong> Providers such as TokenRouter reject bursts with prose like <code>Maximum 5 requests within 1 minutes</code> and no rate-limit headers, so the limiter never learned the ceiling and kept racing into it; every 429 also tore the limiter down and rebuilt it with no pacing. <code>updateFromResponseBody</code> now parses that phrasing (and <code>N requests per minute</code>, <code>N requests per M seconds</code>, <code>N RPM</code>) into a per-window cap, applies it to the limiter as an empty reservoir that refills <code>N</code> every window with calls spread <code>window / N</code> apart, and records it in <code>learnedRateLimits</code>. A learned cap is reapplied whenever the… (#13594 #13895) — thanks @costajohnt</li>
+<li><strong>feat(proxies):</strong> a proxy pool stops re-serving a member the provider just refused through it and tries another member instead, reusing the existing skip cooldown; a later success through the member clears it. Opt-in with the <code>PROXY_SKIP_RECENTLY_FAILED</code> feature flag (default off: pool selection unchanged) (#13602) — thanks @maxmad64bis</li>
+<li><strong>feat(flags):</strong> add <code>DB_HEALTHCHECK_STARTUP_DEFERRED_ENABLED</code> (default off) — opt-in deferral of the startup DB health/integrity check past process boot via <code>setImmediate</code>; off keeps the pre-` until the check has already run (#13717) — thanks @HouMinXi</li>
+<li><strong>feat(i18n):</strong> 7 new locales — Hausa (<code>ha</code>), Yoruba (<code>yo</code>), Igbo (<code>ig</code>), Amharic (<code>am</code>), Uzbek (<code>uz</code>), Georgian (<code>ka</code>), Armenian (<code>hy</code>) — across the dashboard, docs mirrors, CLI, README and the site (66 locales, the full planned expansion from 43) (#13727)</li>
+<li><strong>feat(api):</strong> <code>POST /v1/rerank</code> (and the memory engine’s loopback rerank step) can route to OpenAI-compatible provider nodes on a LAN/Tailscale host — not only loopback — behind the new <code>RERANK_REMOTE_PROVIDER_NODES</code> feature flag (default off), subject to the provider outbound URL policy; the loopback host check is consolidated into <code>@/shared/network/loopbackNodeHost</code> shared by rerank, audio, and the local health checker (#13732 #13733) — thanks @seanford</li>
+<li><strong>feat(security):</strong> OmniRoute now warns at boot when the server that answers <code>/v1</code> inference is bound to a non-loopback interface while <code>REQUIRE_API_KEY</code> is disabled. The guard added in and the live dashboard WebSocket, but not the Next server that actually serves <code>/v1/chat/completions</code> and <code>/v1/responses</code> — which binds <code>HOST || 0.0.0.0</code>, every interface by default. That matters because <code>GET /v1/models</code> follows the dashboard login posture (<code>requireAuthForModels</code>) while inference follows <code>REQUIRE_API_KEY</code>, so an instance with an admin password and <code>REQUIRE_API_KEY=false</code> answers <code>401</code> to the probe an operator… (#12568 #2257 #13820) — thanks @abhisheksharma2411</li>
+<li>Expose combo wall-clock timeout (<code>comboTimeoutMs</code>) next to Target timeout in the combo editor and Combo defaults. Empty keeps the 10-minute hang-stop; a positive value replaces it (#13857) — thanks @HouMinXi</li>
+<li><strong>feat(i18n):</strong> <code>retranslate-site</code> rewrites the site catalogs’ verbatim-English leaves (2,059 across 63 catalogs; mean English residue 10.3 % → 6.3 %, the rest being brand names kept on purpose) (#13886)</li>
+<li><strong>feat(compression):</strong> Lite tool-result truncation length is configurable (<code>lite.maxToolLength</code>, env <code>OMNIROUTE_LITE_MAX_TOOL_LENGTH</code>). Default stays 2000. An out-of-range step cap no longer hides a valid global cap; a toggle-only settings write keeps a stored cap; <code>maxToolLength: null</code> clears it. Dashboard copy no longer hard-codes 2,000 characters (#13915 #13178) — thanks @HouMinXi</li>
+<li><strong>feat(proxy):</strong> support multiple local core endpoints, one per line (#13923) — thanks @maxmad64bis</li>
+<li>feat(providers): <strong>Added Agnes AI (China) as <code>agnes-cn</code> pointed at <code>https://api.agnes-ai.cn/v1</code>. Keys issued for <code>apihub.agnes-ai.com</code> stay on the existing <code>agnes</code> card. Live <code>/v1/models</code> on that host lists <code>agnes-3.0-flash</code> (same id as intl); the CN seed matches 2.0/2.5/3.0 and not retired 1.5.</strong> (#13399) — thanks @HouMinXi</li>
+<li><strong>feat(api):</strong> add per-key <code>allowAutoCombos</code> (default <code>true</code>) to gate the built-in <code>auto/*</code> combos, which previously bypassed a key’s <code>allowedCombos</code>/<code>allowedModels</code>/<code>blockedModels</code> restrictions entirely — a restricted key could still reach any model through <code>auto/best-fast</code>. Also adds a per-key <code>catalogScope</code> (<code>all</code>/<code>combos</code>/<code>models</code>) to control what <code>/v1/models</code> advertises, and the dashboard gained an Auto Combos toggle and a catalog scope selector in the API key permissions UI (#13670) — thanks @fouadSalkini</li>
+<li><strong>feat(sse):</strong> Claude OAuth connections can opt in (per account, Edit connection → Claude section) to Claude Code’s lower-priority lane and once-a-week session-limit reset. After the first 5-hour usage-wall 429 carrying <code>anthropic-ratelimit-unified-slow-offer: treatment</code>, OmniRoute retries the same account with <code>anthropic-usage-limit: slow</code> and keeps sending it until the window resets — the account keeps serving past the limit instead of being cooled down (slot_busy/529 wait the server’s <code>slow-retry-after</code>, bounded by <code>slow-max-wait</code>). With auto-reset on, the wall first tries `POST… (#13074) — thanks @davidebaraldo</li>
+<li>feat(providers): update Fish Audio for S2.1 Pro Free, validated advanced TTS controls, and provider-scoped persistent voice-clone management (#13090) — thanks @Bl0ck154</li>
+<li><strong>feat(usage):</strong> redeem <strong>GLM Coding Plan Reset Cards</strong> (<code>glm</code> / <code>glm-cn</code> / <code>glmt</code> / <code>zai</code>) from the Provider Limits UI — clear an exhausted 5-hour or weekly coding-plan window before it rolls over, via the new <code>/api/usage/glm-reset-card</code> route (<code>GET</code> lists, <code>POST</code> redeems). List and redeem requests egress through the connection’s proxy and honor exclusive-lease isolation; z.ai’s <code>requestId</code> is reused for retries of an ambiguous (transport-failed) redemption so a lost response cannot double-consume a card (in-memory, best-effort — restart the server and a fresh key is required). Responses are validated… (#12754) — thanks @insoln</li>
+<li><strong>feat(routing): self-hosted unified OpenAI-compatible entry (<code>/v1/chat/completions</code>).</strong> When <code>OMNIROUTE_SELF_HOSTED_PROVIDERS</code> (inline YAML) or <code>OMNIROUTE_SELF_HOSTED_PROVIDERS_FILE</code> is set, the existing <code>/v1/chat/completions</code> route diverts through the self-hosted provider adapters (<code>open-sse/services/providerAdapters.ts</code>) — OpenAI / Anthropic / local-compatible — instead of the cloud pipeline. Provider is auto-routed via the <code>x-omniroute-provider</code> header, a <code>provider/model</code> (or <code>provider::model</code>) model prefix, or the first configured provider; upstream credentials stay runtime-only and are stripped from echoed responses. Optional <code>OMNIROUTE_SELF_HOSTED_API_KEY</code> guards the entry… (#13611) — thanks @luyuehm</li>
+<li><strong>feat(routing): deterministic routing strategies for the self-hosted entry (<code>strategy:</code> block, M2/RIC-740).</strong> The unified <code>/v1/chat/completions</code> entry (RIC-738) now accepts a declarative <code>strategy:</code> block — inline in the providers YAML or via <code>OMNIROUTE_SELF_HOSTED_STRATEGY</code> / <code>OMNIROUTE_SELF_HOSTED_STRATEGY_FILE</code> — expressing five explainable, non-predictive routing policies: blacklist / whitelist (hard filters), cooldown circuit breaker (<code>consecutiveFailures</code> + <code>cooldownMs</code>), cost-priority (cheapest <code>costPer1MInput</code> first), latency-aware (fastest recent average first), and an explicit <code>fallbackChain</code> order. The ordered candidate list is the fallback chain: a failed primary (network or non-2xx)… (#13611) — thanks @luyuehm</li>
+<li><strong>feat(dashboard):</strong> add sidebar pinned items shortcut section with individual item pin toggle and localStorage persistence (#12891) — thanks @ZaimMarzuki</li>
+<li><strong>feat(providers):</strong> share the existing <code>api.x.ai/v1/models</code> discovery config with <code>xai-oauth</code> so SuperGrok OAuth connections pick up new Grok ids without a registry seed edit (#13518) — thanks @HouMinXi</li>
+<li><strong>feat(core):</strong> improve observability for dual-auth fallback execution (#11828) — thanks @raheemuddin786</li>
+<li><strong>feat(chat-admission):</strong> expose admission tunables via dashboard settings (#12038) — thanks @oyi77</li>
+<li><strong>feat(dashboard):</strong> show exact token counts on hover in usage analytics cards and tables (#12553) — thanks @ZaimMarzuki</li>
+<li><strong>feat(providers):</strong> add xKiro (#12648)</li>
+<li><strong>feat(reasoning):</strong> opt-in min output budget floor for thinking models (#12742) — thanks @patrykkopycinski</li>
+<li><strong>feat(sse):</strong> retry transient 5xx backend errors with jitter (global-fallback call site) (#12695 #13143) — thanks @KooshaPari</li>
+<li><strong>feat(services):</strong> add open-wa as a 6th embedded service (#13222) — thanks @birdleandro-bit</li>
+<li><strong>feat(providers):</strong> update Openference free models and add Deyin to compatible agents (#13378) — thanks @AnhLead</li>
+<li><strong>feat(docker):</strong> add self-host compose + 5-minute deploy doc (RIC-739) (#13639) — thanks @luyuehm</li>
+<li><strong>feat(antigravity):</strong> expose physical send telemetry (#13659) — thanks @domenicomassafra</li>
+<li><strong>feat(i18n):</strong> blocking key-completeness gate — every locale carries every en.json key (#13827)</li>
+<li><strong>feat(i18n):</strong> new-key gate rejects <strong>MISSING</strong> markers; skills translate new keys in parallel (#13996)</li>
+<li><strong>feat(mitm):</strong> dynamically inject configured models into Antigravity model catalog (#14006) — thanks @steve25060</li>
+<li><strong>feat(cache):</strong> configurable dual-layer semantic caching with Redis/In-Memory vector stores (re-land of (#12630 #14159) — thanks @BillyOutlast</li>
+<li><strong>feat(providers):</strong> add Lyceum (lyceum.technology) as an OpenAI-compatible, pay-per-use provider — chat, embeddings, and live <code>/models</code> discovery through <code>https://api.lyceum.technology/openai/v1</code>, plus a credit-balance quota fetcher (<code>GET /api/v2/external/billing/credits</code>) surfaced in Dashboard › Limits and quota-aware preflight (#12470 #12474) — thanks @PixmaNts</li>
+<li>Add a bounded, request-correlated Auto candidate evaluation trace so pre-dispatch exclusions can be diagnosed without changing routing behavior or recording request content (#14444) — thanks @keeltrace</li>
+<li><strong>feat(dashboard):</strong> combo editor shows the effective round-robin sticky limit and its source, a connection-aware expansion inherit/on/off toggle, and a prompt-cache locality hint on pinned RR/weighted steps; AUTO-COMBO docs cover the sticky batch and the single dynamic-account recommendation. Save keeps <code>stickyRoundRobinLimit</code> and <code>connectionAwareExpansion</code> when the current strategy has no editor for them, matching <code>sanitizeComboRuntimeConfig</code> (#13370 #14014) — thanks @HouMinXi</li>
+<li><strong>feat(dashboard):</strong> request timeline plots MCP tool invocations from <code>mcp_tool_audit</code> next to LLM calls, with a per-API-key filter covering both row kinds. GET <code>/api/mcp/audit</code> (and <code>/stats</code>) is exempt from the local-only MCP prefix so a tunnel-served dashboard can poll it; SSE/stream stay loopback-only. Audit rows stamp the caller’s API-key id from the HTTP principal, not <code>OMNIROUTE_API_KEY_ID</code> (#13941 #13898) — thanks @HouMinXi</li>
+<li>feat(api-manager): collapsible and searchable connection groups with provider select-all in permissions modal (#13952) — thanks @fouadSalkini</li>
+<li><strong>feat(plugins):</strong> the editor plugin registers the host <code>sdk</code> telemetry hook behind an opt-in flag that defaults to off, marking matching inference calls without touching anything else (#14235) — thanks @maxmad64bis</li>
+<li><strong>feat(kiro):</strong> expose Kiro’s provider-native Opus 5 Max effort tier — <code>&#x3C;base>-max</code> in the Claude effort catalog, <code>max</code> in the Kiro effort values, and the adaptive-thinking envelope for <code>claude-opus-5</code> — original change by tarciorick (#14284) — thanks @bufftop25</li>
+<li><strong>feat(sse):</strong> forward the auto mode classifier beta (<code>dangerous-tool-use-2026-09-03</code>) to Anthropic-format upstreams, and let <code>anthropic-compatible-*</code> providers forward client-negotiated betas at all, so Claude Code sessions behind the gateway stay eligible for server-side auto mode classification (#14312) — thanks @dpozimski</li>
+<li><strong>feat(oauth):</strong> Muse Code (Meta) device-authorization login with CLIProxyAPI-parity credential lifecycle — RFC 8628 against auth.meta.com, mint the subscription inference key at <code>/muse-code/key</code>, persist the durable <code>dca:</code> token, remint on 401 / DCA-only records, honor <code>error.resets_at</code> quota cooldowns, and import CLIProxyAPI <code>type: meta</code> auth files. Dual-auth keeps pasted <code>META_API_KEY</code> on the same card (#14329) — thanks @RaviTharuma</li>
+<li><strong>feat(routing):</strong> add opt-in planner/executor orchestration for two-model pipeline combos, with protocol-aware tool-loop detection, dynamic final ownership, native parallel tool calls, and bounded sequential rounds (#14346 #14616) — thanks @potatosips</li>
+<li><strong>feat(proxies):</strong> show each pool member’s last seen egress IP next to the pool totals (#14364) — thanks @maxmad64bis</li>
+<li>test(cli): add isolated real-binary smoke contracts with local sentinel authentication, response receipts, and bounded process-group cleanup (#14382)</li>
+<li>test(cli): allow explicit inheritance of the harness’s freshly sanitized environment so metadata controls reach real clients without exposing caller credentials or loader hooks (#14382)</li>
+<li><strong>feat(cli):</strong> Add remote/context-aware manual model CRUD with metadata validation, dry-run, protected override removal and persistence readback; prefer the public model catalog and keep JSON/JSONL complete. Manual models remain inference-unverified (#14392)</li>
+<li><strong>feat(sse):</strong> track Tavily API credit usage — <code>tavily-search</code> and <code>tavily</code> providers now read plan and account credit usage from <code>GET https://api.tavily.com/usage</code>, surfacing monthly credits in Dashboard › Limits and avoiding exhausted connections during search rotation (#14442) — thanks @HouMinXi</li>
+<li><strong>feat(providers):</strong> add Cloudflare Workers AI image generation (FLUX.1 Schnell, free tier) — reuses the existing <code>cloudflare-ai</code> chat provider’s Account ID + API Token connection with no new credential type (#14443) — thanks @brick30llc-ctrl</li>
+<li><strong>feat(sse):</strong> Context7 rate-limit quota and usage in Provider Limits — reads the <code>ratelimit-*</code> headers of a keyed <code>GET /api/v1/search</code> probe (60 s cache, fail-open) so combo/round-robin rotation can skip exhausted <code>context7</code> keys (#14454) — thanks @HouMinXi</li>
+<li><strong>feat(cli-tools):</strong> assign models to the review and Mixture-of-Agents roles from the dashboard — the Hermes agent already routes work to a dedicated review model and to the MoA reference/aggregator pair, but the config generator had no slots for them, so picking a different model meant hand-editing a file the dashboard would overwrite on the next save. The roles are now first-class and translated across all locales (#14455) — thanks @aldoeliacim</li>
+<li><strong>feat(dashboard):</strong> quota pools can now be scheduled. Each pool takes a list of time windows (days of the week + hours, in an IANA zone of its own) saying when OmniRoute may use its accounts: an <code>allow</code> window turns the pool into a whitelist, a <code>block</code> window is a blackout that always wins over an overlapping <code>allow</code>. Inside an open window two independent limits apply, either of which may be left off — <strong>keep free</strong>, one floor per metered quota window (<code>5h</code>, <code>weekly</code>, …, or <code>any</code> for whichever is most consumed), measured on the whole-account saturation signal so a human burning the same credentials pushes… (#14466) — thanks @davidebaraldo</li>
+<li>feat(cli): add a copy-only dashboard companion with local/remote-context runbooks, explicit server-host status and credential-free command previews (#14494)</li>
+<li><strong>fix(compression):</strong> keep lossy compression off the default path, following HouMinXi’s plan (dedup and whitespace stay on; summaries, relevance filters, and style rewrites are per-request) and KooshaPari’s. Opt-in header: <code>x-omniroute-compression: allow-lossy</code>, <code>engine:&#x3C;id></code>, or a named combo @KooshaPari (#8251 #14529) — thanks @HouMinXi @KooshaPari @RaviTharuma</li>
+<li><strong>fix(resilience):</strong> follow HouMinXi’s per-connection circuit breaker, so one account’s failure no longer opens the breaker for every account on that provider. Proxy failures stay provider-wide. Model-scoped 400 patterns now live in one module, which is KooshaPari’s @KooshaPari (#8251 #14530) — thanks @HouMinXi @KooshaPari @RaviTharuma</li>
+<li><strong>feat(providers):</strong> add <code>expiry-first</code>, a per-provider account fallback strategy that spends the quota closest to being lost. It ranks each account by how much it must burn per hour to avoid wasting its leftover at the next reset (<code>usable / hoursUntilNearestReset</code>), so a full account whose window closes soon outranks an equally full one that holds for days, while a nearly empty account never wins on its near reset alone. <code>fill-first</code> drains the top-priority account and lets the rest roll over unspent; on a four-account Codex pool that left an 88% account untouched through a reset. Distinct from <code>reset-aware</code>… (#14533) — thanks @feci</li>
+<li><strong>perf(logging):</strong> stop walking whole request bodies several times per request when PII sanitization is off: feature flag overrides are cached instead of one SQLite <code>SELECT</code> per string leaf, <code>sanitizePayloadPII</code> returns the payload by reference when the flag is off, pending-request previews are pruned to the preview shape before they are protected (strings are still protected whole and cut last), and the PII masker guardrail no longer JSON-clones every body. On 2 MB agentic bodies at 20 concurrent streams this removed ~12,800 flag lookups per request and cut TTFT p50 from 2.4 s to 1.7 s (#14535) — thanks @dpozimski</li>
+<li><strong>feat(opencode-plugin):</strong> <code>features.diskCacheMaxAgeMs</code> is an opt-in bound for the disk-cache fallback. Unset or <code>0</code> stays unbounded. Past a positive bound the snapshot is still served and the fallback log escalates from warn to error (#14540) — thanks @RaviTharuma</li>
+<li><strong>feat(providers):</strong> correlate CLIProxyAPI <code>X-CPA-TRACE-ID</code> <code>auth_index</code> with usage history and the sanitized account-health label (#14544) — thanks @RaviTharuma</li>
+<li><strong>feat(opencode):</strong> bound the Responses headers wait with an opt-in rotation budget (#14558) — thanks @maxmad64bis</li>
+<li><strong>feat(sse):</strong> tell stalled content streams apart from severed transport connections in stored stream error codes (#14582) — thanks @maxmad64bis</li>
+<li><strong>feat(sse):</strong> Codex catalog lists GPT-6 Sol (efforts <code>-low</code> through <code>-ultra</code>) and GPT-6 Luna (<code>-low</code> through <code>-max</code>) with Codex pricing; explicit <code>max</code> effort is no longer clamped to <code>xhigh</code>, and catalog effort tiers for every GPT-6 Codex model follow the live levels (#14677) — thanks @QuangBlue</li>
+<li><strong>feat(dashboard):</strong> Add a unified, searchable model catalog across all providers (#14684) — thanks @Dattuog</li>
+<li><strong>feat(dashboard):</strong> pool egress observation gains a per-exit failure breakdown by error family (#14749) — thanks @maxmad64bis</li>
+<li><strong>feat(proxy):</strong> a local-core entry can steer its selector to the next member when the existing set-aside sets it aside, without restarting the core (#14752) — thanks @maxmad64bis</li>
+<li><strong>feat(admin):</strong> pool members show set-aside state (reason, expected end, repeat count) and preference order (#14754) — thanks @maxmad64bis</li>
+<li><strong>feat(webhooks):</strong> emit <code>proxy.set_aside</code> when a pool member is temporarily set aside, plus <code>proxy.pool.exhausted</code> declarations for wildcard subscribers (#14755) — thanks @maxmad64bis</li>
+<li>New <code>PROXY_WEBHOOK_REBOUND_MS</code> env (default 5 min, 1s–1h) caps repeat alerts per member so a burst of refusals sends one event (#14755) — thanks @maxmad64bis</li>
+<li><strong>feat(dashboard):</strong> proxy log journal shows received code, exit address, correlation and served account (#14777) — thanks @maxmad64bis</li>
+<li><strong>feat(calls):</strong> record rendered-content presence and usage provenance per request in the call log (#14795) — thanks @maxmad64bis</li>
+<li><strong>feat(proxy-health):</strong> the proxy health cell shows the last sweep verdict with cause and age (#14807) — thanks @maxmad64bis</li>
+<li><strong>feat(call-logs):</strong> show per-request recovery actions in the request log (#14810) — thanks @maxmad64bis</li>
+<li><strong>feat(proxy-logs):</strong> record per-attempt upstream headers duration on proxy log rows, plus opt-in first-chunk duration (<code>PROXY_LOG_FIRST_CHUNK_TIMING</code>), and show them in the proxy log detail (#14892) — thanks @maxmad64bis</li>
+<li><strong>feat(proxyHealth):</strong> a proxy that relays but whose target refuses the egress address now keeps a bounded per-proxy refusal streak (count, first and last seen, last cause and status) across sweeps and restarts, shown in the proxy health cell and on both health routes; a sweep that sees the proxy healthy ends the streak, and entries of deleted proxies are pruned on the next sweep. Observability only — selection is unchanged (#14938) — thanks @maxmad64bis</li>
+<li><strong>feat(providers):</strong> request Claude’s model list with <code>limit=1000</code>, enable xAI API-key model passthrough, default <code>XAI_OAUTH_LIVE_MODEL_DISCOVERY</code> on, and persist <code>autoSync: true</code> on new Grok Build OAuth connections so newly published chat ids can appear without a seed bump (#14237) — thanks @HouMinXi</li>
+<li><strong>feat(i18n):</strong> New locale — Bosnian (<code>bs</code>) — across the dashboard, docs mirrors, CLI, README and the site (#14187) — thanks @jasminsehic</li>
+<li><strong>feat(dashboard):</strong> synced/imported models can now carry a manual context-window override. Rows imported through a provider’s <strong>/models</strong> import had no edit affordance at all, so the override ` (#4125 #14337 #14356) — thanks @abhisheksharma2411</li>
+<li><strong>feat(db):</strong> per-request cost ledger + per-key tpm/rpm/monthly quota (RIC-741) (#13610) — thanks @luyuehm</li>
+<li><strong>feat(cli-tools):</strong> add Oh My Pi (omp) CLI detection and configuration support (#14178) — thanks @navanshjagetiya7-eng</li>
+<li><strong>feat(api):</strong> per-agent AgentBridge restore-default endpoint (re-land of (#13846 #14730)</li>
+</ul>
+<h3 id="-bug-fixes-and--maintenance">🐛 Bug Fixes and 📝 Maintenance</h3>
+<p><strong>1,454 fixes</strong> and <strong>333 maintenance</strong> entries — listed in full, each with its PR and credit, in the attached <code>CHANGELOG-v3.8.51.md</code>.</p>
+<h3 id="-contributors">🙌 Contributors</h3>
+<p>Thanks to everyone whose work landed in v3.8.51:</p>
+<table>
+<thead>
+<tr>
+<th>Contributor</th>
+<th>PRs / Issues</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/5dive-bot">@5dive-bot</a></td>
+<td>#11852</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aaustinhuang">@aaustinhuang</a></td>
+<td>#13201, #13206</td>
+</tr>
+<tr>
+<td><a href="https://github.com/abhisheksharma2411">@abhisheksharma2411</a></td>
+<td>#11547, #11684, #11959, #12209, #12235, #13134, #13295, #13673, #13676, #13814, #13820, #14150, #14356, #14704, #14819</td>
+</tr>
+<tr>
+<td><a href="https://github.com/adevwithpurpose">@adevwithpurpose</a></td>
+<td>#11464, #14156, #14832, #14848</td>
+</tr>
+<tr>
+<td><a href="https://github.com/adityadwi21">@adityadwi21</a></td>
+<td>#13776</td>
+</tr>
+<tr>
+<td><a href="https://github.com/adivekar-utexas">@adivekar-utexas</a></td>
+<td>#12015, #12043, #12090, #12138, #12826, #14692, #14924, #14929, #14939, #14969</td>
+</tr>
+<tr>
+<td><a href="https://github.com/afonsoft">@afonsoft</a></td>
+<td>#13801, #13802, #13807, #14998, #15000, #15001, #15002</td>
+</tr>
+<tr>
+<td><a href="https://github.com/agusgonzaleznic">@agusgonzaleznic</a></td>
+<td>#14881</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ahmedhosnypro">@ahmedhosnypro</a></td>
+<td>#13373</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ai-jeremi-esky">@ai-jeremi-esky</a></td>
+<td>#13874</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AIB1TAL0S">@AIB1TAL0S</a></td>
+<td>#12103</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aldoeliacim">@aldoeliacim</a></td>
+<td>#14287, #14448, #14455, #14930</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AlejandroAkbal">@AlejandroAkbal</a></td>
+<td>#14965</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alexdrgpy06">@alexdrgpy06</a></td>
+<td>#14452</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alfred-rootson">@alfred-rootson</a></td>
+<td>#14252</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alltomatos">@alltomatos</a></td>
+<td>#11448</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alpha-code2019">@alpha-code2019</a></td>
+<td>#12810</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alvinveroy">@alvinveroy</a></td>
+<td>#11857, #12027, #12165, #13002, #13004</td>
+</tr>
+<tr>
+<td><a href="https://github.com/amaleta">@amaleta</a></td>
+<td>#11906, #11934</td>
+</tr>
+<tr>
+<td><a href="https://github.com/amartinawi">@amartinawi</a></td>
+<td>#11575</td>
+</tr>
+<tr>
+<td><a href="https://github.com/amirrezakm">@amirrezakm</a></td>
+<td>#12309, #12310, #12948</td>
+</tr>
+<tr>
+<td><a href="https://github.com/andrea-kingautomation">@andrea-kingautomation</a></td>
+<td>#13785</td>
+</tr>
+<tr>
+<td><a href="https://github.com/andreyzagid-tech">@andreyzagid-tech</a></td>
+<td>#14215</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AndrianBalanescu">@AndrianBalanescu</a></td>
+<td>#11083, #11830, #11834, #11844</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AnhLead">@AnhLead</a></td>
+<td>#13378</td>
+</tr>
+<tr>
+<td><a href="https://github.com/anhtahaylove">@anhtahaylove</a></td>
+<td>#13091, #13092, #13093, #13096, #13097, #13100, #13106, #13109, #13114, #13155, #13166, #13171, #13175, #13187, #13196, #13289, #13292, #13315, #13630, #13778</td>
+</tr>
+<tr>
+<td><a href="https://github.com/anhtran-ai">@anhtran-ai</a></td>
+<td>#13167, #14090</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aniruddhaadak80">@aniruddhaadak80</a></td>
+<td>#11760, #14844</td>
+</tr>
+<tr>
+<td><a href="https://github.com/app">@app</a></td>
+<td>#12554</td>
+</tr>
+<tr>
+<td><a href="https://github.com/appscluster">@appscluster</a></td>
+<td>#13988</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Ardem2025">@Ardem2025</a></td>
+<td>#7138, #9908, #9944, #13929, #14083, #14112</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aref-alapour">@aref-alapour</a></td>
+<td>#12799, #13957, #14344</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arjav1181">@arjav1181</a></td>
+<td>#13910</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arminanton">@arminanton</a></td>
+<td>#11461, #11513</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AStupidBear">@AStupidBear</a></td>
+<td>#11584, #13332, #13725</td>
+</tr>
+<tr>
+<td><a href="https://github.com/atescivitci-cmd">@atescivitci-cmd</a></td>
+<td>#12105</td>
+</tr>
+<tr>
+<td><a href="https://github.com/b3nw">@b3nw</a></td>
+<td>#11970, #11971, #12147</td>
+</tr>
+<tr>
+<td><a href="https://github.com/backryun">@backryun</a></td>
+<td>#11259, #11950, #12075, #12076, #12078, #12079, #12081, #12082, #12181, #12228, #12239, #12255, #12258, #12277, #12367, #12423, #12524, #12538, #14052</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Beexly">@Beexly</a></td>
+<td>#12406</td>
+</tr>
+<tr>
+<td><a href="https://github.com/benjaminkitt">@benjaminkitt</a></td>
+<td>#11747</td>
+</tr>
+<tr>
+<td><a href="https://github.com/benzntech">@benzntech</a></td>
+<td>#11614, #11615</td>
+</tr>
+<tr>
+<td><a href="https://github.com/BillyOutlast">@BillyOutlast</a></td>
+<td>#14159, #14361</td>
+</tr>
+<tr>
+<td><a href="https://github.com/birdleandro-bit">@birdleandro-bit</a></td>
+<td>#13222</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Bl0ck154">@Bl0ck154</a></td>
+<td>#11948, #11951, #11952, #11953, #11954, #12311, #13090, #14244</td>
+</tr>
+<tr>
+<td><a href="https://github.com/botii16">@botii16</a></td>
+<td>#12825</td>
+</tr>
+<tr>
+<td><a href="https://github.com/brick30llc-ctrl">@brick30llc-ctrl</a></td>
+<td>#11752, #12242, #12252, #12262, #14443</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bufftop25">@bufftop25</a></td>
+<td>#14282, #14284</td>
+</tr>
+<tr>
+<td><a href="https://github.com/caniko">@caniko</a></td>
+<td>#12952</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cfigueiroa">@cfigueiroa</a></td>
+<td>#14782</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Ch3fUlrich">@Ch3fUlrich</a></td>
+<td>#14900</td>
+</tr>
+<tr>
+<td><a href="https://github.com/chatchawan-simplewish">@chatchawan-simplewish</a></td>
+<td>#13223</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Chewji9875">@Chewji9875</a></td>
+<td>#11455, #11875, #12028</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cheynetom">@cheynetom</a></td>
+<td>#12058</td>
+</tr>
+<tr>
+<td><a href="https://github.com/CodeStartUp">@CodeStartUp</a></td>
+<td>#14672</td>
+</tr>
+<tr>
+<td><a href="https://github.com/costajohnt">@costajohnt</a></td>
+<td>#13895, #14009, #14010, #14273</td>
+</tr>
+<tr>
+<td><a href="https://github.com/CrashCartCapital">@CrashCartCapital</a></td>
+<td>#13446</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cryptiklemur">@cryptiklemur</a></td>
+<td>#13149, #13150, #13173, #13266, #14161, #15101</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dajiaohuang">@dajiaohuang</a></td>
+<td>#13201, #13206</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dakaribeckerer-art">@dakaribeckerer-art</a></td>
+<td>#13993</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrixlab">@datrixlab</a></td>
+<td>#13159, #13320, #13321, #13322, #13323, #13327, #13328, #13329, #13333, #13334, #13335, #14172, #14173, #14459, #14460</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Dattuog">@Dattuog</a></td>
+<td>#14684, #15051</td>
+</tr>
+<tr>
+<td><a href="https://github.com/davidebaraldo">@davidebaraldo</a></td>
+<td>#12222, #12304, #13074, #14466</td>
+</tr>
+<tr>
+<td><a href="https://github.com/davidlinfr">@davidlinfr</a></td>
+<td>#6390</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ddarkr">@ddarkr</a></td>
+<td>#12124</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Deftera186">@Deftera186</a></td>
+<td>#11809</td>
+</tr>
+<tr>
+<td><a href="https://github.com/delafu">@delafu</a></td>
+<td>#13803</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DenXio101">@DenXio101</a></td>
+<td>#13798</td>
+</tr>
+<tr>
+<td><a href="https://github.com/developerjillur">@developerjillur</a></td>
+<td>#14925</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dmlanday">@dmlanday</a></td>
+<td>#12484, #12485</td>
+</tr>
+<tr>
+<td><a href="https://github.com/domenicomassafra">@domenicomassafra</a></td>
+<td>#13168, #13659, #13809, #13810, #14216</td>
+</tr>
+<tr>
+<td><a href="https://github.com/doramirdor">@doramirdor</a></td>
+<td>#13056</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dpozimski">@dpozimski</a></td>
+<td>#11945, #13635, #14312, #14535</td>
+</tr>
+<tr>
+<td><a href="https://github.com/drmikecrypto">@drmikecrypto</a></td>
+<td>#12565</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ducphamtien-fonos">@ducphamtien-fonos</a></td>
+<td>#13128</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DW-MediaLab">@DW-MediaLab</a></td>
+<td>#12229</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dylanhaskins">@dylanhaskins</a></td>
+<td>#13856</td>
+</tr>
+<tr>
+<td><a href="https://github.com/easypathuni">@easypathuni</a></td>
+<td>#13312</td>
+</tr>
+<tr>
+<td><a href="https://github.com/echel0nn">@echel0nn</a></td>
+<td>#11923</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Egorich-print">@Egorich-print</a></td>
+<td>#12388</td>
+</tr>
+<tr>
+<td><a href="https://github.com/EkoSaputro14">@EkoSaputro14</a></td>
+<td>#13930</td>
+</tr>
+<tr>
+<td><a href="https://github.com/elielsousa-pathbit">@elielsousa-pathbit</a></td>
+<td>#13444, #13793</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Ercaner1988">@Ercaner1988</a></td>
+<td>#14203</td>
+</tr>
+<tr>
+<td><a href="https://github.com/f9td56dbgh-hub">@f9td56dbgh-hub</a></td>
+<td>#11660</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fabioluissilva">@fabioluissilva</a></td>
+<td>#11991</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Falco20100">@Falco20100</a></td>
+<td>#13913</td>
+</tr>
+<tr>
+<td><a href="https://github.com/feci">@feci</a></td>
+<td>#14533</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fewensa">@fewensa</a></td>
+<td>#13861</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fidelix">@fidelix</a></td>
+<td>#12989, #13790, #14870</td>
+</tr>
+<tr>
+<td><a href="https://github.com/foreveryh">@foreveryh</a></td>
+<td>#12177</td>
+</tr>
+<tr>
+<td><a href="https://github.com/formilw">@formilw</a></td>
+<td>#13784, #13919, #14374</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fouadSalkini">@fouadSalkini</a></td>
+<td>#12585, #13466, #13666, #13670, #13951, #13952, #13994, #14188, #14197, #14311, #14314, #14585, #14694, #14801, #14878, #14879</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ftevxk">@ftevxk</a></td>
+<td>#13772</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Gaulnews">@Gaulnews</a></td>
+<td>#12520</td>
+</tr>
+<tr>
+<td><a href="https://github.com/geek007git">@geek007git</a></td>
+<td>#12115, #12116, #12117, #12120, #12122</td>
+</tr>
+<tr>
+<td><a href="https://github.com/geekyNads">@geekyNads</a></td>
+<td>#11784, #12266, #14541</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ggdayup">@ggdayup</a></td>
+<td>#13533, #13548</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ggiak">@ggiak</a></td>
+<td>#11561, #12276, #12350, #12402, #13295</td>
+</tr>
+<tr>
+<td><a href="https://github.com/giauphan">@giauphan</a></td>
+<td>#13324</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gonisulaimann">@gonisulaimann</a></td>
+<td>#12368, #12369, #12371, #12735, #12736, #13741, #14153, #14155, #14164, #14184, #14185, #14271, #14275, #14281, #14285, #14412, #14586, #14686, #14689, #14700, #14703, #14705, #14709, #14710</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Gorillaz322">@Gorillaz322</a></td>
+<td>#12207</td>
+</tr>
+<tr>
+<td><a href="https://github.com/groovecityJO">@groovecityJO</a></td>
+<td>#12682</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hakarioz">@Hakarioz</a></td>
+<td>#14049</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hartmark">@hartmark</a></td>
+<td>#11434, #11452, #11473, #11499, #11703, #11983, #11984, #11985, #11986, #11988, #11989, #11990, #11994, #12221, #12293, #12445, #12446, #12447, #12448, #12460, #12461, #12623, #12646, #12650, #12680, #12717, #12718, #12727, #12741, #12854, #12995, #12999, #13071, #13078, #13079, #13115, #13338, #13573, #13687, #13749, #14279, #14806</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hizzt">@hizzt</a></td>
+<td>#11894</td>
+</tr>
+<tr>
+<td><a href="https://github.com/honeypot55">@honeypot55</a></td>
+<td>#13751</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hongnoul">@hongnoul</a></td>
+<td>#11484</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HouMinXi">@HouMinXi</a></td>
+<td>#11411, #11414, #11512, #11518, #11520, #11641, #11642, #11643, #11687, #11779, #11849, #11850, #11851, #11915, #11916, #11918, #11919, #11920, #12013, #12017, #12033, #12042, #12106, #12139, #12166, #12169, #12171, #12205, #12213, #12312, #12325, #12487, #12488, #12495, #12504, #12557, #12566, #12590, #12591, #12624, #12626, #12632, #12637, #12678, #12696, #12697, #12711, #12733, #12746, #12767, #12770, #12789, #12803, #12805, #12811, #12866, #12868, #12899, #12926, #12934, #12950, #12951, #12974, #13001, #13006, #13011, #13017, #13026, #13027, #13034, #13035, #13038, #13042, #13050, #13060, #13061, #13069, #13107, #13120, #13136, #13178, #13195, #13197, #13331, #13344, #13398, #13399, #13445, #13463, #13518, #13560, #13572, #13626, #13628, #13636, #13643, #13655, #13701, #13717, #13720, #13857, #13859, #13865, #13898, #13902, #13903, #13955, #14005, #14014, #14054, #14063, #14064, #14065, #14066, #14075, #14113, #14201, #14237, #14260, #14310, #14438, #14442, #14454, #14462, #14474, #14478, #14525, #14529, #14530, #14542, #14593, #14607, #14625, #14626, #14627, #14664, #14732, #14734, #14838, #14842, #14849, #14886, #14894, #14899, #14912, #14913, #14914, #14915, #14921, #14928, #14979, #14983, #14987, #15017, #15019, #15020, #15038, #15039, #15040, #15041, #15042, #15043, #15044, #15045, #15046, #15047, #15048, #15050, #15060, #15063, #15064, #15066, #15067, #15068, #15119, #15120, #15121</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hsia97">@Hsia97</a></td>
+<td>#11624</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hubo1989">@hubo1989</a></td>
+<td>#13754</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hummern">@hummern</a></td>
+<td>#13647</td>
+</tr>
+<tr>
+<td><a href="https://github.com/IAMBOBJIM">@IAMBOBJIM</a></td>
+<td>#12972</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Iammilansoni">@Iammilansoni</a></td>
+<td>#13969</td>
+</tr>
+<tr>
+<td><a href="https://github.com/IbrahimKhan12">@IbrahimKhan12</a></td>
+<td>#14549</td>
+</tr>
+<tr>
+<td><a href="https://github.com/initguru">@initguru</a></td>
+<td>#12901, #12902, #12903, #12904, #12905, #12906, #12908, #12909, #12910, #12911, #12912, #12913</td>
+</tr>
+<tr>
+<td><a href="https://github.com/insoln">@insoln</a></td>
+<td>#12668, #12737, #12754, #12755, #12830, #12859, #12864, #12954, #12955, #12956, #12957, #13636</td>
+</tr>
+<tr>
+<td><a href="https://github.com/isavage">@isavage</a></td>
+<td>#13663</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ishan-parihar">@ishan-parihar</a></td>
+<td>#14247</td>
+</tr>
+<tr>
+<td><a href="https://github.com/iuiu-py">@iuiu-py</a></td>
+<td>#14293</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jacobsparts">@jacobsparts</a></td>
+<td>#11854, #12155, #12167</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jasminsehic">@jasminsehic</a></td>
+<td>#12935, #14187</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JasonBroderick">@JasonBroderick</a></td>
+<td>#13072</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jbovard2016">@jbovard2016</a></td>
+<td>#13623</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Jehu">@Jehu</a></td>
+<td>#14633, #15011</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jmche">@jmche</a></td>
+<td>#13031</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Joaquinbrialva">@Joaquinbrialva</a></td>
+<td>#14549</td>
+</tr>
+<tr>
+<td><a href="https://github.com/joglomedia">@joglomedia</a></td>
+<td>#11980</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jonlwheat2-gif">@jonlwheat2-gif</a></td>
+<td>#11443, #11450, #11549, #11567, #11608, #11633, #11635, #11640, #11644, #11671, #11672, #11673, #11674, #11675, #11676, #11677, #11706, #11783, #12051, #12052, #12053, #12055, #13567</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JxnLexn">@JxnLexn</a></td>
+<td>#12471, #13299, #13434, #13555, #13556, #14175, #14176, #14276, #14278, #14751, #14827, #14876</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kanade-hoshino">@kanade-hoshino</a></td>
+<td>#12180</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kang-heewon">@kang-heewon</a></td>
+<td>#14059</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Karan825">@Karan825</a></td>
+<td>#11861</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kareem-jalal">@kareem-jalal</a></td>
+<td>#8169</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KaspaPulse">@KaspaPulse</a></td>
+<td>#11389, #11469, #11628, #11666, #11910</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kaung-minkhant">@kaung-minkhant</a></td>
+<td>#14114</td>
+</tr>
+<tr>
+<td><a href="https://github.com/keeltrace">@keeltrace</a></td>
+<td>#12080, #12223, #12763, #12818, #14444</td>
+</tr>
+<tr>
+<td><a href="https://github.com/keii-2596">@keii-2596</a></td>
+<td>#13709</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KelvinKSPS">@KelvinKSPS</a></td>
+<td>#13808</td>
+</tr>
+<tr>
+<td><a href="https://github.com/khnker">@khnker</a></td>
+<td>#13649</td>
+</tr>
+<tr>
+<td><a href="https://github.com/killer30001000">@killer30001000</a></td>
+<td>#12178, #12468</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Kizuno18">@Kizuno18</a></td>
+<td>#12340</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KooshaPari">@KooshaPari</a></td>
+<td>#12470, #12592, #12667, #12699, #12703, #12706, #12764, #12769, #12771, #13123, #13143, #13300, #13301, #13302, #13340, #13401, #13403, #13404, #13405, #13406, #13407, #13409, #13410, #13411, #13412, #13413, #13414, #13418, #13419, #13423, #13424, #13427, #13433, #13522, #13523, #13524, #13525, #13528, #13531, #13532, #13534, #13539, #13543, #13545, #13546, #13547, #13550, #13551, #13553</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kriptoburak">@kriptoburak</a></td>
+<td>#11370</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KrzysiekSko">@KrzysiekSko</a></td>
+<td>#12425, #12432, #12673</td>
+</tr>
+<tr>
+<td><a href="https://github.com/L4XB">@L4XB</a></td>
+<td>#13622, #13624, #13738, #14729</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Laksopan23">@Laksopan23</a></td>
+<td>#14673, #14675, #14828</td>
+</tr>
+<tr>
+<td><a href="https://github.com/legas888Oleg">@legas888Oleg</a></td>
+<td>#13825</td>
+</tr>
+<tr>
+<td><a href="https://github.com/LeMonBLOCK">@LeMonBLOCK</a></td>
+<td>#8169</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ljluestc">@ljluestc</a></td>
+<td>#12161</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lorenzozanee">@lorenzozanee</a></td>
+<td>#13761, #13762, #13763, #13764, #13765, #13766, #13767, #13768, #14209, #14210, #14211, #14219, #14263, #14264, #14697, #14785, #14813, #14814, #14818, #14826, #14964</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luw2007">@luw2007</a></td>
+<td>#13849</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luyuehm">@luyuehm</a></td>
+<td>#13610, #13611, #13639</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marcelokarval">@marcelokarval</a></td>
+<td>direct commit / report</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marcothedood">@marcothedood</a></td>
+<td>#14613</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marcs7">@marcs7</a></td>
+<td>#13637</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marioschoenert-code">@marioschoenert-code</a></td>
+<td>#13162</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marshalfevzi">@marshalfevzi</a></td>
+<td>#13756</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maxmad64bis">@maxmad64bis</a></td>
+<td>#1622, #11435, #11437, #11441, #11537, #11550, #11553, #11555, #11557, #11812, #11842, #11843, #11903, #12151, #12214, #12215, #12218, #12226, #12314, #12316, #12317, #12318, #12319, #12320, #12321, #12507, #12715, #12731, #12744, #12786, #12787, #12788, #12790, #12792, #12794, #12795, #12828, #12832, #12853, #12857, #12870, #12937, #12941, #12975, #13141, #13142, #13146, #13147, #13153, #13217, #13218, #13279, #13280, #13281, #13436, #13438, #13439, #13440, #13441, #13471, #13484, #13498, #13577, #13578, #13580, #13581, #13582, #13602, #13605, #13606, #13607, #13608, #13609, #13612, #13613, #13614, #13615, #13633, #13641, #13645, #13646, #13650, #13657, #13671, #13672, #13686, #13795, #13923, #13924, #14011, #14013, #14029, #14148, #14149, #14151, #14179, #14202, #14213, #14218, #14220, #14221, #14222, #14223, #14226, #14231, #14233, #14234, #14235, #14236, #14251, #14253, #14290, #14319, #14353, #14364, #14370, #14464, #14558, #14579, #14581, #14582, #14588, #14620, #14621, #14623, #14637, #14639, #14655, #14656, #14657, #14658, #14659, #14669, #14679, #14680, #14681, #14687, #14688, #14691, #14706, #14707, #14708, #14749, #14750, #14752, #14754, #14755, #14756, #14775, #14776, #14777, #14789, #14790, #14791, #14792, #14793, #14794, #14795, #14796, #14797, #14802, #14804, #14807, #14808, #14809, #14810, #14891, #14892, #14934, #14938, #14940, #15004, #15005, #15077</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mdigitalbh81">@mdigitalbh81</a></td>
+<td>#12240, #13571, #14162, #15010, #15033</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Meet6338-X">@Meet6338-X</a></td>
+<td>#11598, #11609, #12110</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mhenke">@mhenke</a></td>
+<td>#14230</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MikeTuev">@MikeTuev</a></td>
+<td>#14674, #14735, #14737</td>
+</tr>
+<tr>
+<td><a href="https://github.com/milunmoghe">@milunmoghe</a></td>
+<td>#14670</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Mistertelecom">@Mistertelecom</a></td>
+<td>#14056, #14108, #14120, #14123, #14125</td>
+</tr>
+<tr>
+<td><a href="https://github.com/morpheus9393">@morpheus9393</a></td>
+<td>#11943, #13759</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Moseyuh333">@Moseyuh333</a></td>
+<td>#13642, #14895</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MumuTW">@MumuTW</a></td>
+<td>#11492, #11502, #11506, #11507, #11626, #11675, #11685, #11728, #11746, #11888, #11889, #11890, #11892, #13408</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nahdd123uosackr">@nahdd123uosackr</a></td>
+<td>#13174, #13193</td>
+</tr>
+<tr>
+<td><a href="https://github.com/NaNomicon">@NaNomicon</a></td>
+<td>#13806</td>
+</tr>
+<tr>
+<td><a href="https://github.com/navanshjagetiya7-eng">@navanshjagetiya7-eng</a></td>
+<td>#14178</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Neuron-Mr-White">@Neuron-Mr-White</a></td>
+<td>#11622, #11801, #12256, #12492, #12855, #14903</td>
+</tr>
+<tr>
+<td><a href="https://github.com/NightStalker-87">@NightStalker-87</a></td>
+<td>#12183</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Nikita75699">@Nikita75699</a></td>
+<td>#14272</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Notaloop763">@Notaloop763</a></td>
+<td>#13689</td>
+</tr>
+<tr>
+<td><a href="https://github.com/NoxzRCW">@NoxzRCW</a></td>
+<td>#11879, #11880, #11881, #11882, #11883, #11935</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ntdat812">@ntdat812</a></td>
+<td>#11585, #12095, #12836, #12858</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ntdatt812">@ntdatt812</a></td>
+<td>#11368, #11573, #11574, #11576, #11577, #11580, #11582, #11583, #11588, #11589, #11590, #11591, #11592, #11593, #11672, #12177, #12180, #12873, #12918, #12920, #12921, #12925, #12930, #13007, #13009, #13024, #13025, #13083, #13087, #13101, #13104, #13110</td>
+</tr>
+<tr>
+<td><a href="https://github.com/official-burak">@official-burak</a></td>
+<td>#11542</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ogunlowoaamos">@ogunlowoaamos</a></td>
+<td>#14541</td>
+</tr>
+<tr>
+<td><a href="https://github.com/oleksandr1811">@oleksandr1811</a></td>
+<td>#13777</td>
+</tr>
+<tr>
+<td><a href="https://github.com/opensource-elearning">@opensource-elearning</a></td>
+<td>#12179, #12189, #12278, #12286, #13566, #13852</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Orion1943">@Orion1943</a></td>
+<td>#13779</td>
+</tr>
+<tr>
+<td><a href="https://github.com/oyi77">@oyi77</a></td>
+<td>#11408, #11409, #11421, #11505, #11677, #12036, #12038, #12110, #13702, #14868</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ozeas">@ozeas</a></td>
+<td>#13140</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pacocartones">@pacocartones</a></td>
+<td>#11521, #11522, #11527, #11528, #11529, #11530, #11531, #11532, #11533, #11534, #11595, #11599, #11603, #11604, #11605, #11607, #11610, #11676, #11714, #11716, #11718, #11767, #11838, #11860, #11862, #11869, #11871, #11872, #11873, #11903, #11906, #11921, #11934, #12356, #12358, #12359, #12360, #12361, #12362, #12364, #12365, #12373, #12374, #12375, #12376, #12377, #12379, #12380, #12381, #12386, #12387, #12389, #12390, #12394, #12395, #12397, #12401, #12403, #12404, #12522, #12523, #12535, #12536, #12540, #12541, #12543, #12545, #12548, #12549, #12550, #12551, #12552, #12647, #12651, #12653, #13055, #13676, #13837, #13838, #13839, #13841, #13842, #13843, #13844, #13845, #14048, #14093, #14094, #14095, #14097, #14098, #14099, #14100</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pan17">@pan17</a></td>
+<td>#13799</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pandudpn">@pandudpn</a></td>
+<td>#13823</td>
+</tr>
+<tr>
+<td><a href="https://github.com/patrykkopycinski">@patrykkopycinski</a></td>
+<td>#11936, #11937, #12224, #12723, #12742, #12885, #13037, #13355, #13357, #13358, #13359, #13448, #13617, #13627, #14561</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PauloFH">@PauloFH</a></td>
+<td>#11509</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PauloHSOliveira">@PauloHSOliveira</a></td>
+<td>#12241</td>
+</tr>
+<tr>
+<td><a href="https://github.com/peridot-augustus">@peridot-augustus</a></td>
+<td>#14605</td>
+</tr>
+<tr>
+<td><a href="https://github.com/peterbussch">@peterbussch</a></td>
+<td>#14289, #14923</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Petrusreno">@Petrusreno</a></td>
+<td>#14354, #14991</td>
+</tr>
+<tr>
+<td><a href="https://github.com/phamtienduceng-eng">@phamtienduceng-eng</a></td>
+<td>#13775</td>
+</tr>
+<tr>
+<td><a href="https://github.com/phs1997">@phs1997</a></td>
+<td>#13972</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PixmaNts">@PixmaNts</a></td>
+<td>#12462, #12474</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Pllutonyy">@Pllutonyy</a></td>
+<td>#12838, #12839</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ponkcore">@ponkcore</a></td>
+<td>#12054</td>
+</tr>
+<tr>
+<td><a href="https://github.com/potatosips">@potatosips</a></td>
+<td>#14616</td>
+</tr>
+<tr>
+<td><a href="https://github.com/prabhtheone">@prabhtheone</a></td>
+<td>#13992, #14117, #14164, #14812</td>
+</tr>
+<tr>
+<td><a href="https://github.com/prabhu-omkar">@prabhu-omkar</a></td>
+<td>#13579</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prajeeth-12">@Prajeeth-12</a></td>
+<td>#11634, #12046</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pranay-gpt">@pranay-gpt</a></td>
+<td>#13771</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ProphetOfDoom-PoD">@ProphetOfDoom-PoD</a></td>
+<td>#13797, #13908</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qinghuanandejiangshi">@qinghuanandejiangshi</a></td>
+<td>#13819</td>
+</tr>
+<tr>
+<td><a href="https://github.com/QuangBlue">@QuangBlue</a></td>
+<td>#14596, #14597, #14598, #14609, #14615, #14632, #14636, #14649, #14650, #14653, #14677, #14720, #14721, #14738, #14739, #14740, #14741, #14816, #14825, #14829, #14837, #14839, #14917, #14919, #14920, #14974, #14975, #14978, #15036, #15037, #15074</td>
+</tr>
+<tr>
+<td><a href="https://github.com/quiterunner-commits">@quiterunner-commits</a></td>
+<td>#12131, #12143</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rafacpti23">@rafacpti23</a></td>
+<td>#11554, #11558, #12192, #12197, #12198, #12202, #12203, #12204, #12841, #14076, #14140, #14143, #14144, #14147</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rafaeldrincon">@rafaeldrincon</a></td>
+<td>#13487, #14871</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rafazafar">@rafazafar</a></td>
+<td>#13156</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ragnar-claude">@ragnar-claude</a></td>
+<td>#11564</td>
+</tr>
+<tr>
+<td><a href="https://github.com/raheemuddin786">@raheemuddin786</a></td>
+<td>#11491, #11828, #11839, #11840, #11841, #12003, #12230, #12231, #12232, #12233, #12234, #12961</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rahilmavani">@rahilmavani</a></td>
+<td>#11761</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Rahulsharma0810">@Rahulsharma0810</a></td>
+<td>#11771, #13758</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rapha4lx">@rapha4lx</a></td>
+<td>#14576</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RaviTharuma">@RaviTharuma</a></td>
+<td>#11710, #11727, #11797, #11798, #11802, #11805, #11806, #11811, #12098, #12099, #12101, #12449, #12452, #12472, #12473, #12493, #12533, #12607, #12628, #12631, #12636, #12875, #12876, #12880, #12882, #12884, #13185, #13426, #13783, #14069, #14088, #14329, #14526, #14529, #14530, #14540, #14544, #14624, #14643, #14644, #14645, #14646, #14647, #14652</td>
+</tr>
+<tr>
+<td><a href="https://github.com/retroamx">@retroamx</a></td>
+<td>#13189</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rezjalibd">@rezjalibd</a></td>
+<td>#12186</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RhianB14">@RhianB14</a></td>
+<td>#11692</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ricardusx">@ricardusx</a></td>
+<td>#13770</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Rick7C2">@Rick7C2</a></td>
+<td>#13008</td>
+</tr>
+<tr>
+<td><a href="https://github.com/riez">@riez</a></td>
+<td>#13888</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rifqiawl">@rifqiawl</a></td>
+<td>#11517, #11519, #11969</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rolemiaster">@rolemiaster</a></td>
+<td>#13769</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rqzbeh">@rqzbeh</a></td>
+<td>#11390, #12525</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Sabeekhann">@Sabeekhann</a></td>
+<td>#11699, #11705</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sahildaswani">@sahildaswani</a></td>
+<td>#13831</td>
+</tr>
+<tr>
+<td><a href="https://github.com/santosraju99-hub">@santosraju99-hub</a></td>
+<td>#11755, #11770</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SCys">@SCys</a></td>
+<td>#12562, #14316, #14349, #14824</td>
+</tr>
+<tr>
+<td><a href="https://github.com/seanford">@seanford</a></td>
+<td>#13733, #13740</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Seramicx">@Seramicx</a></td>
+<td>#11568</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Sharang8601">@Sharang8601</a></td>
+<td>#14622</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Sheshiyer">@Sheshiyer</a></td>
+<td>#13047</td>
+</tr>
+<tr>
+<td><a href="https://github.com/shipsfromrio">@shipsfromrio</a></td>
+<td>#14941, #14942, #14943, #14945, #14946, #14949, #14950, #14951, #14953, #14954, #14955, #14956, #14957, #14958, #14959</td>
+</tr>
+<tr>
+<td><a href="https://github.com/shubhayu-dev">@shubhayu-dev</a></td>
+<td>#14347</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SIGTERM-015">@SIGTERM-015</a></td>
+<td>#13219</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sistemabritto">@sistemabritto</a></td>
+<td>#13352</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Siva010">@Siva010</a></td>
+<td>#12191, #12785</td>
+</tr>
+<tr>
+<td><a href="https://github.com/skygunner">@skygunner</a></td>
+<td>#15053, #15055</td>
+</tr>
+<tr>
+<td><a href="https://github.com/smkzw">@smkzw</a></td>
+<td>#14307</td>
+</tr>
+<tr>
+<td><a href="https://github.com/smshagor-dev">@smshagor-dev</a></td>
+<td>#13863, #13867</td>
+</tr>
+<tr>
+<td><a href="https://github.com/soaoen">@soaoen</a></td>
+<td>#14523</td>
+</tr>
+<tr>
+<td><a href="https://github.com/solstxce">@solstxce</a></td>
+<td>#11597</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sonirahul">@sonirahul</a></td>
+<td>#12872</td>
+</tr>
+<tr>
+<td><a href="https://github.com/soroush5">@soroush5</a></td>
+<td>#12691, #13753, #13755, #14205</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sprintberlin">@sprintberlin</a></td>
+<td>#13561, #14190, #14259, #14490</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Stazyu">@Stazyu</a></td>
+<td>#12497</td>
+</tr>
+<tr>
+<td><a href="https://github.com/steve25060">@steve25060</a></td>
+<td>#14006</td>
+</tr>
+<tr>
+<td><a href="https://github.com/stormsia">@stormsia</a></td>
+<td>#13984</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sxh313">@sxh313</a></td>
+<td>#14340, #14345, #14374</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tanveer-arch">@tanveer-arch</a></td>
+<td>#12442, #12443</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tauanbinato">@tauanbinato</a></td>
+<td>#14972</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tenshiak">@tenshiak</a></td>
+<td>#12279</td>
+</tr>
+<tr>
+<td><a href="https://github.com/texastoland">@texastoland</a></td>
+<td>#13800, #14214, #14555</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TheDemonTuan">@TheDemonTuan</a></td>
+<td>#11468, #11470, #11471, #11482, #11548, #11758, #11775, #11814, #12933, #13848, #13956</td>
+</tr>
+<tr>
+<td><a href="https://github.com/themedexperiencesusa">@themedexperiencesusa</a></td>
+<td>#13350</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TheRealAlexV">@TheRealAlexV</a></td>
+<td>#14873</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ThiagoMafra-Integrare">@ThiagoMafra-Integrare</a></td>
+<td>#12863, #13780</td>
+</tr>
+<tr>
+<td><a href="https://github.com/thomasmaerz">@thomasmaerz</a></td>
+<td>#12688, #12834</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tiangao88">@tiangao88</a></td>
+<td>#12814, #12982, #14001</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tolgaaksoy">@tolgaaksoy</a></td>
+<td>#13786, #13787</td>
+</tr>
+<tr>
+<td><a href="https://github.com/toor11">@toor11</a></td>
+<td>#12663, #12664, #15018</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TrippyEngineer">@TrippyEngineer</a></td>
+<td>#9057</td>
+</tr>
+<tr>
+<td><a href="https://github.com/trycohn">@trycohn</a></td>
+<td>#13864, #13967</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tuandinh0801">@tuandinh0801</a></td>
+<td>#11454, #13013, #13015, #13020, #13021, #13318, #13705</td>
+</tr>
+<tr>
+<td><a href="https://github.com/turbolego">@turbolego</a></td>
+<td>#11621, #11762, #11772, #11774, #11781, #12216, #12337, #13040, #13041</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Tushar49">@Tushar49</a></td>
+<td>#11392</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ujjawalkaushik1110">@ujjawalkaushik1110</a></td>
+<td>#11863</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Vaishnavi220506">@Vaishnavi220506</a></td>
+<td>#14594</td>
+</tr>
+<tr>
+<td><a href="https://github.com/valimwiliam2020-art">@valimwiliam2020-art</a></td>
+<td>#14336, #14348, #14367</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vamshiOmniWorks">@vamshiOmniWorks</a></td>
+<td>#14280</td>
+</tr>
+<tr>
+<td><a href="https://github.com/VardoKen">@VardoKen</a></td>
+<td>#14207</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ventulus95">@ventulus95</a></td>
+<td>#13317</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vermasomesh835">@vermasomesh835</a></td>
+<td>#11794</td>
+</tr>
+<tr>
+<td><a href="https://github.com/VictorRP7">@VictorRP7</a></td>
+<td>#13226</td>
+</tr>
+<tr>
+<td><a href="https://github.com/VIPKaiser">@VIPKaiser</a></td>
+<td>#13920, #14315, #14342, #14345, #14583, #14584</td>
+</tr>
+<tr>
+<td><a href="https://github.com/visheshgubrani">@visheshgubrani</a></td>
+<td>#12966</td>
+</tr>
+<tr>
+<td><a href="https://github.com/voidstackloop">@voidstackloop</a></td>
+<td>#13342, #13773</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vsd2807">@vsd2807</a></td>
+<td>#11565, #11619</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wahidsadik371-coder">@wahidsadik371-coder</a></td>
+<td>#12126</td>
+</tr>
+<tr>
+<td><a href="https://github.com/watchingdogs">@watchingdogs</a></td>
+<td>#12031</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wenzetan">@wenzetan</a></td>
+<td>#14477</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wildcard">@wildcard</a></td>
+<td>#11620</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wofiporia">@wofiporia</a></td>
+<td>#12629</td>
+</tr>
+<tr>
+<td><a href="https://github.com/woodsonl">@woodsonl</a></td>
+<td>#12686, #12730, #13938, #14324, #14551, #14589, #14723, #14766, #14768</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xiaoyaner0201">@xiaoyaner0201</a></td>
+<td>#11460, #11662, #12083, #13293, #13711, #13746, #14164, #14457, #14641, #14986</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xiechimon">@xiechimon</a></td>
+<td>#13750, #13855, #14115, #14164, #14242, #14243, #14291, #14300, #14350, #14538, #14556, #14562, #14595</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Xore">@Xore</a></td>
+<td>#13383, #13792</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Xxx91n">@Xxx91n</a></td>
+<td>#11690</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yelsoft16">@yelsoft16</a></td>
+<td>#14845</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yourspraveen">@yourspraveen</a></td>
+<td>#11146</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ysntony">@ysntony</a></td>
+<td>#13046, #14246</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yugui923">@yugui923</a></td>
+<td>#14228</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yxyxy">@yxyxy</a></td>
+<td>#11671</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zachary-frederich">@zachary-frederich</a></td>
+<td>#12993</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ZaimMarzuki">@ZaimMarzuki</a></td>
+<td>#11960, #12553, #12891, #13029</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Zartharas">@Zartharas</a></td>
+<td>#11340</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zcrew0x">@zcrew0x</a></td>
+<td>#13690</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zeeshanhaque21">@zeeshanhaque21</a></td>
+<td>#13708</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zero-executioner">@zero-executioner</a></td>
+<td>#11631</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zhiru">@zhiru</a></td>
+<td>#14133</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Zicocoder">@Zicocoder</a></td>
+<td>#14122</td>
+</tr>
+<tr>
+<td><a href="https://github.com/diegosouzapw">@diegosouzapw</a></td>
+<td>maintainer</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<blockquote>
+<p><strong>Source</strong> <a href="https://github.com/cheaper-inference/OmniRoute">cheaper-inference/OmniRoute</a> · <code>v3.8.51</code> · 2026-09-30 · <a href="https://github.com/cheaper-inference/OmniRoute/releases/tag/v3.8.51">upstream release</a></p>
+</blockquote>
+<p><em>Mirrored verbatim for indexing. All rights belong to the upstream project.</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> Release notes come from the upstream project. We organize and connect them so you can compare versions at a glance. All content rights belong to the original authors. </p> <nav class="pager" aria-label="Release navigation"> <a href="/releases/omniroute/3.8.52"> <span class="k">← Next</span> <span class="t">v3.8.52</span> </a> <a href="/releases/omniroute/3.8.50"> <span class="k">Previous →</span> <span class="t">v3.8.50</span> </a> </nav> <aside class="ad-slot" aria-label="Advertisement" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>Advertisement</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/cheaper-inference/OmniRoute/releases/tag/v3.8.51" target="_blank" rel="noopener"> <span>Original on GitHub</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/cheaper-inference/OmniRoute" target="_blank" rel="noopener"> <span>cheaper-inference/OmniRoute</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">On this page</div> <nav> <a href="#-release-by-the-numbers" class="lv3">📊 Release by the numbers</a><a href="#-top-25-contributors-this-cycle" class="lv3">🏆 Top 25 contributors this cycle</a><a href="#highlights" class>Highlights</a><a href="#-new-features" class="lv3">✨ New Features</a><a href="#-bug-fixes-and--maintenance" class="lv3">🐛 Bug Fixes and 📝 Maintenance</a><a href="#-contributors" class="lv3">🙌 Contributors</a> </nav> </div> <div class="rail-card"> <div class="rail-title">Version history</div> <ul class="rail-list"> <li> <a href="/releases/omniroute/3.8.54"> <span class="v">v3.8.54</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/releases/omniroute/3.8.53"> <span class="v">v3.8.53</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/releases/omniroute/3.8.52"> <span class="v">v3.8.52</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/releases/omniroute/3.8.51" aria-current="true"> <span class="v">v3.8.51</span> <span class="d">26-09-30</span> </a> </li><li> <a href="/releases/omniroute/3.8.50"> <span class="v">v3.8.50</span> <span class="d">26-08-26</span> </a> </li><li> <a href="/releases/omniroute/3.8.49"> <span class="v">v3.8.49</span> <span class="d">26-07-30</span> </a> </li><li> <a href="/releases/omniroute/3.8.48"> <span class="v">v3.8.48</span> <span class="d">26-07-13</span> </a> </li><li> <a href="/releases/omniroute/3.8.47"> <span class="v">v3.8.47</span> <span class="d">26-07-13</span> </a> </li> </ul> <a href="/releases/omniroute" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> View all 19 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>Open-source release intelligence, published daily.</p> </div> <div class="footer-col"> <h3>Track</h3> <ul> <li><a href="/releases">Releases</a></li> <li><a href="/projects">Projects</a></li> <li><a href="/releases.xml">RSS feed</a></li> </ul> </div> <div class="footer-col"> <h3>Archive</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">Chinese archive</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">Technical notes</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>Meta</h3> <ul> <li><a href="/privacy">Privacy policy</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release notes belong to their upstream projects.</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="Search releases"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="Search releases, projects, versions…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ navigate</span> <span>↵ open</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

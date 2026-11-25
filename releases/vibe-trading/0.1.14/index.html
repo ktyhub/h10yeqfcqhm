@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Vibe-Trading v0.1.14 — STAGS NextStack</title><meta name="description" content="Rolls up 272 commits / 74 merged pull requests since 0.1.13."><meta name="keywords" content="open source release notes, release tracker, changelog aggregator, breaking changes, deprecation tracker, Kafka releases, Spring Boot releases, Kubernetes releases"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/releases/vibe-trading/0.1.14/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/vibe-trading/0.1.14/"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/Vibe-Trading/Vibe-Trading_v0.1.14"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/vibe-trading/0.1.14/"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="Vibe-Trading v0.1.14 — STAGS NextStack"><meta property="og:description" content="Rolls up 272 commits / 74 merged pull requests since 0.1.13."><meta property="og:url" content="https://www.stags.cn/releases/vibe-trading/0.1.14/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"en","description":"STAGS indexes release notes from infrastructure and AI projects — breaking changes, deprecations and migrations — in one English-first feed.","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/releases/vibe-trading/0.1.14/#article","headline":"Vibe-Trading v0.1.14 release notes","datePublished":"2026-08-20","inLanguage":"en","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/HKUDS/Vibe-Trading"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">Skip to content</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/" class="brand" aria-label="STAGS NextStack — Open-source release intelligence"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/releases">Releases</a><a href="/projects">Projects</a><a href="/topics">Topics</a><a href="/compare">Compare</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="Open menu"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="Primary"> <a href="/releases" class="navmenu-item">Releases</a><a href="/projects" class="navmenu-item">Projects</a><a href="/topics" class="navmenu-item">Topics</a><a href="/compare" class="navmenu-item">Compare</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="Search releases"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">Search</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="Language"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">EN</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="Language"> <p class="langmenu-head">Language</p> <a class="langmenu-item" href="/releases/vibe-trading/0.1.14/" hreflang="en" lang="en" aria-current="true" data-on="true"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/Vibe-Trading/Vibe-Trading_v0.1.14" hreflang="zh-Hans" lang="zh-CN" data-on="false"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/vibe-trading/0.1.14/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/vibe-trading/0.1.14/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/vibe-trading/0.1.14/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/vibe-trading/0.1.14/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/vibe-trading/0.1.14/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/">Home</a> <span class="sep">/</span> <a href="/releases">Releases</a> <span class="sep">/</span> <a href="/releases/vibe-trading">Vibe-Trading</a> </nav> <h1 class="detail-title"> <span class="p">Vibe-Trading</span> v0.1.14 </h1> <div class="detail-meta"> <span class="chip chip--patch">patch</span> <span><span class="k">Published</span>Aug 20, 2026</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/HKUDS/Vibe-Trading" target="_blank" rel="noopener"> <span class="k">Source</span>HKUDS/Vibe-Trading </a>   <span class="sep" aria-hidden="true"></span> <a href="/zh/release_note/Vibe-Trading/Vibe-Trading_v0.1.14"> Chinese translation </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/releases/vibe-trading/0.1.14/">Copy link</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="vibe-trading-v0114">Vibe-Trading v0.1.14</h1>
+<h2 id="highlights">Highlights</h2>
+<ul>
+<li><strong><code>smartmoneyconcepts</code> becomes an opt-in <code>[smc]</code> extra</strong> — An install-time migration, not an API break: the base install no longer pulls <code>numba</code> → <code>llvmlite</code>, so Intel-Mac users on Python 3.11–3.13 stop hitting a CMake-requiring source build (discussion #1035). If you rely on the one SMC-backed skill example, install <code>vibe-trading-ai[smc]</code> explicitly; the stale <code>&#x3C;3.14</code> cap is also gone. CI now tests both ends of <code>requires-python</code>, so floor/ceiling version breaks get caught before release.</li>
+<li><strong>Options Lab and three new Run Detail tabs</strong> (#1096, #1099, #1097, #1091) — Options Lab’s payoff diagram, spot×IV P&#x26;L matrix, Greeks cards and live chain are read-only wrappers over <code>options_payoff</code>/<code>get_options_chain</code>, so the UI and MCP surface compute from the same test-pinned <code>src/quantlib/options.py</code> — no dual-implementation math to audit, and it places no orders. Factor, Positions and Tearsheet derive from artifacts/<code>equity.csv</code> the run already writes; Factor adds a new read-only <code>GET /runs/{run_id}/factor</code> pairwise-IC correlation matrix, gated by <code>has_factor_artifacts</code>. Watch the Positions semantics: the pie is gross (shorts and cash included) while the bars are net exposure, so a long/short pair nets to zero on the bars but both legs stay visible on the pie.</li>
+<li><strong>Strategy Discovery ships as a gated, fail-closed facade</strong> (#978, #1007) — <code>list_strategies</code>, <code>query_strategies</code>, <code>get_strategy_evidence</code> plus <code>refresh_strategy_evidence</code> (agent tool, MCP wrapper, <code>vibe-trading strategy-evidence refresh --manifest</code>) answer “what exists and what state is it in” via per-<code>(strategy, regime)</code> evidence rows. The gate fails closed: stale rows are excluded from default recommendations behind an <code>include_stale</code> opt-out, and a startup guard drops routing text when any advertised tool is not actually registered — don’t treat the prompt text as proof a tool exists. Ingestion uses the <code>backtest-diagnose</code> Hard-Gate Checklist with stable <code>hard-gate:*</code> skip tokens and atomic rebuilds.</li>
+<li><strong>Vietnam equities (<code>.VN</code>) finally run under their own engine</strong> (#1033) — Previously <code>.VN</code> matched no <code>_MARKET_PATTERNS</code> entry, silently fell back to <code>a_share</code>, and both Yahoo loaders rejected the suffix before building a request — so any Vietnamese backtest ran under China A-share rules regardless of the requested data source. Now <code>.VN</code> resolves through <code>["yahoo", "yfinance", "local"]</code> onto a dedicated <code>VietnamEquityEngine</code>. Re-run any HOSE backtests produced on 0.1.13 or earlier; those numbers were computed with the wrong market rules.</li>
+<li><strong>MCP surface reaches 74 tools, with paging changes that alter transport behavior</strong> (#1138, #1137) — Up from 70 in 0.1.13. SEC filings and financial statements move to offset paging, and <code>load_skill</code> routes through the registry so an oversized skill pages instead of being truncated at the transport limit. Clients that assumed one complete payload per call must now handle continuation.</li>
+<li><strong>Backtest and quantlib numbers change — re-baseline your artifacts</strong> (#1082, #1058, #1119, #1121) — The engine reports actual post-fill positions instead of requested ones, <code>excess_return</code> is consistent with the corrected <code>benchmark_return</code>, and hold mode says so when it drops a resize. The archive no longer bundles two runs’ artifacts into one file, and importing the runner no longer loads <code>.env</code> as a side effect. Numerics harden <code>xirr</code>/money-weighted return against long-horizon discount underflow and DCF against non-finite inputs rather than returning a silently negative share price.</li>
+</ul>
+<p>No breaking changes.</p>
+<p>Rolls up 272 commits / 74 merged pull requests since 0.1.13.</p>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Options Lab</strong> (#1096, closes #1095, thanks @shadowinlife) — a Web UI page
+with four surfaces: expiry payoff diagram, spot×IV scenario P&#x26;L matrix,
+portfolio Greeks cards, and a live US options chain. The math is not new: two
+read-only HTTP endpoints wrap the existing <code>options_payoff</code> /
+<code>get_options_chain</code> tools, so the page and the MCP surface compute from the
+same test-pinned <code>src/quantlib/options.py</code>. Research only — it places no
+orders.</li>
+<li><strong>Factor Research tab</strong> in Run Detail (#1099, thanks @shadowinlife) — IC
+statistics cards, the daily IC series with its mean line, quantile-group
+equity curves, and an IC correlation heatmap, all rendered from the
+<code>factor_analysis</code> artifacts a run already writes. The new read-only
+<code>GET /runs/{run_id}/factor</code> endpoint scans the run’s <code>artifacts/</code> tree and
+computes the pairwise IC time-series correlation matrix, which existed
+nowhere before; a <code>has_factor_artifacts</code> flag gates the tab so runs without
+factor output do not show an empty panel.</li>
+<li><strong>Positions tab</strong> in Run Detail (#1097, closes #1098, thanks @shadowinlife) —
+portfolio-book structure from the existing <code>positions.csv</code>: a per-symbol
+weight pie/treemap with a date slider, sector and asset-class net-exposure
+bars, and a weight-evolution stacked area. The pie is <strong>gross</strong> composition
+(absolute weights including shorts and cash) while the bars are <strong>net</strong>
+exposure per industry, so a long/short pair in one sector nets to zero on the
+bars while both legs stay visible on the pie. The two charts answer different
+questions on purpose.</li>
+<li><strong>Tearsheet tab</strong> in Run Detail (#1091, closes #1090, thanks @shadowinlife) —
+monthly-returns heatmap (years × months with a full-year column), annual
+returns bar chart, top-5 drawdown table, and an equity curve annotated with
+the ranked drawdown zones. Everything is derived client-side from the
+<code>equity.csv</code> rows the run response already carries: no backend change, no new
+dependency, and month axis labels come from <code>Intl.DateTimeFormat</code> rather than
+per-locale month keys.</li>
+<li><strong>Interactive backtest research dashboard</strong> (#1084, thanks @AndyLongest) — an
+optional report-style view for a completed backtest alongside the existing
+candlestick and trade-detail views: headline return/risk/trading KPIs,
+normalized equity versus benchmark, drawdown with rolling Sharpe, realized
+trade P&#x26;L, a trade ledger, and the complete metric table. CLI backtests get a
+quiet local report-server bootstrap so <code>Full Report</code> routes to the dashboard
+without a manual server step.</li>
+<li><strong>Strategy Discovery</strong> (#978 Phase 1 and #1007 Phase 2, refs #969, thanks
+@shadowinlife) — a read-only facade answering “what strategies exist and what
+state are they in?” across the Alpha Zoo and the SDM strategy store, with
+per-<code>(strategy, regime)</code> evidence rows rather than scenario tags. Ships
+<code>list_strategies</code> / <code>query_strategies</code> / <code>get_strategy_evidence</code> as agent and
+MCP tools behind an evidence gate (minimum-trade, coverage and
+cost-breakeven thresholds, each with an explicit warning), plus a startup
+guard that drops the routing text when any advertised tool is not actually
+registered. Phase 2 adds the population path — <code>refresh_strategy_evidence</code>
+as an agent tool, an MCP wrapper and
+<code>vibe-trading strategy-evidence refresh --manifest</code> — with the
+<code>backtest-diagnose</code> Hard-Gate Checklist as the ingestion gate (stable
+<code>hard-gate:*</code> skip tokens) and atomic rebuilds. Freshness is computed at read
+time from the evidence-window age (<code>fresh</code>/<code>aging</code>/<code>stale</code>); stale rows fail
+closed out of default recommendations behind an <code>include_stale</code> opt-out, and
+<code>sdm:*</code> rows mirror the SDM lifecycle.</li>
+<li><strong>Scheduled research now delivers itself.</strong> A finished briefing leaves the
+run through an outbox rather than waiting to be read: the outbox row is
+claimed under a lease before sending so a crash mid-delivery cannot double
+post, the send is wired to both the session and the channel runtimes, and the
+push happens on the terminal event. Delivery is configured and watched from
+Market Watch.</li>
+<li><strong>Each monitor’s latest verdict is persisted on its job</strong> (#1152, refs #943,
+thanks @he-yufeng) — the run’s terminal briefing is parsed server-side into a
+structured <code>last_verdict</code> record and the <code>/scheduled-runs</code> list carries it
+inline, so the list renders a verdict without re-parsing free text per row or
+going N+1 on sessions. The five research playbooks grow a strictly additive
+<code>## Verdict</code> tail — one <code>- SYMBOL: STATE - reason</code> line per tracked symbol,
+each playbook declaring its own state vocabulary. Parsing is deliberately
+strict: an ad-hoc prompt lands permanently at <code>no_verdict_section</code> and renders
+as nothing rather than a warning, a run that tracked nothing is a real “no
+calls” answer rather than an absence, and a malformed section degrades to
+<code>contract_violation</code> instead of showing a wrong verdict. The prior record is
+embedded one level deep at write time and no deeper.</li>
+<li><strong>Futu connector — seven extended read-only endpoints</strong> (#1135, thanks
+@549236606-oss) closing the gap between what the SDK exposes and what the
+connector consumed: <code>get_rehab</code> (dividend/split/rights adjustment factors, so
+backtests stop reading dividend gaps as price moves), <code>get_capital_flow</code>
+(historical super/big/mid/small inflow buckets), <code>get_capital_distribution</code>
+(today’s in-flow versus out-flow snapshot), <code>get_history_deals</code> (fill records
+for true cost-basis reconstruction, capped at the SDK’s 360-day window),
+<code>get_acc_cash_flow</code>, <code>get_financials</code> (income/balance/cash-flow statements),
+and <code>get_earnings_calendar</code> with EPS and revenue consensus. Each routes
+through the same <code>_quote_ctx</code> / <code>_trade_ctx</code> / <code>_assert_gateway</code> envelope as
+the original five, so missing data, missing privileges and a missing OpenD all
+degrade to a clean fail-closed payload instead of an SDK stack trace. The
+<code>futu-api</code> SDK stays lazily loaded.</li>
+<li><strong>Vietnam equities (HOSE)</strong> as a backtest market (#1033, thanks @ngoanpv).
+<code>.VN</code> matched no entry in <code>_MARKET_PATTERNS</code>, so <code>_detect_market</code> fell back to
+<code>a_share</code> and executed Vietnamese bars under China A-share rules — and asking
+for Yahoo explicitly did not help, because both Yahoo loaders gated on suffix
+and rejected <code>.VN</code> before building the request. <code>.VN</code> now resolves through the
+Yahoo loaders with a <code>["yahoo", "yfinance", "local"]</code> fallback chain and runs
+on a dedicated <code>VietnamEquityEngine</code>.</li>
+<li><strong>Offline USD-M account reconciliation</strong> (#1106, relates #1030, thanks
+@honginp) — immutable Binance USD-M account and position snapshot contracts
+that compare an exchange observation against the existing <code>AccountState</code> and
+<code>RiskSnapshot</code> without mutating either, reporting numeric, structural,
+missing-symbol and unexpected-symbol drift deterministically. Liquidation-engine
+validation is explicitly left unassessed rather than silently assumed. This is
+the Shadow 1 slice: contracts and fixture-only offline reconciliation.</li>
+<li><strong>Novita AI</strong> as a built-in OpenAI-compatible provider (#1059, thanks
+@jax-novita) — registered in the provider registry with <code>NOVITA_API_KEY</code> /
+<code>NOVITA_BASE_URL</code> and wired through capabilities, CLI onboarding,
+<code>.env.example</code> and the README provider list, so it is selectable from the
+built-in list instead of hand-configured as a custom endpoint.</li>
+<li><strong>GitHub Copilot</strong> as a provider through the official <code>github-copilot-sdk</code>
+(#990, supersedes #899, thanks @sykuang), with SDK-managed authentication from
+<code>COPILOT_GITHUB_TOKEN</code>, <code>GH_TOKEN</code>, <code>GITHUB_TOKEN</code>, stored Copilot CLI
+credentials or <code>gh</code> credentials, plus LangChain-compatible invoke, streaming,
+reasoning and tool-call handling and Settings/preflight integration. This
+implements the boundary #899 was closed on: no borrowed OAuth client ID and no
+editor-impersonation headers.</li>
+<li><strong>tickerall hosted MetaTrader 5 data source</strong> (#968, closes #897, thanks
+@miguelangelo78) — a broker’s MetaTrader 5 candle feed over the hosted
+TickerAll HTTP API, so forex and metals backtests run on any OS with no local,
+logged-in MetaTrader 5 terminal. Purely opt-in: <code>is_available()</code> is False
+unless <code>TICKERALL_API_KEY</code> and <code>TICKERALL_ACCOUNT_ID</code> are set, and the loader
+never joins an automatic chain.</li>
+<li><strong>A drift tolerance band for rebalance mode</strong> — a rebalance that would move
+the book by less than the band is skipped rather than executed for a rounding
+difference.</li>
+<li><strong>Spanish and German locales</strong> (#1087 thanks @daviddaco1, #1117 thanks
+@1psconstructor). Spanish ships a full key-for-key <code>es.json</code> plus
+<code>README_es.md</code>, making Spanish the sixth README; German ships <code>de.json</code> with
+the full UI key set. Both register in <code>SUPPORTED_LANGUAGES</code> and
+<code>localeLoaders</code> on the existing lazy-loading path, and the locale-parity and
+interpolation-variable tests cover them.</li>
+<li><strong>Desktop update safety boundary</strong> (#1101, refs #1016, thanks @QCYTSN) — a
+strict PID-scoped backend/watchdog shutdown result for a future update
+handoff, dormant Windows candidate verification, interrupted-attempt recovery
+primitives, and a documented, tested rejection matrix for tampered, unsigned,
+invalid-signature, wrong-publisher and downgraded candidates. The signed
+<code>0.3.0 → 0.3.1</code> run itself remains blocked on a signing identity; this is the
+part that could be made executable before a certificate exists, including the
+proof that desktop cleanup never kills unrelated Python processes.</li>
+<li><strong>Docker images carry the Feishu and Telegram channel dependencies</strong> (#1088,
+thanks @birdxs), with a manually triggered workflow that builds and pushes to
+both GHCR and Docker Hub and syncs the project description to the Docker Hub
+page.</li>
+<li><strong>Strict alpha t-stats</strong> in the bench JSON and HTML report (#1085, thanks
+@jay79-boop), so the strict-mode number is readable from the artifact instead
+of only the console.</li>
+<li><strong>Offset paging on the MCP surface</strong> for SEC filings and financial statements
+(#1138), and <code>load_skill</code> routed through the registry so an oversized skill
+pages instead of being truncated at the transport limit (#1137).</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong>The MCP surface grows to 74 tools</strong> (from 70 in 0.1.13).</li>
+<li><strong><code>smartmoneyconcepts</code> is now an opt-in <code>[smc]</code> extra, not a base
+dependency</strong> — and the stale <code>&#x3C;3.14</code> cap is gone from both the project
+metadata and the distribution manifest. The package pulled in
+<code>numba</code> → <code>llvmlite</code>, and llvmlite ships no macOS x86_64 wheel from 0.46
+onward, so as a base dependency it turned every Intel-Mac install into a
+source build that needs CMake (discussion #1035). It backs exactly one skill
+example, whose <code>SKILL.md</code> already tells the reader to install it. Intel-Mac
+users on Python 3.11–3.13 can now <code>pip install vibe-trading-ai</code> without a
+toolchain.</li>
+<li><strong>CI runs the test job on both the floor and the ceiling of
+<code>requires-python</code></strong>, so a version-specific break at either end is caught
+before release rather than by a user.</li>
+<li><strong>Vite moves from 6.4.3 to 8.2.0</strong> in the frontend dev toolchain (#1022).</li>
+<li><strong>Market-data provenance now declares per-market volume units</strong> (#1065,
+#1131, thanks @shadowinlife), and <code>get_market_data</code> carries that provenance
+over MCP rather than dropping it at the transport boundary.</li>
+<li><strong>The Ollama runtime URL is normalized at source</strong> (#1074) instead of being
+patched at each call site.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>A run’s grounding gate stops refusing answers it can support.</strong> The
+identity/price recovery path now re-fetches missing evidence within a bounded
+budget instead of rejecting outright (#1092, thanks @Shizoqua); identity
+constants in rate formulas are no longer read as unsupported quotes (#1083,
+thanks @AndyLongest); line-leading ordered-list markers are masked before
+number extraction (#1063, thanks @zzz607); ISO dates that run straight into
+CJK text are recognised as dates (#1132, thanks @Robin1987China); a
+report-style date cell parses as a date and a US CSV stem resolves; a
+dash-form trading day reads as a date and both bounds of a ranged level are
+masked; an order line is read as an instruction rather than an observed
+quote; and an ”@” level is masked only when a quantity or an order label
+accompanies it, so a bare price is still held to the evidence standard.</li>
+<li><strong>Agent run reliability</strong> (#1105, thanks @wiliao) — grounding
+false-rejections, the final-answer gate and LLM timeouts, together with
+prompt wording and support/resistance masking (#1060).</li>
+<li><strong><code>build_registry()</code> no longer returns a partial registry in silence</strong>
+(#1129, thanks @er-s-an): a construction failure is reported instead of
+leaving the caller with a short tool list that looks complete.</li>
+<li><strong>Backtest correctness</strong>: <code>excess_return</code> stays consistent with the corrected
+<code>benchmark_return</code> (#1058, thanks @Shizoqua) and the corrected benchmark
+fields are rounded to the metrics contract; the engine reports actual
+post-fill positions rather than the requested ones (#1082, thanks
+@AndyLongest); hold mode says so when it drops a requested resize; the
+archive no longer mixes two runs’ artifacts into one bundle; and importing
+the runner module no longer loads <code>.env</code> as a side effect.</li>
+<li><strong>Quantlib numerics</strong>: <code>xirr</code> and money-weighted return survive long-horizon
+discount underflow instead of crashing (#1119, thanks @pengpengyi92); DCF
+refuses non-finite inputs rather than returning a silently negative share
+price (#1121, thanks @Robin1987China); a zero-volatility option discounts its
+forward value (#1066), the fixed-income curve keeps decay inside the
+requested bounds (#1076), event studies anchor to the prior session (#1078),
+and cross-validation aligns label ends to the prior observation (#1079) — all
+thanks @pengpengyi92. <code>technical_indicator</code> RSI uses Wilder EWM smoothing
+(#1056, thanks @Shizoqua).</li>
+<li><strong>Swarm</strong>: worker prompts are ordered for prompt-cache-friendly prefixes
+(#1057, thanks @Echoandelementwebsites); worker artifacts are isolated between
+retry attempts (#1053) and a path-shaped agent id is rejected before the retry
+<code>rmtree</code>; raw <code>ok</code>/<code>success</code> tool-result envelopes are rejected (#1052) and
+oversized tool results truncate with the shared notice (#1110) — thanks
+@Shizoqua; tool-less agents are no longer instructed to call <code>write_file</code>
+(#1144, thanks @Echoandelementwebsites); and the per-task <code>ChatLLM</code> is closed
+to stop a pooled-connection leak (#1145, thanks @cgycorey), with the same
+treatment for the one-shot clients in auto-title and image vision (#1153).</li>
+<li><strong>Connectors and market data</strong>: baostock volume is normalized to board lots
+behind a cross-source consistency guard (#1067, thanks @shadowinlife); the
+IBKR market-data tier is selectable and starved quotes report as <code>no_data</code>
+(#1075, thanks @jay79-boop), with the requested and the applied tier reported
+separately; eToro gains runtime UI parity for SDK connector status (#1051) and
+fixes crypto browse and flat market-data quotes (#1070, thanks @ofeksh-tr);
+the <code>tencent</code> loader builds its SSL context from the certifi CA bundle, since
+the new GlobalSign Atlas R3 root is absent from Python’s default store and HK
+quotes failed every retry (#1113, thanks @x-lambda); and the East Money
+research-report endpoint gets the time parameters it now requires (#1077,
+thanks @zzz607).</li>
+<li><strong>CLI</strong>: <code>connector orders</code> renders broker_sdk rows — the renderer only knew
+the nested IBKR shape, so a flat row left every column but Account empty — and
+stringified SDK enums print as <code>BUY</code> rather than <code>OrderSide.BUY</code>, while
+class-B tickers such as <code>BRK.B</code> and decimal values are left intact (#1150,
+thanks @nstavros); direct SDK account diagnostics render (#1073); the <code>show</code>
+subcommand dispatches its <code>run_id</code> instead of the <code>--show</code> flag (#1147, thanks
+@cgycorey); and a Docker Codex OAuth EOF explains itself (#1054, thanks
+@zhiwuyazhe-fjr).</li>
+<li><strong>Providers</strong>: reasoning effort is honoured in chat completions (#1025, thanks
+@cgycorey) and passed through to the Anthropic adapter (#1115, thanks
+@straun-repo).</li>
+<li><strong>A remote MCP failure reports the server’s own explanation</strong> instead of a
+bare status code, so a rejected token reads as a rejected token (refs #1126).</li>
+<li><strong>Scheduled research</strong>: an in-flight delivery is no longer overwritten
+(#1140, thanks @Shizoqua), and the <code>scheduled-runs</code> DELETE returns an empty
+<code>Response</code> for its 204 (#1068, thanks @ofeksh-tr).</li>
+<li><strong>Tools and agent</strong>: unsupported ticker-plus-name symbol queries are marked
+skipped rather than failed (#1114) and recovery steering is delivered as user
+messages with inline system tags (#1112) — thanks @lorenzozanee;
+prediction-market fields reject non-finite values and the envelope stays
+strict JSON (#1136, thanks @Shizoqua); <code>gross_profit</code> is derived from revenue
+minus COGS when the SEC tag is absent (#1111, thanks @cgycorey); every
+compacted message folds through the summarizer; and the autopilot preserves
+backtest validation evidence when linking hypotheses (#1139, thanks
+@Shizoqua).</li>
+<li><strong>Onboarding</strong>: <code>.env.partial</code> is created with owner-only permissions (#1086,
+thanks @lukiod) and written atomically, so a failed save cannot destroy
+recovery state.</li>
+<li><strong>Memory</strong>: the fallback tokenizer’s minimum is aligned with the FTS5
+sanitizer (#1071, thanks @Shizoqua).</li>
+<li><strong>Research reports</strong> reject a reversed window instead of reporting it as
+missing coverage.</li>
+<li><strong>Web</strong>: inferred strategy labels are marked as inferred in the run dashboard
+(#1134, part 1 of #1094, thanks @fixXxerTech).</li>
+<li><strong>The test suite no longer escapes its sandbox into the real config root</strong>
+(#1118, closes #1116, thanks @lorenzozanee). A full run had been appending
+synthetic <code>order_rejected</code> records to the live, hash-chained audit ledger at
+<code>~/.vibe-trading/live/audit.jsonl</code> and writing a <code>live/audit_chain.jsonl</code>
+holding a single NUL byte. It was reported on Windows, but the escape was not
+Windows-specific — a default macOS environment leaked the same way. The
+config root is now sandboxed before collection, through one knob at the tail
+of the resolution chain rather than a per-test override, and <code>os</code> patches are
+confined to the module under test.
+hash locks are portable across supported platforms (#1102); Windows desktop
+packaging inputs are stabilized (#1104); the Docker build workflow is pinned
+and the image stays on hash-locked dependencies; the alpha-bench SP500 panel
+carries the GICS sector through; a frontend test waits on the sector
+re-render rather than on the spinner disappearing; and the Spanish locale says
+“demo”, not “papel”, for paper trading.</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>Source</strong> <a href="https://github.com/HKUDS/Vibe-Trading">HKUDS/Vibe-Trading</a> · <code>v0.1.14</code> · 2026-08-20 · <a href="https://github.com/HKUDS/Vibe-Trading/releases/tag/v0.1.14">upstream release</a></p>
+</blockquote>
+<p><em>Mirrored verbatim for indexing. All rights belong to the upstream project.</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> Release notes come from the upstream project. We organize and connect them so you can compare versions at a glance. All content rights belong to the original authors. </p> <nav class="pager" aria-label="Release navigation"> <a href="/releases/vibe-trading/0.1.15"> <span class="k">← Next</span> <span class="t">v0.1.15</span> </a> <a href="/releases/vibe-trading/0.1.13"> <span class="k">Previous →</span> <span class="t">v0.1.13</span> </a> </nav> <aside class="ad-slot" aria-label="Advertisement" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>Advertisement</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/HKUDS/Vibe-Trading/releases/tag/v0.1.14" target="_blank" rel="noopener"> <span>Original on GitHub</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/HKUDS/Vibe-Trading" target="_blank" rel="noopener"> <span>HKUDS/Vibe-Trading</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">On this page</div> <nav> <a href="#highlights" class>Highlights</a><a href="#added" class="lv3">Added</a><a href="#changed" class="lv3">Changed</a><a href="#fixed" class="lv3">Fixed</a> </nav> </div> <div class="rail-card"> <div class="rail-title">Version history</div> <ul class="rail-list"> <li> <a href="/releases/vibe-trading/0.1.19"> <span class="v">v0.1.19</span> <span class="d">26-11-05</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.18"> <span class="v">v0.1.18</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.17"> <span class="v">v0.1.17</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.16"> <span class="v">v0.1.16</span> <span class="d">26-09-29</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.15"> <span class="v">v0.1.15</span> <span class="d">26-09-09</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.14" aria-current="true"> <span class="v">v0.1.14</span> <span class="d">26-08-20</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.13"> <span class="v">v0.1.13</span> <span class="d">26-08-10</span> </a> </li><li> <a href="/releases/vibe-trading/0.1.12"> <span class="v">v0.1.12</span> <span class="d">26-07-22</span> </a> </li> </ul> <a href="/releases/vibe-trading" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> View all 16 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>Open-source release intelligence, published daily.</p> </div> <div class="footer-col"> <h3>Track</h3> <ul> <li><a href="/releases">Releases</a></li> <li><a href="/projects">Projects</a></li> <li><a href="/releases.xml">RSS feed</a></li> </ul> </div> <div class="footer-col"> <h3>Archive</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">Chinese archive</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">Technical notes</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>Meta</h3> <ul> <li><a href="/privacy">Privacy policy</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release notes belong to their upstream projects.</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="Search releases"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="Search releases, projects, versions…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ navigate</span> <span>↵ open</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>
